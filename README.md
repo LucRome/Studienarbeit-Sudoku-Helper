@@ -12,3 +12,12 @@ python -m venv .venv
 - Install the dependencies:
     - `pip install -r requirements.txt`
 
+# Running the App
+- Database migration:
+```
+py manage.py migrate
+```
+- Run:
+```
+py manage.py runserver
+```
