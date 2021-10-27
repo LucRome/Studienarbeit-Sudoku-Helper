@@ -1,6 +1,9 @@
 # Virtual Environment
 .venv
 
+#
+migrations
+
 # Ignore upload folder
 upload/
 # Byte-compiled / optimized / DLL files
