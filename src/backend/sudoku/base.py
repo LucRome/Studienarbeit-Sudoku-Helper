@@ -1,3 +1,7 @@
+"""
+Base Classes for Sudoku
+"""
+
 from typing import List, Optional
 from exceptions import *
 
