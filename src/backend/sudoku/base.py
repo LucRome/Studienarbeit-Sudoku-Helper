@@ -6,6 +6,8 @@ from typing import List, Optional
 from exceptions import *
 from math import floor
 
+FIELD_VALUE_MIN = 1
+FIELD_VALUE_MAX = 9
 class Field:
     """
     represents a single field 
@@ -19,13 +21,13 @@ class Field:
             self.__value = value
 
     def set_value(self, val: int) -> None:
-        if val < 0 or val > 9:
+        if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
             raise WrongFieldValueExcetion(val)
         else:
             self.__value = val
     
     def add_candidate(self, val: int) -> None:
-        if val < 0 or val > 9:
+        if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
             raise WrongFieldCandidateException(val)
         else:
             if val not in self.__candidates:
@@ -43,7 +45,6 @@ class Field:
     def get_candidates(self) -> List[int]:
         return self.__candidates
     
-
 class Sudoku:
     """
     Class for the complete Sudoku Field
