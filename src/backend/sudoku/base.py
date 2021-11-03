@@ -14,6 +14,10 @@ class Field:
     __value: Optional[int]
     __candidates: List[int] = list()
 
+    def __init__(self, value: Optional[int]):
+        if value is not None:
+            self.__value = value
+
     def set_value(self, val: int) -> None:
         if val < 0 or val > 9:
             raise WrongFieldValueExcetion(val)
@@ -47,10 +51,15 @@ class Sudoku:
     """
     fields: List[List[Field]] = list(list())
     
-    def __init__(self) -> None:
-        for column in range(0, 8):
-            for row in range(0,8):
-                self.fields[column][row] = Field()
+    def __init__(self, values: Optional[List[List[int]]]) -> None:
+        if values is None:
+            for column in range(0, 8):
+                for row in range(0,8):
+                    self.fields[column][row] = Field()
+        else:
+            for column in range(0,8):
+                for row in range(0,8):
+                    self.fields[column][row] = Field(values[column][row])
 
     def get_field(self, row: int, column: int) -> Field:
         if row < 0 or row > 8 or column < 0 or column > 8:
