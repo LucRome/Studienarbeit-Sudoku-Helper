@@ -16,15 +16,20 @@ class Field:
     __value: Optional[int]
     __candidates: List[int] = list()
 
-    def __init__(self, value: Optional[int]):
+    def __init__(self, value: Optional[int] = None):
         if value is not None:
-            self.__value = value
+            self.set_value(value)
+        else:
+            self.remove_value()
 
     def set_value(self, val: int) -> None:
         if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
             raise WrongFieldValueExcetion(val)
         else:
             self.__value = val
+    
+    def remove_value(self) -> None:
+        self.__value = None
     
     def add_candidate(self, val: int) -> None:
         if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
@@ -50,17 +55,20 @@ class Sudoku:
     Class for the complete Sudoku Field
     Orientation: See GitHub Wiki
     """
-    fields: List[List[Field]] = list(list())
+    fields: List[List[Field]]
     
-    def __init__(self, values: Optional[List[List[int]]]) -> None:
+    def __init__(self, values: Optional[List[List[Optional[int]]]] = None) -> None:
+        self.fields = list()
         if values is None:
-            for column in range(0, 8):
-                for row in range(0,8):
-                    self.fields[column][row] = Field()
+            for column in range(0, 9):
+                self.fields.append(list())
+                for row in range(0,9):
+                    self.fields[column].append(Field())
         else:
-            for column in range(0,8):
-                for row in range(0,8):
-                    self.fields[column][row] = Field(values[column][row])
+            for column in range(0,9):
+                self.fields.append(list())
+                for row in range(0,9):
+                    self.fields[column].append(Field(values[row][column]))
 
     def get_field(self, row: int, column: int) -> Field:
         if row < 0 or row > 8 or column < 0 or column > 8:
@@ -70,15 +78,15 @@ class Sudoku:
     def get_row(self, row: int) -> List[Field]:
         if row < 0 or row > 8:
             raise OutOfFieldsException()
-        return self.fields[row]
+        ret: List[Field] = list()
+        for column in range(0, 9):
+            ret.append(self.fields[column][row])
+        return ret
 
     def get_column(self, column: int) -> List[Field]:
         if column < 0 or column > 8:
             raise OutOfFieldsException()
-        ret: List[Field] = list()
-        for row in range(0, 8):
-            ret.append(self.fields[column][row])
-        return ret
+        return self.fields[column]
     
     def get_block(self, block_nr: int) -> List[Field]:
         if block_nr < 0 or block_nr > 8:
@@ -87,23 +95,23 @@ class Sudoku:
         # Determine the rows and columns
         columns: range
         if (block_nr % 3) == 0:
-            columns = range(0,2)
+            columns = range(0,3)
         elif (block_nr % 3) == 1:
-            columns = range(3, 5)
+            columns = range(3, 6)
         else:
-            columns = range(6, 8)
+            columns = range(6, 9)
         rows: range
         if block_nr <= 2:
-            rows = range(0,2)
+            rows = range(0,3)
         elif block_nr <= 5:
-            rows = range(3, 5)
+            rows = range(3, 6)
         else:
-            rows = range(6, 8)
+            rows = range(6, 9)
         
         # fill the return list
         ret: List[Field] = list()
-        for x in columns:
-            for y in rows:
+        for y in rows:
+            for x in columns:
                 ret.append(self.fields[x][y])
         return ret
 
