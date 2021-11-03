@@ -62,33 +62,33 @@ class Sudoku:
     def __init__(self, values: Optional[List[List[Optional[int]]]] = None) -> None:
         self.fields = list()
         if values is None:
-            for column in NINE_RANGE:
+            for row in NINE_RANGE:
                 self.fields.append(list())
-                for row in NINE_RANGE:
-                    self.fields[column].append(Field())
+                for column in NINE_RANGE:
+                    self.fields[row].append(Field())
         else:
-            for column in NINE_RANGE:
+            for row in NINE_RANGE:
                 self.fields.append(list())
-                for row in NINE_RANGE:
-                    self.fields[column].append(Field(values[row][column]))
+                for column in NINE_RANGE:
+                    self.fields[row].append(Field(values[row][column]))
 
     def get_field(self, row: int, column: int) -> Field:
         if row not in NINE_RANGE or column not in NINE_RANGE:
             raise OutOfFieldsException()
-        return self.fields[column][row]
+        return self.fields[row][column]
 
     def get_row(self, row: int) -> List[Field]:
         if row not in NINE_RANGE:
             raise OutOfFieldsException()
-        ret: List[Field] = list()
-        for column in range(0, 9):
-            ret.append(self.fields[column][row])
-        return ret
+        return self.fields[row]
 
     def get_column(self, column: int) -> List[Field]:
         if column not in NINE_RANGE:
             raise OutOfFieldsException()
-        return self.fields[column]
+        ret: List[Field] = list()
+        for row in range(0, 9):
+            ret.append(self.get_field(row, column))
+        return ret
     
     def get_block(self, block_nr: int) -> List[Field]:
         if block_nr not in NINE_RANGE:
@@ -114,7 +114,7 @@ class Sudoku:
         ret: List[Field] = list()
         for y in rows:
             for x in columns:
-                ret.append(self.fields[x][y])
+                ret.append(self.get_field(row=y, column= x))
         return ret
 
     def get_block_nr(row: int, column: int) -> int:
