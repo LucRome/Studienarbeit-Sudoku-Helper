@@ -103,7 +103,8 @@ class Sudoku:
         ret: List[Field] = list()
         for x in columns:
             for y in rows:
-                List.append(self.fields[columns][rows])
+                ret.append(self.fields[x][y])
+        return ret
 
     def get_block_nr(row: int, column: int) -> int:
         if row < 0 or row > 8 or column < 0 or column > 8:
