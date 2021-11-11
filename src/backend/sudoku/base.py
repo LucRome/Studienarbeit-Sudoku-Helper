@@ -4,7 +4,7 @@ Base Classes for Sudoku
 
 from logging import NOTSET
 from typing import List, Optional
-from exceptions import *
+from .exceptions import *
 from math import floor
 
 FIELD_VALUE_MIN = 1

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+    Params:
+        sudoku: Sudoku Class
+        range: range(0,9)
+{% endcomment %}
+
+{% block content %}
+    {% include 'sudoku.html' with sudoku=sudoku range=range%}
+{% endblock content %}
