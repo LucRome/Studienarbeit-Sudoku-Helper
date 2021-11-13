@@ -1,6 +1,6 @@
 from typing import Type, Optional
 from base import Field, Sudoku, FIELD_VALUE_MAX, FIELD_VALUE_MIN
-from exceptions import OutOfFieldsException, WrongFieldCandidateException, WrongFieldValueExcetion
+from exceptions import OutOfFieldsException, WrongFieldCandidateException, WrongFieldValueException
 import unittest
 
 def print_sudoku(sudoku: Sudoku):
@@ -34,9 +34,9 @@ class TestField(unittest.TestCase):
         self.assertIsNone(field.get_value())
 
         # throw error
-        with self.assertRaises(WrongFieldValueExcetion):
+        with self.assertRaises(WrongFieldValueException):
             field.set_value(val=(FIELD_VALUE_MAX + 1))
-        with self.assertRaises(WrongFieldValueExcetion):
+        with self.assertRaises(WrongFieldValueException):
             field.set_value(val=(FIELD_VALUE_MIN - 1))
 
     def test_candidates(self):

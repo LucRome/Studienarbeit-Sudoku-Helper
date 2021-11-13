@@ -25,7 +25,7 @@ class Field:
 
     def set_value(self, val: int) -> None:
         if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
-            raise WrongFieldValueExcetion(val)
+            raise WrongFieldValueException(val)
         else:
             self.__value = val
     
