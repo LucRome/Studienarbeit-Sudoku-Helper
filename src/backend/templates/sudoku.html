@@ -6,22 +6,30 @@
 {% endcomment %}
 
 {% load accessors %}
+{% load static %}
 
-<form method="post">
-    <table>
-        {% for row in range %}
-            <tr>
-                {% for column in range %}
-                    <td>
-                        {% with field=sudoku|row:row|column:column %}
-                            <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
-                            <div>
-                                <p>TODO: Candidates</p>
-                            </div>
-                        {% endwith %}
-                    </td>
+<link rel="stylesheet" href="{% static 'css/sudoku.css' %}">
+<script src="{% static 'js/sudoku.js' %}"></script>
+
+<div class="sudoku">
+    <form method="post">
+        <table>
+            <tbody>
+                {% for row in range %}
+                    <tr>
+                        {% for column in range %}
+                            <td>
+                                {% with field=sudoku|row:row|column:column %}
+                                    <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                                    <div style="display: none;">
+                                        <p>TODO: Candidates</p>
+                                    </div>
+                                {% endwith %}
+                            </td>
+                        {% endfor %}
+                    </tr>  
                 {% endfor %}
-            </tr>  
-        {% endfor %}
-    </table>
-</form>
+            </tbody>
+        </table>
+    </form>
+</div>
