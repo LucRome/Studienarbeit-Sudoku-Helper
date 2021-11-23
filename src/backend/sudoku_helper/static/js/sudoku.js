@@ -38,6 +38,17 @@ $(document).ready(
                 }
             }
         )
+
+        // Add Listener to clear sudoku button
+        $("button#clear-sudoku-btn").on("click",
+            function() {
+                for (let y = 0; y < SUDOKU_SIZE; y++) {
+                    for (let x = 0; x < SUDOKU_SIZE; x++) {
+                        sudoku_values[y][x] = NaN;
+                    }
+                }
+            }
+        )
     }
 )
 

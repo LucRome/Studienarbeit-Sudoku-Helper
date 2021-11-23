@@ -3,6 +3,7 @@
     Params:
         sudoku: Sudoku Class
         range: range(0,9)
+        btn_template: button template 
 {% endcomment %}
 
 {% load accessors %}
@@ -10,9 +11,25 @@
 
 <link rel="stylesheet" href="{% static 'css/sudoku.css' %}">
 <script src="{% static 'js/sudoku.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/buttons.css' %}">
 
-<div class="sudoku">
-    <form method="post">
+{% comment %} 
+    Info And Delete Buttons
+{% endcomment %}
+<div class="d-flex justify-content-around">
+    <div class="">TODO: Info Field</div>
+    <button id="clear-sudoku-btn" form="form-sudoku" type="reset" class="btn btn-danger rounded-circle">
+        <span class="material-icons-outlined">clear</span>
+        
+    </button>
+</div>
+
+{% comment %} 
+    Sudoku Form
+{% endcomment %}
+<div class="sudoku d-flex justify-content-center container-fluid">
+    <form method="post" id="form-sudoku">
+        {% csrf_token %}
         <table>
             <tbody>
                 {% for row in range %}
@@ -32,4 +49,14 @@
             </tbody>
         </table>
     </form>
+</div>
+
+{% comment %} 
+    Settings, Validate
+{% endcomment %}
+
+<div class="d-flex justify-content-around">
+    <div>TODO: Settings Button</div>
+    {% include btn_template %}
+    <div>TODO: Question Button</div>
 </div>
