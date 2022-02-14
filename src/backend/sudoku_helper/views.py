@@ -28,8 +28,7 @@ def check_sudoku(request: HttpRequest):
     values = get_values_from_request(request)
     sudoku = Sudoku(values)
 
-    #TODO: check sudoku
-    correct = sudoku_simple_check(sudoku)
+    correct = sudoku_simple_check(sudoku) # TODO: please add the complex sudoku check here
 
     context = {
         'sudoku': sudoku,
