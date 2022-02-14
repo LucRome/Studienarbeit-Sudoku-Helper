@@ -24,6 +24,19 @@ $(document).ready(
                 // 48 = '0'; 58 = '9'
             }
         )
+        
+        let inputs = $(".sudoku input")
+        // first value of array is ignored (its the prototype and not a relevant object)
+        for (let i = 1; i < inputs.length; i++) {
+            let [y,x] = get_indexes_from_id(inputs[i]);
+            // Add new value to value array
+            sudoku_values[y][x] = Number.parseInt(inputs[i].value);
+            if (check_input_allowed(y,x)) {
+                $(inputs[i]).removeClass("sudoku-field-incorrect");
+            } else {
+                $(inputs[i]).addClass("sudoku-field-incorrect");
+            }  
+        }
 
         // Add the listeners for input events
         $(".sudoku input").on("change",
