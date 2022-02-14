@@ -25,40 +25,29 @@ $(document).ready(
             }
         )
         
-        let inputs = $(".sudoku input")
-        // first value of array is ignored (its the prototype and not a relevant object)
-        for (let i = 1; i < inputs.length; i++) {
-            let [y,x] = get_indexes_from_id(inputs[i]);
-            // Add new value to value array
-            sudoku_values[y][x] = Number.parseInt(inputs[i].value);
-            if (check_input_allowed(y,x)) {
-                $(inputs[i]).removeClass("sudoku-field-incorrect");
-            } else {
-                $(inputs[i]).addClass("sudoku-field-incorrect");
-            }  
+        {
+            let inputs = $(".sudoku input")
+            // first value of array is ignored (its the prototype and not a relevant object)
+            for (let i = 1; i < inputs.length; i++) {
+                parse_and_check(inputs[i])
+            }
         }
 
         // Add the listeners for input events
         $(".sudoku input").on("change",
             function (e) {
-                let [y,x] = get_indexes_from_id(e.target);
-                // Add new value to value array
-                sudoku_values[y][x] = Number.parseInt(e.target.value);
-                if (check_input_allowed(y,x)) {
-                    $(e.target).removeClass("sudoku-field-incorrect");
-                } else {
-                    $(e.target).addClass("sudoku-field-incorrect");
-                }
+                parse_and_check(e.target)
             }
         )
 
         // Add Listener to clear sudoku button
         $("button#clear-sudoku-btn").on("click",
             function() {
-                for (let y = 0; y < SUDOKU_SIZE; y++) {
-                    for (let x = 0; x < SUDOKU_SIZE; x++) {
-                        sudoku_values[y][x] = NaN;
-                    }
+                let inputs = $(".sudoku input")
+                // first value of array is ignored (its the prototype and not a relevant object)
+                for (let i = 1; i < inputs.length; i++) {
+                    inputs[i].value = NaN
+                    parse_and_check(inputs[i])
                 }
             }
         )
@@ -130,4 +119,16 @@ function get_block_starts(y,x) {
     starts[0] = Math.floor(y / 3) * 3;
     starts[1] = Math.floor(x / 3) * 3;
     return starts;
+}
+
+// parse and check the value of a given sudoku field
+function parse_and_check(input_field) {
+    let [y,x] = get_indexes_from_id(input_field);
+    // Add new value to value array
+    sudoku_values[y][x] = Number.parseInt(input_field.value);
+    if (check_input_allowed(y,x)) {
+        $(input_field).removeClass("sudoku-field-incorrect");
+    } else {
+        $(input_field).addClass("sudoku-field-incorrect");
+    }
 }
