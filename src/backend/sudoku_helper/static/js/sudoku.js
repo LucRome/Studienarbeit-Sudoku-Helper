@@ -128,7 +128,11 @@ function parse_and_check(input_field) {
     sudoku_values[y][x] = Number.parseInt(input_field.value);
     if (check_input_allowed(y,x)) {
         $(input_field).removeClass("sudoku-field-incorrect");
+        if ($(".sudoku-field-incorrect").length === 0) {
+            $("#submit-sudoku-btn").prop("disabled", false);  // enable Validate Button when no incorrect fields are left
+        }
     } else {
         $(input_field).addClass("sudoku-field-incorrect");
+        $("#submit-sudoku-btn").prop("disabled", true);  // disable Validate Button
     }
 }
