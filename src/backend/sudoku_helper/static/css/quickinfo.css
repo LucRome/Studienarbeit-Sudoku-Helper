@@ -1,0 +1,6 @@
+.quickinfo {
+    text-overflow: ellipsis;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: black;
+}

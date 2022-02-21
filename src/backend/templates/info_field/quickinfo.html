@@ -1,0 +1,18 @@
+{% comment %} 
+    Quickinfo field
+    Params: 
+        Text: Text to display
+{% endcomment %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/quickinfo.css' %}">
+
+<div class="quickinfo d-flex">
+  <p>{{text}}</p> {# Text Preview #}
+  <button type="button" class="btn btn-primary rounded-pill">
+    <span class="material-icons-outlined">
+      info
+    </span>
+  </button>
+</div>
