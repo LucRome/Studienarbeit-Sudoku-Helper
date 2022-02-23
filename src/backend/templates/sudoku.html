@@ -16,11 +16,11 @@
 {% comment %} 
     Info And Delete Buttons
 {% endcomment %}
+
 <div class="d-flex justify-content-around">
-    {% include "info_field/quickinfo.html" %}
+    {% include "info_field/quickinfo.html" with text="hello" %}
     <button id="clear-sudoku-btn" form="form-sudoku" type="button" class="btn btn-danger rounded-circle">
         <span class="material-icons-outlined">clear</span>
-        
     </button>
 </div>
 
