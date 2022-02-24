@@ -65,7 +65,13 @@ function get_indexes_from_id(input_object) {
 
 // perform the simple checks whether the input is allowed
 function check_input_allowed(y, x) {
-    return check_per_row(y, x) && check_per_column(y, x) && check_per_block(y, x); 
+    return check_number(y, x) && check_per_row(y, x) && check_per_column(y, x) && check_per_block(y, x); 
+}
+
+// check number
+function check_number(y, x) {
+    let number = sudoku_values[y][x];
+    return ((number >= 0) && (number <= 9)) || isNaN(number)
 }
 
 // check by row
