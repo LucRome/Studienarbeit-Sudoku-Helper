@@ -1,0 +1,43 @@
+{% comment %} 
+  Sudoku Form
+  Params:
+    sudoku: Sudoku Class
+    range: range(0,9)
+    sudoku_readonly: if True -> all Sudoku Fields are readonly
+{% endcomment %}
+
+{% load accessors %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/sudoku.css' %}">
+<script src="{% static 'js/sudoku.js' %}"></script>
+
+{# Sudoku Form #}
+<div class="sudoku d-flex justify-content-center container-fluid">
+  <form method="post" id="form-sudoku">
+    {% csrf_token %}
+    <table>
+      <tbody>
+        {% for row in range %}
+          <tr>
+            {% for column in range %}
+              <td>
+                {% with field=sudoku|row:row|column:column %}
+                  {% if sudoku_readonly %}
+                    <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                  {% else %}
+                    <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/>
+                  {% endif %}
+                  <div style="display: none;">
+                    <p>TODO: Candidates</p>
+                  </div>
+                {% endwith %}
+              </td>
+            {% endfor %}
+          </tr>  
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+</div>
+

@@ -13,5 +13,5 @@
         <strong class="material-icons-outlined">check_circle</strong> The submitted Sudoku is validated!
     </div>
 
-    {% include 'sudoku.html' with sudoku=sudoku range=range sudoku_readonly="True" btn_template="button_groups/solve.html"%}
+    {% include 'page_parts/all.html' with show_clr="true" text="TODO: Quickinfo" sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
 {% endblock content %}

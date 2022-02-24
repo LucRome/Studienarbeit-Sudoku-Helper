@@ -1,3 +1,4 @@
+from email.policy import default
 import re
 from django.http.request import HttpRequest
 from django.shortcuts import render
@@ -17,9 +18,8 @@ def index(request: HttpRequest):
     context={
         'sudoku': sudoku,
         'range': NINE_RANGE,
-        'btn_template': 'button_groups/validate.html'
     }
-    return render(request, 'index.html', context)
+    return render(request, 'pages/index.html', context)
 
 @require_http_methods(['POST'])
 def check_sudoku(request: HttpRequest):
@@ -38,14 +38,14 @@ def check_sudoku(request: HttpRequest):
             'failed_tests': True,
             'error_msg': 'TODO: Error Message' # TODO
         }
-        return render(request, 'index.html', context)
+        return render(request, 'pages/index.html', context)
     
     else:
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
         }
-        return render(request, 'verified.html', context)
+        return render(request, 'pages/verified.html', context)
 
 @require_http_methods(['POST'])
 def solve_sudoku(request: HttpRequest):

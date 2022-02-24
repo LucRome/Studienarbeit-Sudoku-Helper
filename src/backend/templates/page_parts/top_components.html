@@ -1,0 +1,41 @@
+{% comment %}
+  Components on top of the Sudoku Form (Quickinfo and Clear Button)
+  Params:
+    show_clr: Show the clear button ?
+    text: quickinfo text
+{% endcomment %}
+
+{% load static %}
+
+<div class="d-flex justify-content-around">
+  {# Quickinfo #}
+  <link rel="stylesheet" href="{% static 'css/quickinfo.css' %}">
+  <div class="container-fluid quickinfo d-flex justify-content-around align-items-center">
+    <p class="align-self-center mb-0 me-2">{{text}}</p> {# Text Preview #}
+    <button type="button" class="btn btn-primary rounded-pill d-flex align-content-center" data-bs-toggle="modal" data-bs-target="#quickinfo-modal">
+      <span class="material-icons-outlined">
+        info
+      </span>
+    </button>
+    <div class="modal" id="quickinfo-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+          <div class="modal-body">
+            <p>{{text}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Clear Button #}
+  {% if show_clr %}
+    <button id="clear-sudoku-btn" form="form-sudoku" type="button" class="btn btn-danger rounded-pill d-flex align-content-center">
+      <span class="material-icons-outlined">delete</span>
+    </button>
+  {% endif %}
+</div>
+
