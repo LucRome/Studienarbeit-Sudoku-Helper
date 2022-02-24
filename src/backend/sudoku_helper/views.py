@@ -1,3 +1,4 @@
+import re
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
@@ -30,12 +31,25 @@ def check_sudoku(request: HttpRequest):
 
     correct = sudoku_simple_check(sudoku) # TODO: please add the complex sudoku check here
 
-    context = {
-        'sudoku': sudoku,
-        'range': NINE_RANGE,
-        'btn_template': 'button_groups/validate.html' #TODO: correct
-    }
+    if not correct:
+        context = {
+            'sudoku': sudoku,
+            'range': NINE_RANGE,
+            'failed_tests': True,
+            'error_msg': 'TODO: Error Message' # TODO
+        }
+        return render(request, 'index.html', context)
+    
+    else:
+        context = {
+            'sudoku': sudoku,
+            'range': NINE_RANGE,
+        }
+        return render(request, 'verified.html', context)
 
-    print("sudoku checked")
-
-    return render(request, 'index.html', context) # TODO: use correct template
+@require_http_methods(['POST'])
+def solve_sudoku(request: HttpRequest):
+    """
+    Apply the solving Algorithms to the Sudoku
+    """
+    pass

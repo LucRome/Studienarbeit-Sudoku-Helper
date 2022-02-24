@@ -3,7 +3,7 @@
     Params:
         sudoku: Sudoku Class
         range: range(0,9)
-        btn_template: button template 
+        btn_template: button template
 {% endcomment %}
 
 {% load accessors %}
@@ -37,7 +37,11 @@
                         {% for column in range %}
                             <td>
                                 {% with field=sudoku|row:row|column:column %}
-                                    <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                                    {% if sudoku_readonly %}
+                                        <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                                    {% else %}
+                                        <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/>
+                                    {% endif %}
                                     <div style="display: none;">
                                         <p>TODO: Candidates</p>
                                     </div>
