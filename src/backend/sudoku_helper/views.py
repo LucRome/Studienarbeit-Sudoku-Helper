@@ -1,5 +1,3 @@
-from email.policy import default
-import re
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
@@ -18,6 +16,7 @@ def index(request: HttpRequest):
     context={
         'sudoku': sudoku,
         'range': NINE_RANGE,
+        'quickinfo': 'Welcome, please enter the numbers into the sudoku and press validate to proceed!'
     }
     return render(request, 'pages/index.html', context)
 
@@ -29,14 +28,15 @@ def check_sudoku(request: HttpRequest):
     values = get_values_from_request(request)
     sudoku = Sudoku(values)
 
-    correct = sudoku_simple_check(sudoku) # TODO: please add the complex sudoku check here
+    correct, msg = sudoku_simple_check(sudoku) # TODO: please add the complex sudoku check here
 
     if not correct:
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
+            'quickinfo': 'Please enter a correct sudoku and press Validate to proceed!',
             'failed_tests': True,
-            'error_msg': 'TODO: Error Message' # TODO
+            'error_msg': msg,
         }
         return render(request, 'pages/index.html', context)
     
@@ -44,6 +44,7 @@ def check_sudoku(request: HttpRequest):
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
+            'quickinfo': 'Your sudoku was verified, now you can start solving it by pressing solve!'
         }
         return render(request, 'pages/verified.html', context)
 

@@ -4,6 +4,7 @@
     Params:
         sudoku: Sudoku Class
         range: range(0,9)
+        quickinfo: Quickinfo text
 {% endcomment %}
 
 {% block content %}
@@ -13,5 +14,5 @@
         <strong class="material-icons-outlined">check_circle</strong> The submitted Sudoku is valid!
     </div>
 
-    {% include 'page_parts/all.html' with show_clr="" text="TODO: Quickinfo" sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
+    {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
 {% endblock content %}

@@ -6,6 +6,7 @@
     range: range(0,9)
     failed_tests: Was a Sudoku rejected from the server
     error_msg: The Error Message, in case the backend tests failed
+    quickinfo: quickinfo text
 {% endcomment %}
 
 {% block content %}
@@ -18,7 +19,7 @@
   {% endif %}
   
   {# Rest of the Page #}
-  {% include 'page_parts/all.html' with show_clr="True" text="TODO: Quickinfo" sudoku=sudoku range=range sudoku_readonly="" nxt_action="validate" %}
+  {% include 'page_parts/all.html' with show_clr="True" text=quickinfo sudoku=sudoku range=range sudoku_readonly="" nxt_action="validate" %}
     {# ="" -> False #}
 
 {% endblock content %}
