@@ -33,12 +33,6 @@ class TestField(unittest.TestCase):
         field = Field()
         self.assertIsNone(field.get_value())
 
-        # throw error
-        with self.assertRaises(WrongFieldValueExcetion):
-            field.set_value(val=(FIELD_VALUE_MAX + 1))
-        with self.assertRaises(WrongFieldValueExcetion):
-            field.set_value(val=(FIELD_VALUE_MIN - 1))
-
     def test_candidates(self):
         field: Field = Field()
         self.assertListEqual(field.get_candidates(), [])
