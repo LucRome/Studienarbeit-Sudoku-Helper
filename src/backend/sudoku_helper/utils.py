@@ -17,26 +17,33 @@ def get_values_from_request(request: HttpRequest) -> List[List[int]]:
 
     return values
 
-# Move to sudoku class (add tests?)
+
+def get_amount_of_fields_with_value(val: int, lst: List[Field]) -> int:
+    """
+    Returns the amount of Fields with value val in the List
+    """
+    n = 0
+    for f in lst:
+        if f.get_value() == val:
+            n += 1
+    
+    return n
+
+
 def sudoku_simple_check(sudoku: Sudoku) -> Tuple[bool, Optional[str]]:
     """
     Performs the simple checks on the sudoku (per row, per column, per block)
     """
-
-    # Correct number range
-    for y in NINE_RANGE:
-        for x in NINE_RANGE:
-            value = sudoku.get_field(y, x).get_value()
-            if not (value is None or (value <= 9 and value >= 1)):
-                return (False, f'The Value in [{y}, {x}] ([Row, Column]) is outside of (1, 9) (value = {value})!')
-
+    # Correct Number range
+    if not sudoku.check_field_values():
+        return (False, 'A Value is outside of (1, 9)!')
 
     # No double numbers
     for x in NINE_RANGE:
         [row, column, block] = [sudoku.get_row(x), sudoku.get_column(x), sudoku.get_block(x)]
         for i in range(1,9):
-            if not ((row.count(i) <= 1) and (column.count(i) <= 1) and (block.count(i) <= 1)):
-                return (False, f'The Value {value} occurs multiple times in a row, a column or a block°!')
+            if not ((get_amount_of_fields_with_value(i, row) <= 1) and (get_amount_of_fields_with_value(i, column) <= 1) and (get_amount_of_fields_with_value(i, block) <= 1)):
+                return (False, f'The Value {i} occurs multiple times in a row, a column or a block!')
     
     # correct
     return (True, None)

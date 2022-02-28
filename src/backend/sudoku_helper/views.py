@@ -27,8 +27,14 @@ def check_sudoku(request: HttpRequest):
     """
     values = get_values_from_request(request)
     sudoku = Sudoku(values)
+    correct = True
 
     correct, msg = sudoku_simple_check(sudoku) # TODO: please add the complex sudoku check here
+    if correct and sudoku is not None:
+        correct, msg = sudoku_simple_check(sudoku)
+        if correct:
+            # TODO: add complex test here!!!
+            pass
 
     if not correct:
         context = {
