@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from sudoku.base import NINE_RANGE
 
+from sudoku.exceptions import WrongFieldValueExcetion
+
 from .utils import get_values_from_request, sudoku_simple_check
 
 from sudoku.base import Sudoku
@@ -26,10 +28,20 @@ def check_sudoku(request: HttpRequest):
     Check the submitted Sudoku (comes after index)
     """
     values = get_values_from_request(request)
-    sudoku = Sudoku(values)
-    correct = True
+    
+    try:
+        sudoku = Sudoku(values)
+        correct = True
+    except WrongFieldValueExcetion as e:
+        correct, msg = False, 'Some Field Values were not in the allowed range of 1 - 9 and therefore were removed!'
+        # Initialize Sudoku without wrong Field Values
+        for y in NINE_RANGE:
+            for x in NINE_RANGE:
+                val = values[y][x]
+                if val is not None and (val > 9 or val < 1):
+                    values[y][x] = None
+        sudoku = Sudoku(values)
 
-    correct, msg = sudoku_simple_check(sudoku) # TODO: please add the complex sudoku check here
     if correct and sudoku is not None:
         correct, msg = sudoku_simple_check(sudoku)
         if correct:

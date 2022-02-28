@@ -34,9 +34,6 @@ def sudoku_simple_check(sudoku: Sudoku) -> Tuple[bool, Optional[str]]:
     """
     Performs the simple checks on the sudoku (per row, per column, per block)
     """
-    # Correct Number range
-    if not sudoku.check_field_values():
-        return (False, 'A Value is outside of (1, 9)!')
 
     # No double numbers
     for x in NINE_RANGE:
