@@ -24,7 +24,10 @@ class Field:
             self.remove_value()
 
     def set_value(self, val: int) -> None:
-        self.__value = val
+        if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
+            raise WrongFieldValueExcetion(val)
+        else:
+            self.__value = val
     
     def remove_value(self) -> None:
         self.__value = None
@@ -119,14 +122,3 @@ class Sudoku:
         x: int = floor(column/3)
         y: int = floor(row/3)
         return y*3 + x
-
-    def check_field_values(self) -> bool:
-        """
-        True if all Field values are 1 - 9 or None
-        """
-        for y in range(0, 9):
-            for x in range(0, 9):
-                val = self.get_field(y, x).get_value()
-                if (val is not None) and ((val < 1) or (val > 9)):
-                    return False
-        return True
