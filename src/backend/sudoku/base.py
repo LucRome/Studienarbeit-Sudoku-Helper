@@ -48,7 +48,6 @@ class Field:
     def get_candidates(self) -> List[int]:
         return self.__candidates
     
-NINE_RANGE = range(0,9)
 class Sudoku:
     """
     Class for the complete Sudoku Field
@@ -59,28 +58,28 @@ class Sudoku:
     def __init__(self, values: Optional[List[List[Optional[int]]]] = None) -> None:
         self.fields = list()
         if values is None:
-            for row in NINE_RANGE:
+            for row in range(0, 9):
                 self.fields.append(list())
-                for column in NINE_RANGE:
+                for column in range(0, 9):
                     self.fields[row].append(Field())
         else:
-            for row in NINE_RANGE:
+            for row in range(0, 9):
                 self.fields.append(list())
-                for column in NINE_RANGE:
+                for column in range(0, 9):
                     self.fields[row].append(Field(values[row][column]))
 
     def get_field(self, row: int, column: int) -> Field:
-        if row not in NINE_RANGE or column not in NINE_RANGE:
+        if row not in range(0, 9) or column not in range(0, 9):
             raise OutOfFieldsException()
         return self.fields[row][column]
 
     def get_row(self, row: int) -> List[Field]:
-        if row not in NINE_RANGE:
+        if row not in range(0, 9):
             raise OutOfFieldsException()
         return self.fields[row]
 
     def get_column(self, column: int) -> List[Field]:
-        if column not in NINE_RANGE:
+        if column not in range(0, 9):
             raise OutOfFieldsException()
         ret: List[Field] = list()
         for row in range(0, 9):
@@ -88,7 +87,7 @@ class Sudoku:
         return ret
     
     def get_block(self, block_nr: int) -> List[Field]:
-        if block_nr not in NINE_RANGE:
+        if block_nr not in range(0, 9):
             raise OutOfFieldsException()
 
         # Determine the rows and columns
@@ -115,7 +114,7 @@ class Sudoku:
         return ret
 
     def get_block_nr(row: int, column: int) -> int:
-        if row not in NINE_RANGE or column not in NINE_RANGE:
+        if row not in range(0, 9) or column not in range(0, 9):
             raise OutOfFieldsException()
         x: int = floor(column/3)
         y: int = floor(row/3)

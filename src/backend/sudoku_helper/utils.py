@@ -1,5 +1,4 @@
 from typing import List, Optional
-from sudoku.base import NINE_RANGE
 from sudoku.base import Sudoku, Field
 from django.http import HttpRequest
 from typing import Tuple, Optional
@@ -7,9 +6,9 @@ from typing import Tuple, Optional
 def get_values_from_request(request: HttpRequest) -> List[List[int]]:
     values: List[List[Optional[int]]] = list()
 
-    for row in NINE_RANGE:
+    for row in range(0, 9):
         values.append(list())
-        for column in NINE_RANGE:
+        for column in range(0, 9):
             value_str = request.POST[f'{row}_{column}']
             values[row].append( 
                 None if value_str == '' else int(value_str)
@@ -39,7 +38,7 @@ def sudoku_simple_check(sudoku: Sudoku) -> Tuple[bool, Optional[str]]:
         return (False, 'A Value is outside of (1, 9)!')
 
     # No double numbers
-    for x in NINE_RANGE:
+    for x in range(0, 9):
         [row, column, block] = [sudoku.get_row(x), sudoku.get_column(x), sudoku.get_block(x)]
         for i in range(1,9):
             if not ((get_amount_of_fields_with_value(i, row) <= 1) and (get_amount_of_fields_with_value(i, column) <= 1) and (get_amount_of_fields_with_value(i, block) <= 1)):
