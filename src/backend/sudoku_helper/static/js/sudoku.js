@@ -71,7 +71,7 @@ function check_input_allowed(y, x) {
 // check number
 function check_number(y, x) {
     let number = sudoku_values[y][x];
-    return ((number >= 0) && (number <= 9)) || isNaN(number)
+    return ((number >= 1) && (number <= 9)) || isNaN(number)
 }
 
 // check by row
