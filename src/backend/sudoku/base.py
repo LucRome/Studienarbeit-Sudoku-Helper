@@ -9,6 +9,7 @@ from math import floor
 
 FIELD_VALUE_MIN = 1
 FIELD_VALUE_MAX = 9
+ALL_FIELD_VALUES = range(FIELD_VALUE_MIN, FIELD_VALUE_MAX + 1)
 class Field:
     """
     represents a single field 
