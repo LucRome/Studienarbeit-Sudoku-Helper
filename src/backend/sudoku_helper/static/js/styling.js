@@ -18,5 +18,5 @@ function resize_all_texts() {
 
     fs_rest_str = size_rest + unit;
 
-    $("p, span, button, a").css("font-size", fs_rest_str)
+    $("p, span, button, a, strong").css("font-size", fs_rest_str)
 }
