@@ -1,5 +1,4 @@
 .quickinfo {
-    text-overflow: ellipsis;
     /* border-style: solid;
     border-width: 4px;
     border-color: black; */
@@ -8,5 +7,11 @@
     display: block;
     padding: 4px;
     margin: 2px;
-    width: calc();
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.quickinfo p {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
