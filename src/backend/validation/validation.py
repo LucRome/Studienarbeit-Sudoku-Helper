@@ -16,7 +16,7 @@ def checkSudoku(grid):
 
 #A backtracking/recursive function to check all possible combinations of numbers until a solution is found
 def validateSudoku(grid: Sudoku, counter):
-  if counter >= 10:
+  if counter >= 2:
     return counter
   #Find next empty cell
   for i in range(0,81):
@@ -35,7 +35,7 @@ def validateSudoku(grid: Sudoku, counter):
                 grid.get_field(row,col).set_value(0)
                 return counter + 1
               else:
-                   counter = validateSudoku(grid, counter)
-                   grid.get_field(row,col).set_value(0)
+                counter = validateSudoku(grid, counter)
+                grid.get_field(row,col).set_value(0)
 
       return counter
