@@ -4,11 +4,12 @@ Base Classes for Sudoku
 
 from logging import NOTSET
 from typing import List, Optional
-from exceptions import *
+from .exceptions import *
 from math import floor
 
 FIELD_VALUE_MIN = 1
 FIELD_VALUE_MAX = 9
+ALL_FIELD_VALUES = range(FIELD_VALUE_MIN, FIELD_VALUE_MAX + 1)
 class Field:
     """
     represents a single field 
@@ -24,7 +25,7 @@ class Field:
             self.remove_value()
 
     def set_value(self, val: int) -> None:
-        if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
+        if val is not None and (val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX):
             raise WrongFieldValueException(val)
         else:
             self.__value = val

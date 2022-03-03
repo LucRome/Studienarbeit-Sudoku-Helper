@@ -1,0 +1,44 @@
+{# templates/base.html #}
+
+{% load static %}
+{# base template for all pages #}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+  <title>{% block title %}Sudoku Helper{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {# Icons to show in Browser (e.g.) in Tabbar #}
+  {# TODO #}
+
+  {# Bootstrap stuff #}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  {# own definitions #}
+  
+
+  {% block additional-head %} {% endblock %}
+</head>
+
+<body>
+  {# Navbar #}
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    {% block navbar-content %} 
+      {# TODO: block needed?#}
+    {% endblock %}
+  </nav>
+
+  {# Content #}
+  {% block content %}{% endblock content %}
+</body>
+
+</html>

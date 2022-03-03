@@ -1,0 +1,68 @@
+/* Outer Border and Shadow */
+.sudoku {
+  border-radius: 10px;
+  border: 10px solid black;
+  width: fit-content;
+  overflow: hidden;
+  padding: 0px;
+  box-shadow: 2px 2px 6px darkgray;
+}
+
+.sudoku input {
+  padding: 0px;
+  border: 1px solid black;
+  margin: 0px;
+  border-radius: 0px;
+  text-align: center;
+  width: 2em;
+}
+
+/* Input Widths */
+@media screen and (orientation: landscape) {
+  main {
+    font-size: 6vw;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  main {
+    font-size: 8vh;
+  }
+}
+
+/* Remove the Input Highlighter */
+.sudoku input:focus-visible {
+  outline: none;
+}
+
+/* Remove Space between Elements */
+.sudoku td {
+  padding: 0px;
+}
+
+/* Add Block Seperator Lines */
+.sudoku table tr:nth-child(3n) {
+  border-bottom: 2px solid black !important;
+}
+
+.sudoku table td:nth-child(3n) {
+  border-right: 2px solid black;
+}
+
+/* Remove Controll Elements from Number input */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Incorrect Sudoku Fields */
+.sudoku-field-incorrect {
+  background-color: lightcoral;
+}
