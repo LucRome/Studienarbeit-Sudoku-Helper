@@ -25,7 +25,7 @@ class Field:
             self.remove_value()
 
     def set_value(self, val: int) -> None:
-        if val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX:
+        if val is not None and (val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX):
             raise WrongFieldValueException(val)
         else:
             self.__value = val
