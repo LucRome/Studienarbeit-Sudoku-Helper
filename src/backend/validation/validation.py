@@ -1,6 +1,13 @@
 from typing import Type, Optional
 from sudoku.base import Sudoku, Field
 
+#Class 
+#list map in attribute
+#validateSudoku pos mitgeben
+#checkSudoku durch i == 81 ersetzten
+#name ändern
+#select candidate
+
 def field_to_value(field: Field) -> Optional[int]:
     return field.get_value()
 
@@ -29,7 +36,7 @@ def validateSudoku(grid: Sudoku, counter):
           #Check that this value has not already be used on this column
           if not (value in list(map(field_to_value, grid.get_column(col)))):
             #Check that this value has not already be used on this 3x3 square
-            if not value in list(map(field_to_value,grid.get_block(Sudoku.get_block_nr(row=4, column=7)))):
+            if not value in list(map(field_to_value,grid.get_block(Sudoku.get_block_nr(row, col)))):
               grid.get_field(row,col).set_value(value)
               if checkSudoku(grid):
                 grid.get_field(row,col).set_value(None)
