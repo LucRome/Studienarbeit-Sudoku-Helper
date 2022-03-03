@@ -21,3 +21,14 @@ py manage.py migrate
 ```
 py manage.py runserver
 ```
+
+# Running the Tests
+**Tests for Sudoku Base Classes:**
+- go to folder containing sudoku classes
+```
+cd ./src/backend/sudoku
+```
+- execute tests
+```
+py -m unittest tests
+```
