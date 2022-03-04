@@ -50,16 +50,17 @@ class TestValidateSudoku(unittest.TestCase):
         
 
         sudoku1: Sudoku = Sudoku(grid)
-        counter = validateSudoku(sudoku1,0)
+        val = Validation(sudoku1)
+        counter = val.validate_sudoku(grid = sudoku1,counter= 0,pos =0)
         self.assertAlmostEqual(counter,1)
         print(counter)
 
-        sudoku2: Sudoku = Sudoku(grid)
-        counter = validateSudoku(sudoku2,0)
-        self.assertAlmostEqual(counter,1)
-        print(counter)
+        #sudoku2: Sudoku = Sudoku(grid2)
+        #counter = Validation.validate_sudoku(sudoku2,0,0)
+        #self.assertAlmostEqual(counter,2)
+        #print(counter)
         
-        sudoku3: Sudoku = Sudoku(grid)
-        counter = validateSudoku(sudoku3,0)
-        self.assertGreaterEqual(counter,10)
-        print(counter)
+        #sudoku3: Sudoku = Sudoku(grid3)
+        #counter = Validation.validate_sudoku(sudoku3,0,0)
+        #self.assertAlmostEqual(counter,2)
+        #print(counter)
