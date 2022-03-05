@@ -25,17 +25,32 @@ $(document).ready(
             }
         )
         
-        // check all fields (may be already filled)
+        // parse all fields (may be already filled)
         let inputs = $(".sudoku input")
-        // first value of array is ignored (its the prototype and not a relevant object)
         for (let i = 1; i < inputs.length; i++) {
-            parse_and_check(inputs[i])
+            // first value of array is ignored (its the prototype and not a relevant object)
+            parse(inputs[i])
         }
+        // check all rows, columns and blocks
+        for (let y = 0; y < SUDOKU_SIZE; y++) {
+            check_row(y);
+        }
+        for (let x = 0; x < SUDOKU_SIZE; x++) {
+            check_column(x);
+        }
+        for (let y = 0; y < SUDOKU_SIZE; y = y+3) {
+            for (let x = 0; x < SUDOKU_SIZE; x = x+3) {
+                check_block(y, x);
+            }
+        }
+        check_validation_possible();
 
         // Add the listeners for input events
         $(".sudoku input").on("change",
             function (e) {
-                parse_and_check(e.target)
+                let [y, x] = parse(e.target);
+                check_input(y, x);
+                check_validation_possible(y, x);
             }
         )
 
@@ -46,7 +61,7 @@ $(document).ready(
                 // first value of array is ignored (its the prototype and not a relevant object)
                 for (let i = 1; i < inputs.length; i++) {
                     inputs[i].value = NaN
-                    parse_and_check(inputs[i])
+                    parse(inputs[i])
                 }
             }
         )
@@ -183,25 +198,20 @@ function get_block_starts(y,x) {
     return starts;
 }
 
-// parse and check the value of a given sudoku field
-function parse_and_check(input_field) {
+// parse
+function parse(input_field) {
     let [y,x] = get_indexes_from_id(input_field);
     // Add new value to value array
     sudoku_values[y][x] = Number.parseInt(input_field.value);
-    check_input(y, x);
+    check_number(y, x);
+    return [y, x];
+}
 
+// check validation possible
+function check_validation_possible() {
     if($(".sudoku-field-incorrect").length > 0) {
         $("#submit-sudoku-btn").prop("disabled", true);  // disable Validate Button
     } else {
         $("#submit-sudoku-btn").prop("disabled", false);  // enable Validate Button
     }
-    // if (check_input(y,x)) {
-    //     $(input_field).removeClass("sudoku-field-incorrect");
-    //     if ($(".sudoku-field-incorrect").length === 0) {
-    //         $("#submit-sudoku-btn").prop("disabled", false);  // enable Validate Button when no incorrect fields are left
-    //     }
-    // } else {
-    //     $(input_field).
-    //     $("#submit-sudoku-btn").prop("disabled", true);  // disable Validate Button
-    // }
 }
