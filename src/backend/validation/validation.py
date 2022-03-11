@@ -49,6 +49,7 @@ class Validation:
 
   #A backtracking/recursive function to check all possible combinations of numbers until a solution is found
   def validate_sudoku(self, sudoku:Sudoku, counter, pos):
+    sudoku.select_candidates()
     if counter >= 2:
       return counter
     #Find next empty cell
@@ -58,8 +59,10 @@ class Validation:
       fieldvalue = self.grid[row][col]
 
       if (fieldvalue == None):
+        print(f'checking field {row},{col}:')
         for value in (sudoku.get_field(row,col).get_candidates()):
           #Check that this value has not already be used on this row
+          print(f'\t value: {value}')
           if not (value in self.grid[row]):
             #Check that this value has not already be used on this column
             if not (value in (self.grid[0][col], self.grid[1][col], self.grid[2][col], self.grid[3][col], self.grid[4][col], self.grid[5][col], self.grid[6][col],
