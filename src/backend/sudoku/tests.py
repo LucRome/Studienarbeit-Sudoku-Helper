@@ -117,8 +117,8 @@ class SudokuTest(unittest.TestCase):
 class CandidateTest(unittest.TestCase):
     def test_1(self):
         values = [
-            #0 1 2 3  4  5 6 7 8    
-            [None,  1,      2,      3,   None,   None,   None,   None,   None],
+            #0      1       2       3       4       5       6       7       8    
+            [None,  1,      2,      3,      None,   None,   None,   None,   None],
             [None,  None,   None,   None,   None,   None,   None,   None,   None],
             [None,  None,   None,   None,   None,   None,   None,   None,   None],
 
@@ -134,7 +134,7 @@ class CandidateTest(unittest.TestCase):
         sudoku = Sudoku(values)
         sudoku.select_candidates()
         self.assertListEqual(sudoku.get_field(0,0).get_candidates(), [5,6,7,8,9])
-        self.assertListEqual(sudoku.get_field(0,1).get_candidates(), [4,5,6,7,8,9])
+        self.assertListEqual(sudoku.get_field(0,4).get_candidates(), [4,5,6,7,8,9])
         self.assertListEqual(sudoku.get_field(8,8).get_candidates(), [4,5,6,7,8])
         
 
