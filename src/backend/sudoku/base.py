@@ -26,9 +26,10 @@ class Field:
     with a value and the candidates
     """
     __value: Optional[int]
-    __candidates: List[int] = list()
+    __candidates: List[int]
 
     def __init__(self, value: Optional[int] = None):
+        self.__candidates = list()
         if value is not None:
             self.set_value(value)
         else:
