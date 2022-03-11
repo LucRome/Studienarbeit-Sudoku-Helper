@@ -30,5 +30,6 @@ cd ./src/backend
 ```
 - execute tests
 ```
-py -m unittest sudoku.tests
+py -m unittest sudoku.Tests
+py -m unittest validation.testValidation
 ```
