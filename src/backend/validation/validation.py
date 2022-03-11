@@ -49,7 +49,6 @@ class Validation:
 
   #A backtracking/recursive function to check all possible combinations of numbers until a solution is found
   def validate_sudoku(self, sudoku:Sudoku, counter, pos):
-    sudoku.select_candidates()
     if counter >= 2:
       return counter
     #Find next empty cell

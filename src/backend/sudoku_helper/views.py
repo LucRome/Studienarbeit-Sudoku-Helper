@@ -48,6 +48,7 @@ def check_sudoku(request: HttpRequest):
         val = Validation(sudoku)
         correct, msg = sudoku_simple_check(sudoku)
         if correct:
+            sudoku.select_candidates()
             if val.validate_sudoku(sudoku,0,0) == 1:
                 correct = True
             else:
