@@ -203,3 +203,4 @@ class Sudoku:
                 if not value_in_section(blk, val):
                     candidates.append(val)
             intersect_all_candidates(blk, candidates)
+
