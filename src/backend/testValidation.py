@@ -50,8 +50,9 @@ class TestValidateSudoku(unittest.TestCase):
         
 
         sudoku1: Sudoku = Sudoku(grid)
+        sudoku1.select_candidates()
         val = Validation(sudoku1)
-        counter = val.validate_sudoku(grid = sudoku1,counter= 0,pos =0)
+        counter = val.validate_sudoku(sudoku1, counter= 0,pos =0)
         self.assertAlmostEqual(counter,1)
         print(counter)
 
