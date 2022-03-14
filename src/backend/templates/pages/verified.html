@@ -11,7 +11,8 @@
     {# Success Message #}
     <div class="alert alert-success alert-dismissible d-flex align-items-center">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong class="material-icons-outlined">check_circle</strong> The submitted Sudoku is valid!
+        <strong class="material-icons-outlined mb">check_circle</strong> 
+        <p class="mb-0">The submitted Sudoku is valid!<p>
     </div>
 
     {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
