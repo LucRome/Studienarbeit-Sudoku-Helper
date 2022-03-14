@@ -67,7 +67,7 @@ class Validation:
               #Check that this value has not already be used on this 3x3 square
               if self.checkBlock(row=row,col=col,value=value):
                 self.grid[row][col] = value 
-                if self.check_sudoku():    
+                if self.check_sudoku():   # TODO: Wouldn't  if i == 80: be enough to check?? 
                   self.printSudoku()
                   self.grid[row][col] = None
                   return counter + 1
