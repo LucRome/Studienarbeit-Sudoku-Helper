@@ -35,9 +35,7 @@ class Validation:
     else:
       return (False, f'The Sudoku is not valid! Multiple Solutions exist!')  
 
-        
-
-
+  
   def validate_sudoku(self, sudoku:Sudoku, counter, pos):
     if counter >= 2:
       return counter
