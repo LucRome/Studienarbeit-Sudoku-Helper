@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sudoku_helper',
-    'dev_tools'
+    'sudoku_helper'
 ]
 
 MIDDLEWARE = [
