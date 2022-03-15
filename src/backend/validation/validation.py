@@ -1,33 +1,15 @@
-from typing import Type, Optional
+from typing import Tuple, Optional
 from sudoku.base import Sudoku, Field
-import time
-#Class 
-#list map in attribute
-#validateSudoku pos mitgeben
-#checkSudoku durch i == 81 ersetzten
-#name ändern
-#select candidate
 
 def field_to_value(field: Field) -> Optional[int]:
     return field.get_value()
 
 class Validation:
   grid = []
-  gridBlock = []
 
   def __init__(self,sudoku):
     for i in range(0,9):
-      self.gridBlock.append(list(map(field_to_value, sudoku.get_block(i))))
       self.grid.append(list(map(field_to_value,sudoku.get_row(i))))  
-
-  
-  def printSudoku(self):
-    print("-----------------------")
-    for row in range(0, 9):
-        for col in range(0, 9):
-            print("[", self.grid[row][col], end ="]")
-        print("")
-    print("-----------------------")
 
   def check_sudoku(self):
     for i in range(0,9):
@@ -44,20 +26,26 @@ class Validation:
           return False
     return True
       
-    
+  def validate(self, sudoku:Sudoku) -> Tuple[bool, Optional[str]]:
+    counter = self.validate_sudoku(sudoku,0,0)
+    if counter == 0:
+      return (False, f'The Sudoku is not valid! No Solutions exist!')
+    elif counter == 1:
+      return (True, None)
+    else:
+      return (False, f'The Sudoku is not valid! Multiple Solutions exist!')  
 
-
-  #A backtracking/recursive function to check all possible combinations of numbers until a solution is found
+  
   def validate_sudoku(self, sudoku:Sudoku, counter, pos):
     if counter >= 2:
       return counter
-    #Find next empty cell
     for i in range(pos,81):
       row=i//9
       col=i%9
       fieldvalue = self.grid[row][col]
-
+      #Find next empty cell
       if (fieldvalue == None):
+        #Check if Value is a possible Candidate
         for value in (sudoku.get_field(row,col).get_candidates()):
           #Check that this value has not already be used on this row
           if not (value in self.grid[row]):
@@ -67,8 +55,7 @@ class Validation:
               #Check that this value has not already be used on this 3x3 square
               if self.checkBlock(row=row,col=col,value=value):
                 self.grid[row][col] = value 
-                if self.check_sudoku():   # TODO: Wouldn't  if i == 80: be enough to check?? 
-                  self.printSudoku()
+                if self.check_sudoku():    
                   self.grid[row][col] = None
                   return counter + 1
                 else:
