@@ -26,9 +26,10 @@ py manage.py runserver
 **Tests for Sudoku Base Classes:**
 - go to folder containing sudoku classes
 ```
-cd ./src/backend/sudoku
+cd ./src/backend
 ```
 - execute tests
 ```
-py -m unittest tests
+py -m unittest sudoku.Tests
+py -m unittest validation.test_validation
 ```

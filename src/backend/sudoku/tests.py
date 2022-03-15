@@ -1,6 +1,6 @@
 from typing import Type, Optional
-from base import Field, Sudoku, FIELD_VALUE_MAX, FIELD_VALUE_MIN
-from exceptions import OutOfFieldsException, WrongFieldCandidateException, WrongFieldValueException
+from .base import Field, Sudoku, FIELD_VALUE_MAX, FIELD_VALUE_MIN
+from .exceptions import OutOfFieldsException, WrongFieldCandidateException, WrongFieldValueException
 import unittest
 
 def print_sudoku(sudoku: Sudoku):
@@ -109,6 +109,34 @@ class SudokuTest(unittest.TestCase):
         target_values = [1,2,3,4,5,6,7,8,9]
         block_values = list(map(field_to_value, sudoku.get_block(Sudoku.get_block_nr(row=4, column=7))))
         self.assertListEqual(target_values, block_values)
+
+"""
+    Candidate Select Tests
+"""
+
+class CandidateTest(unittest.TestCase):
+    def test_1(self):
+        values = [
+            #0      1       2       3       4       5       6       7       8    
+            [None,  1,      2,      3,      None,   None,   None,   None,   None],
+            [None,  None,   None,   None,   None,   None,   None,   None,   None],
+            [None,  None,   None,   None,   None,   None,   None,   None,   None],
+
+            [4,     None,   None,   None,   None,   None,   None,   None,   None],
+            [None,  None,   None,   None,   None,   None,   None,   None,   None],
+            [None,  None,   None,   None,   None,   None,   None,   None,   None],
+
+            [None,  None,   None,   None,   None,   None,   None,   2,      9],
+            [None,  None,   None,   None,   None,   None,   1,      None,   None],
+            [None,  None,   None,   None,   None,   None,   None,   3,      None],
+        ]   
+
+        sudoku = Sudoku(values)
+        sudoku.select_candidates()
+        self.assertListEqual(sudoku.get_field(0,0).get_candidates(), [5,6,7,8,9])
+        self.assertListEqual(sudoku.get_field(0,4).get_candidates(), [4,5,6,7,8,9])
+        self.assertListEqual(sudoku.get_field(8,8).get_candidates(), [4,5,6,7,8])
+        
 
 if __name__ == '__main__':
     unittest.main()

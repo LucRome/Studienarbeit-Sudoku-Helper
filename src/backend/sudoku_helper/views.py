@@ -2,6 +2,7 @@ from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from sudoku.base import NINE_RANGE
+from validation.validation import *
 
 from sudoku.exceptions import WrongFieldValueException
 
@@ -43,10 +44,11 @@ def check_sudoku(request: HttpRequest):
         sudoku = Sudoku(values)
 
     if correct and sudoku is not None:
+        val = Validation(sudoku)
         correct, msg = sudoku_simple_check(sudoku)
         if correct:
-            # TODO: add complex test here!!!
-            pass
+            sudoku.select_candidates()
+            correct,msg = val.validate(sudoku)
 
     if not correct:
         context = {
