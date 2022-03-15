@@ -17,9 +17,14 @@
       Validate
     </button>
   {% elif nxt_action == "solve" %}
-    <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill" id="solve-sudoku-btn" form="form-sudoku" type="submit">
-      Solve
-    </button>
+    <div class="d-flex justify-content-around">
+      <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="show-candidates">
+        Show Candidates
+      </button>
+      <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+        Solve
+      </button>
+    </div>
   {% endif %}
 
   {# Help Button #}

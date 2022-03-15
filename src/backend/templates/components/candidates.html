@@ -1,0 +1,13 @@
+{% comment %} 
+  The Candidates for a single cell
+  Parameters:
+    candidates: Sudoku Field Candidates
+{% endcomment %}
+
+<table class="candidate-table">
+  <tr> {# Use Opacity to hide #}
+    <td class=""><p> {% if 1 in candidates %}1{% endif %} </p></td>
+    <td class=""><p> {% if 2 in candidates %}2{% endif %} </p></td>
+    <td class=""><p> {% if 3 in candidates %}3{% endif %} </p></td>
+  </tr>
+</table>

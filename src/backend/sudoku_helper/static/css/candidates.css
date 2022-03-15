@@ -1,0 +1,5 @@
+.candidate-table td p {
+    font-size: 33%;
+    min-width: 1ch;
+    /* TODO: rather use JS?? */
+}
