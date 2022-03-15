@@ -10,23 +10,24 @@
 <div class="d-flex justify-content-around">
   {# Quickinfo #}
   <link rel="stylesheet" href="{% static 'css/quickinfo.css' %}">
-  <div class="container-fluid quickinfo d-flex justify-content-around align-items-center">
-    <p class="align-self-center mb-0 me-2">{{text}}</p> {# Text Preview #}
+  <div class="container-fluid quickinfo d-flex align-items-center justify-content-around">
+    <p class="align-self-center mb-0">{{text}}</p> {# Text Preview #}
     <button type="button" class="btn btn-primary rounded-pill d-flex align-content-center" data-bs-toggle="modal" data-bs-target="#quickinfo-modal">
       <span class="material-icons-outlined">
         info
       </span>
     </button>
-    <div class="modal" id="quickinfo-modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p></p> {# needed for float-end #}
-            <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">Close</button>
-          </div>
-          <div class="modal-body">
-            <p>{{text}}</p>
-          </div>
+  </div>
+  {# Quickinfo modal #}
+  <div class="modal" id="quickinfo-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p></p> {# needed for float-end #}
+          <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">Close</button>
+        </div>
+        <div class="modal-body">
+          <p>{{text}}</p>
         </div>
       </div>
     </div>
