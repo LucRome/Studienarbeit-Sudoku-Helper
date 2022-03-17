@@ -20,7 +20,7 @@
     <table>
       <tbody>
         {% for row in range %}
-          <tr>
+          <tr class="sudoku-row">
             {% for column in range %}
               <td class="sudoku-field">
                 {% with field=sudoku|row:row|column:column %}

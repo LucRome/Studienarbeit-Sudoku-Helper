@@ -4,20 +4,76 @@
     candidates: Sudoku Field Candidates
 {% endcomment %}
 
+{% load static %}
+
 <table class="candidate-table">
-  <tr> {# Use Opacity to hide #}
-    <td class=""><p> {% if 1 in candidates %}1{% endif %} </p></td>
-    <td class=""><p> {% if 2 in candidates %}2{% endif %} </p></td>
-    <td class=""><p> {% if 3 in candidates %}3{% endif %} </p></td>
+  <tr class="p-0"> {# Use Opacity to hide #}
+    <td class="candidate-field">
+      {% if 1 in candidates %}
+        <img src="{% static 'imgs/candidates/1.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
+    <td class="candidate-field">
+      {% if 2 in candidates %}
+        <img src="{% static 'imgs/candidates/2.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
+    <td class="candidate-field">
+      {% if 3 in candidates %}
+        <img src="{% static 'imgs/candidates/3.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
   </tr>
-  <tr> {# Use Opacity to hide #}
-    <td class=""><p> {% if 1 in candidates %}1{% endif %} </p></td>
-    <td class=""><p> {% if 2 in candidates %}2{% endif %} </p></td>
-    <td class=""><p> {% if 3 in candidates %}3{% endif %} </p></td>
+  <tr class="p-0"> {# Use Opacity to hide #}
+    <td class="candidate-field">
+      {% if 4 in candidates %}
+        <img src="{% static 'imgs/candidates/4.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
+    <td class="candidate-field">
+      {% if 5 in candidates %}
+        <img src="{% static 'imgs/candidates/5.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
+    <td class="candidate-field">
+      {% if 6 in candidates %}
+        <img src="{% static 'imgs/candidates/6.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
   </tr>
-  <tr> {# Use Opacity to hide #}
-    <td class=""><p> {% if 1 in candidates %}1{% endif %} </p></td>
-    <td class=""><p> {% if 2 in candidates %}2{% endif %} </p></td>
-    <td class=""><p> {% if 3 in candidates %}3{% endif %} </p></td>
+  <tr class="p-0"> {# Use Opacity to hide #}
+    <td class="candidate-field">
+      {% if 7 in candidates %}
+        <img src="{% static 'imgs/candidates/7.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
+    <td class="candidate-field">
+      {% if 8 in candidates %}
+        <img src="{% static 'imgs/candidates/8.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
+    <td class="candidate-field">
+      {% if 9 in candidates %}
+        <img src="{% static 'imgs/candidates/9.svg' %}" />
+      {% else %}
+        <div></div>
+      {% endif %}
+    </td>
   </tr>
 </table>

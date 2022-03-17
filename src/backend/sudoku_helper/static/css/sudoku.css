@@ -1,3 +1,8 @@
+/* For Candidates */
+.candidate-field {
+  font-size: 0px;
+}
+
 /* Outer Border and Shadow */
 .sudoku {
   border-radius: 10px;
@@ -49,11 +54,11 @@
 }
 
 /* Add Block Seperator Lines */
-.sudoku table tr:nth-child(3n) {
+.sudoku table .sudoku-row:nth-child(3n) {
   border-bottom: 2px solid black !important;
 }
 
-.sudoku table td:nth-child(3n) {
+.sudoku table .sudoku-field:nth-child(3n) {
   border-right: 2px solid black;
 }
 
