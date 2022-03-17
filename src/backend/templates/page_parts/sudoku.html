@@ -22,7 +22,7 @@
         {% for row in range %}
           <tr>
             {% for column in range %}
-              <td>
+              <td class="sudoku-field">
                 {% with field=sudoku|row:row|column:column %}
                   {% if not sudoku_readonly %}
                     {# When not readonly: Normal Input #}
