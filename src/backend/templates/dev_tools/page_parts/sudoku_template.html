@@ -1,0 +1,44 @@
+{% comment %} 
+  A Sudoku Template (Consisting of write protected form (with title) and submit Button)
+  Params:
+    sudoku_template: SudokuTemplate
+    range: range(0, 9)
+{% endcomment %}
+
+{% load accessors %}
+{% load static %}
+
+{# Sudoku Form #}
+<table>
+  <tr>
+    <td class="d-flex justify-content-center"> <h3>{{sudoku_template.title}}</h3> </td>
+  </tr>
+  <tr><td class="sudoku">
+    <form method="post" id="form-sudoku-{{sudoku_template.nr}}">
+      {% csrf_token %}
+      <table>
+        <tbody>
+          {% for row in range %}
+            <tr>
+              {% for column in range %}
+                <td>
+                  {% with field=sudoku_template.sudoku|row:row|column:column %}
+                    <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                  {% endwith %}
+                </td>
+              {% endfor %}
+            </tr>  
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </td></tr>
+  <tr>
+    <td class="d-flex justify-content-center"> 
+      <button formaction="{% url 'submit-sudoku' %}" class="btn btn-lg btn-primary rounded-pill" id="submit-sudoku-btn" form="form-sudoku-{{sudoku_template.nr}}" type="submit">
+        Validate
+      </button>
+    </td>
+  <tr>
+</div>
+

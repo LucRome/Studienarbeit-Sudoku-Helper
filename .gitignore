@@ -2,6 +2,9 @@
 .venv
 
 #
+test
+
+#
 migrations
 
 # Ignore upload folder
@@ -159,7 +162,6 @@ dmypy.json
 *.synctex.gz
 *.fdb_latexmk
 *.fls 
-*.pdf
 
 ## selenium
 

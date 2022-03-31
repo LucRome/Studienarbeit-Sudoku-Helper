@@ -1,0 +1,17 @@
+{% comment %} 
+	Quickly include all page Parts
+	Params:
+		(top)
+		show_clr: Show the clear button ?
+    text: quickinfo text
+		(sudoku)
+		sudoku: Sudoku Class
+    range: range(0,9)
+    sudoku_readonly: if True -> all Sudoku Fields are readonly
+		(bottom)
+		nxt_action: The next Action ('validate' | 'solve')
+{% endcomment %}
+
+{% include 'page_parts/top_components.html' with show_clr=show_clr text=text %}
+{% include 'page_parts/sudoku.html' with sudoku=sudoku range=range sudoku_readonly=sudoku_readonly %}
+{% include 'page_parts/bottom_components.html' with nxt_action=nxt_action %}

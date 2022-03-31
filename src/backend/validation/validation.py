@@ -62,4 +62,9 @@ class Validation:
                   counter = self.validate_sudoku(sudoku, counter, i)
                   self.grid[row][col] = None
 
+<<<<<<< HEAD
         return counter
+=======
+        return counter
+
+>>>>>>> main

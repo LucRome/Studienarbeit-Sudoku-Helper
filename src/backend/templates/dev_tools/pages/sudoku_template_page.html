@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+  All Sudoku Templates
+  Params:
+    templates: List of Sudoku templates
+    range: range(0, 9)
+{% endcomment %}
+
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'dev_tools/sudoku_templates.css' %}">
+
+  <div class="d-flex flex-wrap justify-content-around">
+    {% for template in templates %}
+      {% include 'dev_tools/page_parts/sudoku_template.html' with sudoku_template=template range=range %}
+    {% endfor %}
+  </div>
+{% endblock content %}
+

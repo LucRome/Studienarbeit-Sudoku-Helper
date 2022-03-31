@@ -1,0 +1,21 @@
+.quickinfo {
+    /* border-style: solid;
+    border-width: 4px;
+    border-color: black; */
+    border: solid 2px black;
+    border-radius: 10px;
+    display: block;
+    padding: 4px;
+    margin: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.quickinfo p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.modal-dialog {
+    max-width: 1320px !important;  /* Max-width of bootstrap container-lg */
+}
