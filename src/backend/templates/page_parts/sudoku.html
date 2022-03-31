@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="{% static 'css/sudoku.css' %}">
 <script src="{% static 'js/sudoku.js' %}"></script>
 <script src="{% static 'js/styling.js' %}"></script>
+<script src="{% static 'js/candidates.js' %}"></script>
 
 {# Sudoku Form #}
 <div class="sudoku d-flex justify-content-center container-fluid">
@@ -20,18 +21,21 @@
     <table>
       <tbody>
         {% for row in range %}
-          <tr>
+          <tr class="sudoku-row">
             {% for column in range %}
-              <td>
+              <td class="sudoku-field">
                 {% with field=sudoku|row:row|column:column %}
-                  {% if sudoku_readonly %}
-                    <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
-                  {% else %}
+                  {% if not sudoku_readonly %}
+                    {# When not readonly: Normal Input #}
                     <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/>
+                  {% else %}
+                    {# When readonly: Value in readonly mode or candidates #}
+                    {% if field.get_value is not None %}
+                      <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                    {% else %}
+                      {% include "components/candidates.html" with candidates=field.get_candidates %}
+                    {% endif %}
                   {% endif %}
-                  <div style="display: none;">
-                    <p>TODO: Candidates</p>
-                  </div>
                 {% endwith %}
               </td>
             {% endfor %}

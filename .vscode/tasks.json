@@ -6,7 +6,7 @@
         {
             "label": "Run Tests for Validation",
             "type": "shell",
-            "command": "py",
+            "command": "${command:python.interpreterPath}",
             "options": {
                 "cwd": "${workspaceFolder}/src/backend"
             },
@@ -15,6 +15,19 @@
                 "unittest",
                 "validation.test_validation"
             ]
+        },
+        {
+            "label": "Run Server",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "options": {
+                "cwd": "${workspaceFolder}/src/backend"
+            },
+            "args": [
+                "manage.py",
+                "runserver"
+            ],
+            "problemMatcher": []
         }
     ]
 }
