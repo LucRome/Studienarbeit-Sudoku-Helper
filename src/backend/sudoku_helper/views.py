@@ -11,6 +11,8 @@ from .utils import get_values_from_request, sudoku_simple_check
 
 from sudoku.base import Sudoku
 
+from .dev_tools import TEMPLATES
+
 # Create your views here.
 def index(request: HttpRequest):
     """
@@ -75,3 +77,16 @@ def solve_sudoku(request: HttpRequest):
     Apply the solving Algorithms to the Sudoku
     """
     pass
+
+
+"""
+Dev Tool Views
+"""
+
+def sudoku_templates(request: HttpRequest):
+    context = {
+        'templates': TEMPLATES,
+        'range': NINE_RANGE
+    }
+
+    return render(request, 'dev_tools/pages/sudoku_template_page.html', context)
