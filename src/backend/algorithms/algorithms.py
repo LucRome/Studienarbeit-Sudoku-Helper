@@ -39,10 +39,10 @@ class Algorithm:
         return (((row%3)*3+(col%3)))
 
     # all algorithms
-    def get_all_algorithms(self) -> List[Callable[[], Tuple[bool, Dict[str, Any]]]]:
+    def get_all_algorithms(self) -> List[Callable[[], Tuple[bool, Dict[str, Any]]]]:        
         return [
-            self.algorithm_1,
             self.algorithm_2,
+            self.algorithm_1,
             self.algorithm_3,
             self.algorithm_4,
             self.algorithm_5,
