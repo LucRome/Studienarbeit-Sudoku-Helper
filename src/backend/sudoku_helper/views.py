@@ -1,6 +1,7 @@
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
+from algorithms.algorithms import Algorithm
 from sudoku.base import NINE_RANGE
 from validation.validation import *
 
@@ -68,7 +69,15 @@ def solve_sudoku(request: HttpRequest):
         }
         return render(request, 'pages/index.html', context)
     
-    
+    algorithms = Algorithm(sudoku)
+    for al_fn in algorithms.get_all_algorithms():
+        success, dict = al_fn()
+        
+        if success:
+            break
+
+    # Wenn nie success: Error Message
+    # Wenn success: Entsprechend verarbeiten
 
     
 

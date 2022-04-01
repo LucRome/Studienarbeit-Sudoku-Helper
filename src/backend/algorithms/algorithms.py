@@ -1,5 +1,5 @@
 from traceback import print_list
-from typing import Tuple, Optional
+from typing import Any, Dict, Tuple, Optional, Callable, List, Dict
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 
 class Algorithm:
@@ -38,6 +38,20 @@ class Algorithm:
     def get_block_by_row_col(self,row:int,col:int):
         return (((row%3)*3+(col%3)))
 
+    # all algorithms
+    def get_all_algorithms(self) -> List[Callable[[], Tuple[bool, Dict[str, Any]]]]:
+        return [
+            self.algorithm_1,
+            self.algorithm_2,
+            self.algorithm_3,
+            self.algorithm_4,
+            self.algorithm_5,
+            self.algorithm_6,
+            self.algorithm_7,
+            self.algorithm_8,
+            self.algorithm_9,
+            self.algorithm_10,
+        ]
 
     # hidden single
     def algorithm_1(self) -> Tuple[bool, Optional[str]]:
