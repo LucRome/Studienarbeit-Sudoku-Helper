@@ -13,7 +13,9 @@
             "args": [
                 "-m",
                 "unittest",
-                "validation.test_validation"
+                "validation.test_validation",
+                "algorithms.test_algorithms",
+                "sudoku.tests"
             ]
         },
         {
