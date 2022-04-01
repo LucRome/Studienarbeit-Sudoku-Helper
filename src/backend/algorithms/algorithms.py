@@ -46,7 +46,7 @@ class Algorithm:
         colCounter = 0
         for i in NINE_RANGE:
             for value in ALL_FIELD_VALUES:
-                for j in range(0,9):
+                for j in NINE_RANGE:
                     if (value in self.blocks[i][j]):
                         blockCounter = blockCounter + 1
                     if (rowCounter <= 1) and (value in self.rows[i][j]):
