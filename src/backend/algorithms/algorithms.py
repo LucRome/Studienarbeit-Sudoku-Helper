@@ -1,6 +1,6 @@
 from traceback import print_list
 from typing import Tuple, Optional
-from sudoku.base import Sudoku, Field
+from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 
 class Algorithm:
 
@@ -44,8 +44,8 @@ class Algorithm:
         blockCounter = 0
         rowCounter = 0
         colCounter = 0
-        for i in range(0,9):
-            for value in range(1,10):
+        for i in NINE_RANGE:
+            for value in ALL_FIELD_VALUES:
                 for j in range(0,9):
                     if (value in self.blocks[i][j]):
                         blockCounter = blockCounter + 1
@@ -80,7 +80,7 @@ class Algorithm:
         for i in range(0,81):
             row=i//9
             col=i%9
-            for value1 in range(1,10):
+            for value1 in ALL_FIELD_VALUES:
                 for value2 in range(value1+1,10): 
                     if (len(self.rows[row][col]) == 2 and value1 in self.rows[row][col] and value2 in self.rows[row][col]):
                         print('!!!!!!!!!')
