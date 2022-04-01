@@ -33,7 +33,7 @@
                     {% if field.get_value is not None %}
                       <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
                     {% else %}
-                      {% include "components/candidates.html" with candidates=field.get_candidates %}
+                      {% include "components/candidates.html" with candidates=field.get_candidates row=row column=column %}
                     {% endif %}
                   {% endif %}
                 {% endwith %}

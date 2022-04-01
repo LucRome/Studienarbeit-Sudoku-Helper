@@ -2,6 +2,8 @@
   The Candidates for a single cell
   Parameters:
     candidates: Sudoku Field Candidates
+    row: row
+    column: column
 {% endcomment %}
 
 {% load static %}
@@ -77,3 +79,4 @@
     </td>
   </tr>
 </table>
+<input id="candidates_{{row}}_{{column}}" name="candidates_{{row}}_{{column}}" type="text" value="{{ candidates }}" style="display: None;" readonly/>
