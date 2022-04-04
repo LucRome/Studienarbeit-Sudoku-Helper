@@ -85,8 +85,11 @@ class Algorithm:
     def algorithm_2(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for row in NINE_RANGE:
             for col in NINE_RANGE:
-                candidates = self.sudoku.get_field(row, col).get_candidates()
+                field = self.sudoku.get_field(row, col)
+                candidates = field.get_candidates()
                 if len(candidates) == 1:
+                    field.set_value(candidates[0])
+                    field.set_candidates([])
                     return True, {
                         'algorithm': 'open_single',
                         'field': (row, col)
