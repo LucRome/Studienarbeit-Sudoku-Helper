@@ -72,3 +72,23 @@ class TestValidateSudoku(unittest.TestCase):
         #print(counter)
 
 
+        # Correct sudoku
+        grid4 = [
+                [None, 5, None, None, 3, 2, 4, 9, None],
+                [None, 9, 6, None, None, None, 2, 1, None],
+                [None, 8, None, 1, None, 6, 7, None, 3],
+                [None, None, None, None, 6, None, 3, 7, None],
+                [None, 6, None, None, None, 9, 1, None, 5],
+                [None, 1, None, 3, 7, None, None, 6, None],
+                [None, None, None, None, None, None, 5, 3, None],
+                [8, 3, None, 2, 5, 7, None, 4, None],
+                [5, None, None, 6, None, 3, 8, None, 7],
+        ]
+        sudoku4: Sudoku = Sudoku(grid4)
+        val4 = Validation(sudoku4)
+        sudoku4.select_candidates()
+        correct,msg = val4.validate(sudoku4)
+        self.assertTrue(correct)
+        
+
+
