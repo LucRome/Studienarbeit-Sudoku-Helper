@@ -13,6 +13,8 @@ from sudoku.base import Sudoku
 
 from .dev_tools import TEMPLATES
 
+import json
+
 # Create your views here.
 def index(request: HttpRequest):
     """
@@ -74,12 +76,17 @@ def solve_sudoku(request: HttpRequest):
         success, dict = al_fn()
         
         if success:
-            break
+            context = {
+                'sudoku': sudoku,
+                'range': NINE_RANGE,
+                'quickinfo': 'TODO: Quickinfo!!!',
+                'algo_script': f"js/algorithm_scripts/{dict['algorithm']}.js",
+                'dict_str': json.dumps(dict)
+            }
+            return render(request, 'pages/solve.html', context)
 
-    # Wenn nie success: Error Message
-    # Wenn success: Entsprechend verarbeiten
-
-    
+    # TODO: Wenn nie success: Error Message
+   
 
 
 """

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+    Params:
+        sudoku: Sudoku Class
+        range: range(0,9)
+        quickinfo: Quickinfo text
+        algo_script: Name of the Script to visualise the Algorithm results
+        dict_str: serialized dictionary
+        
+{% endcomment %}
+
+{% block content %}
+    {# Error Message when no solution is found #}
+    {% if no_solution %}
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong class="material-icons-outlined mb">warning</strong> 
+            <p class="mb-0">No of <p>
+        </div>
+    {% endif %}
+
+    {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
+    {% include 'algorithms/script.html' with dict_str=dict_str algo_script=algo_script %}
+{% endblock content %}

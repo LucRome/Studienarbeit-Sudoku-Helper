@@ -1,0 +1,19 @@
+{% comment %} 
+    Saves the serialized dictionary from the algorithms to process it later
+    Params:
+        algo_script: Name of the Script to visualise the Algorithm results
+        dict_str: serialized dictionary
+{% endcomment %}
+
+{% load static %}
+
+<p id="dict_str">{{dict_str}}</p> 
+
+<script>
+    $(document).ready(function() {
+        dict_str = $("#dict_str").text()
+        dict = JSON.parse(dict_str)
+    })
+</script>
+
+<script src="{% static algo_script %}"></script>

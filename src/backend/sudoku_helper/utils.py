@@ -31,11 +31,11 @@ def get_candidates_from_request(request: HttpRequest) -> List[List[Optional[List
         for col in NINE_RANGE:
             key = f'candidates_{row}_{col}'
             if key not in request.POST.keys():
-                all_candidates[row].append(None)
+                all_candidates[row].append([])
             else:
                 field_candidates: Optional[str] = request.POST[key]
                 if field_candidates is None:
-                    all_candidates[row].append(None)
+                    all_candidates[row].append([])
                 else:
                     all_candidates[row].append(list())
                     for i in ALL_FIELD_VALUES:
@@ -60,7 +60,7 @@ def check_and_add_candidates_from_request(request: HttpRequest, sudoku: Sudoku) 
                 for i in candidate_list[row][col]:
                     if i not in field_candidates:
                         return False
-                sudoku.get_field(row, col).set_candidates(field_candidates)
+                sudoku.get_field(row, col).set_candidates(candidate_list[row][col])
     return True
 
 
