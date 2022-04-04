@@ -76,6 +76,7 @@ def solve_sudoku(request: HttpRequest):
         success, dict = al_fn()
         
         if success:
+            sudoku.recalculate_candidates()
             context = {
                 'sudoku': sudoku,
                 'range': NINE_RANGE,
