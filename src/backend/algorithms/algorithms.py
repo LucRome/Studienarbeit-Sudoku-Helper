@@ -1,16 +1,17 @@
 from traceback import print_list
-from typing import Any, Dict, Tuple, Optional, Callable, List, Dict
+from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 
 class Algorithm:
 
-
+    sudoku: Sudoku
     blocks = [[0 for _ in range(9)] for _ in range(9)]
     rows = [[0 for _ in range(9)] for _ in range(9)]
     cols = [[0 for _ in range(9)] for _ in range(9)]
 
     def __init__(self,sudoku:Sudoku):
         self.update_list(sudoku)
+        self.sudoku = sudoku
 
         
     def update_list(self,sudoku:Sudoku):
@@ -39,7 +40,7 @@ class Algorithm:
         return (((row%3)*3+(col%3)))
 
     # all algorithms
-    def get_all_algorithms(self) -> List[Callable[[], Tuple[bool, Dict[str, Any]]]]:        
+    def get_all_algorithms(self) -> List[Callable[[], Tuple[bool, Optional[Dict[str, Any]]]]]:        
         return [
             self.algorithm_2,
             self.algorithm_1,
@@ -81,13 +82,16 @@ class Algorithm:
         return (False, None)
  
     # Open single
-    def algorithm_2(self) -> Tuple[bool, Optional[str]]:
-        for i in range(0,81):
-            row=i//9
-            col=i%9
-            if len(self.rows[row][col]) == 1:
-                return (True,'In the Field Row:{row}, Colum:{col} there is only one Candidate remaining!')        
-        return (False,None)
+    def algorithm_2(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
+        for row in NINE_RANGE:
+            for col in NINE_RANGE:
+                candidates = self.sudoku.get_field(row, col).get_candidates()
+                if len(candidates) == 1:
+                    return True, {
+                        'algorithm': 'open_single',
+                        'field': (row, col)
+                    }   
+        return False, None
 
     # Open pair
     def algorithm_3(self) -> Tuple[bool, Optional[str]]:
