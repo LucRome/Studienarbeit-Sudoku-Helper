@@ -80,7 +80,8 @@ def solve_sudoku(request: HttpRequest):
             context = {
                 'sudoku': sudoku,
                 'range': NINE_RANGE,
-                'quickinfo': 'TODO: Quickinfo!!!',
+                'quickinfo_template': f"algorithms/quickinfos/{dict['algorithm']}.html",
+                'dict': dict,
                 'algo_script': f"js/algorithm_scripts/{dict['algorithm']}.js",
                 'dict_str': json.dumps(dict)
             }
