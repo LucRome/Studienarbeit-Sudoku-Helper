@@ -10,9 +10,12 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/sudoku.css' %}">
-<script src="{% static 'js/sudoku.js' %}"></script>
 <script src="{% static 'js/styling.js' %}"></script>
 <script src="{% static 'js/candidates.js' %}"></script>
+
+{% if not sudoku_readonly %}
+  <script src="{% static 'js/sudoku.js' %}"></script>
+{% endif %}
 
 {# Sudoku Form #}
 <div class="sudoku d-flex justify-content-center container-fluid">
