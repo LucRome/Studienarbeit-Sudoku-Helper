@@ -13,14 +13,14 @@
 
   {# Next Action Button #}
   {% if nxt_action == "validate" %}
-    <button formaction="{% url 'submit-sudoku' %}" class="btn btn-lg btn-primary rounded-pill" id="submit-sudoku-btn" form="form-sudoku" type="submit">
+    <button formaction="{% url 'submit-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="submit-sudoku-btn" form="form-sudoku" type="submit">
       Validate
     </button>
   {% elif nxt_action == "solve" %}
     <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="show-candidates">
       Show Candidates
     </button>
-    <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+    <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
       Solve
     </button>
   {% endif %}
