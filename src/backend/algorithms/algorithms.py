@@ -1,4 +1,3 @@
-from traceback import print_list
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 
@@ -23,7 +22,7 @@ class Algorithm:
             self.cols[col][row] = sudoku.get_field(row,col).get_candidates()
             self.blocks[Sudoku.get_block_nr(row,col)][self.get_block_by_row_col(row,col)] = sudoku.get_field(row,col).get_candidates()
 
-        #self.print_list()
+        self.print_list()
     
     def print_list(self):
         print('Blocks:',self.blocks)
@@ -104,7 +103,6 @@ class Algorithm:
             for value1 in ALL_FIELD_VALUES:
                 for value2 in range(value1+1,10): 
                     if (len(self.rows[row][col]) == 2 and value1 in self.rows[row][col] and value2 in self.rows[row][col]):
-                        print('!!!!!!!!!')
                         if col <= 8:
                             for a in range(col+1,9):
                                 if (value1 in self.rows[row][a] and value2 in self.rows[row][a] and len(self.rows[row][a]) == 2):
@@ -123,18 +121,164 @@ class Algorithm:
 
     # Verstecktes Paar
     def algorithm_4(self) -> Tuple[bool, Optional[str]]:
+        for i in NINE_RANGE:
+            row = self.sudoku.get_row(i)
+            col = self.sudoku.get_column(i)
+            block = self.sudoku.get_block(i)
+            for value1 in ALL_FIELD_VALUES:
+                for value2 in range(value1+1,10):
+                    rowCounter = 0
+                    colCounter = 0
+                    blockCounter = 0
+                    for j in NINE_RANGE:                        
+                        
+                        #block check
+                        if value1 in block[j].get_candidates():
+                            if value2 in block[j].get_candidates():
+                                blockCounter = blockCounter + 1
+                            else:
+                                blockCounter = 5
+                                
+                        if value2 in block[j].get_candidates():
+                            if value1 in block[j].get_candidates():
+                                blockCounter = blockCounter + 1
+                            else:
+                                blockCounter = 5
+                                
+                        #col check
+                        if value1 in col[j].get_candidates():
+                            if value2 in col[j].get_candidates():
+                                colCounter = colCounter + 1
+                            else:
+                                colCounter = 5
+                                
+                        if value2 in col[j].get_candidates():
+                            if value1 in col[j].get_candidates():
+                                colCounter = colCounter + 1
+                            else:
+                                colCounter = 5
+                                
+                        #ROW check
+                        if value1 in row[j].get_candidates():
+                            if value2 in row[j].get_candidates():
+                                rowCounter = rowCounter + 1
+                            else:
+                                rowCounter = 5                                
+                        if value2 in row[j].get_candidates():
+                            if value1 in row[j].get_candidates():
+                                rowCounter = rowCounter + 1
+                            else:
+                                rowCounter = 5
 
-        return True,'a'
+                    if blockCounter == 4:
+                        return True, f'V1: {value1}, V2:{value2}, Block:{i}'
+                    if colCounter == 4:
+                        return True, f'V1: {value1}, V2:{value2}, Col:{i}'
+                    if rowCounter == 4:
+                        return True, f'V1: {value1}, V2:{value2}, Row:{i}'
+
+        return (False,None)
 
     # Nacktes Dreier
     def algorithm_5(self) -> Tuple[bool, Optional[str]]:
-
-        return True,'a'
+        for i in NINE_RANGE:
+            row = self.sudoku.get_row(i)
+            col = self.sudoku.get_column(i)
+            block = self.sudoku.get_block(i)
+            for value1 in ALL_FIELD_VALUES:
+                for value2 in range(value1+1,10):
+                    for value3 in range(value2+1,10):
+                        rowCounter = 0
+                        colCounter = 0
+                        blockCounter = 0
+                        list = (value1,value2,value3)
+                        for j in NINE_RANGE:
+                            #block check
+                            if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates():
+                                err = False
+                                for testValue in block[j].get_candidates():
+                                    if not(testValue in list):
+                                        err = True
+                                if not err:
+                                    blockCounter = blockCounter + 1
+                                
+                            #col check 
+                            if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates():
+                                err = False
+                                for testValue in col[j].get_candidates():
+                                    if not(testValue in list):
+                                        err = True
+                                if not err:
+                                    colCounter = colCounter + 1
+                            
+                            #row check
+                            if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates():
+                                err = False
+                                for testValue in row[j].get_candidates():
+                                    if not(testValue in list):
+                                        err = True
+                                if not err:
+                                    rowCounter = rowCounter + 1 
+                                             
+                        if blockCounter == 3:
+                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Block:{i}' 
+                        if colCounter == 3:
+                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Col:{i}' 
+                        if rowCounter == 3:
+                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Row:{i}'        
+        return (False,None)
 
     # Versteckter Dreier
     def algorithm_6(self) -> Tuple[bool, Optional[str]]:
-
-        return True,'a'
+        for i in NINE_RANGE:
+            row = self.sudoku.get_row(i)
+            col = self.sudoku.get_column(i)
+            block = self.sudoku.get_block(i)
+            for value1 in ALL_FIELD_VALUES:
+                for value2 in range(value1+1,10):
+                    for value3 in range(value2+1,10):
+                        rowCounter = 0
+                        colCounter = 0
+                        blockCounter = 0
+                        blockList = [False,False,False]
+                        colList = [False,False,False]
+                        rowList = [False,False,False]
+                        for j in NINE_RANGE:
+                            #block check
+                            if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates():
+                                if value1 in block[j].get_candidates():
+                                    blockList[0] = True
+                                if value2 in block[j].get_candidates():  
+                                    blockList[1] = True 
+                                if value3 in block[j].get_candidates():
+                                    blockList[2] = True
+                                blockCounter = blockCounter + 1
+                            #col check
+                            if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates():
+                                if value1 in col[j].get_candidates():
+                                    colList[0] = True
+                                if value2 in col[j].get_candidates():  
+                                    colList[1] = True 
+                                if value3 in col[j].get_candidates():
+                                    colList[2] = True
+                                colCounter = colCounter + 1
+                            #row check
+                            if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates():
+                                if value1 in row[j].get_candidates():
+                                    rowList[0] = True
+                                if value2 in row[j].get_candidates():  
+                                    rowList[1] = True 
+                                if value3 in row[j].get_candidates():
+                                    rowList[2] = True
+                                rowCounter = rowCounter + 1
+                                
+                        if blockCounter == 3 and blockList[0]and blockList[1]and blockList[2]:
+                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, block:{i}'   
+                        if colCounter == 3 and colList[0]and colList[1]and colList[2]:
+                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Col:{i}' 
+                        if rowCounter == 3 and rowList[0]and rowList[1]and rowList[2]:
+                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Row:{i}' 
+        return (False,None)
 
     # Nackter/Versteckter Vierer
     def algorithm_7(self) -> Tuple[bool, Optional[str]]:
