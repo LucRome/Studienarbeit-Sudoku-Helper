@@ -1,6 +1,3 @@
-from __future__ import barry_as_FLUFL
-from pickle import FALSE
-from traceback import print_list
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 
