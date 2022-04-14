@@ -250,29 +250,29 @@ class Algorithm:
                             #block check
                             if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates():
                                 if value1 in block[j].get_candidates():
-                                    blockList[0]= True
+                                    blockList[0] = True
                                 if value2 in block[j].get_candidates():  
-                                    blockList[1]= True 
+                                    blockList[1] = True 
                                 if value3 in block[j].get_candidates():
-                                    blockList[2]= True
+                                    blockList[2] = True
                                 blockCounter = blockCounter + 1
                             #col check
                             if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates():
                                 if value1 in col[j].get_candidates():
-                                    colList[0]= True
+                                    colList[0] = True
                                 if value2 in col[j].get_candidates():  
-                                    colList[1]= True 
+                                    colList[1] = True 
                                 if value3 in col[j].get_candidates():
-                                    colList[2]= True
+                                    colList[2] = True
                                 colCounter = colCounter + 1
                             #row check
                             if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates():
                                 if value1 in row[j].get_candidates():
-                                    rowList[0]= True
+                                    rowList[0] = True
                                 if value2 in row[j].get_candidates():  
-                                    rowList[1]= True 
+                                    rowList[1] = True 
                                 if value3 in row[j].get_candidates():
-                                    rowList[2]= True
+                                    rowList[2] = True
                                 rowCounter = rowCounter + 1
                                 
                         if blockCounter == 3 and blockList[0]and blockList[1]and blockList[2]:
