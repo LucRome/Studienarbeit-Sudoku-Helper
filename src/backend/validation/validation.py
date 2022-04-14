@@ -1,13 +1,14 @@
-from typing import Tuple, Optional
+from typing import List, Tuple, Optional
 from sudoku.base import Sudoku, Field
 
 def field_to_value(field: Field) -> Optional[int]:
     return field.get_value()
 
 class Validation:
-  grid = []
+  grid: List
 
   def __init__(self,sudoku):
+    self.grid = list()
     for i in range(0,9):
       self.grid.append(list(map(field_to_value,sudoku.get_row(i))))  
 

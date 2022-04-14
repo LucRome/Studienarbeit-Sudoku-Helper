@@ -5,13 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Unittests (Sudoku Base)",
+            "name": "Python: Unittests (Sudoku Base, Validation)",
             "type": "python",
             "request": "launch",
             "module": "unittest",
             "cwd": "${workspaceFolder}/src/backend",
             "args": [
-                "sudoku.tests"
+                "sudoku.tests",
+                "validation.test_validation"
             ],
             "justMyCode": true
         },
