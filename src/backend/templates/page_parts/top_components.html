@@ -3,6 +3,9 @@
   Params:
     show_clr: Show the clear button ?
     text: quickinfo text
+    text_template: Template for the quickinfo text
+    dict: Dictionary for the text template
+    (Either text or text_template + dict)
 {% endcomment %}
 
 {% load static %}
@@ -11,7 +14,13 @@
   {# Quickinfo #}
   <link rel="stylesheet" href="{% static 'css/quickinfo.css' %}">
   <div class="container-fluid quickinfo d-flex align-items-center justify-content-around">
-    <p class="align-self-center mb-0">{{text}}</p> {# Text Preview #}
+    <p class="align-self-center mb-0">
+      {% if text_template %}
+        {% include text_template with dict=dict %}
+      {% else %}
+        {{text}}
+      {% endif %}    
+    </p> {# Text Preview #}
     <button type="button" class="btn btn-primary rounded-pill d-flex align-content-center" data-bs-toggle="modal" data-bs-target="#quickinfo-modal">
       <span class="material-icons-outlined">
         info
@@ -27,7 +36,13 @@
           <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">Close</button>
         </div>
         <div class="modal-body">
-          <p>{{text}}</p>
+          <p>
+            {% if text_template %}
+              {% include text_template with dict=dict %}
+            {% else %}
+              {{text}}
+            {% endif %}
+          </p>
         </div>
       </div>
     </div>

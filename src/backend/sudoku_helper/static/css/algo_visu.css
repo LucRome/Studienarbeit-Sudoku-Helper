@@ -1,0 +1,5 @@
+.field-new-value {
+    /* For fields that get a (new) value */
+    background-color: var(--bs-teal);
+}
+

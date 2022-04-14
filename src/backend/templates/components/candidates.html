@@ -2,12 +2,14 @@
   The Candidates for a single cell
   Parameters:
     candidates: Sudoku Field Candidates
+    row: row
+    column: column
 {% endcomment %}
 
 {% load static %}
 
 <table class="candidate-table invisible">
-  <tr class="p-0"> {# Use Opacity to hide #}
+  <tr class="p-0">
     <td class="candidate-field">
       {% if 1 in candidates %}
         <img src="{% static 'imgs/candidates/1.svg' %}" />
@@ -30,7 +32,7 @@
       {% endif %}
     </td>
   </tr>
-  <tr class="p-0"> {# Use Opacity to hide #}
+  <tr class="p-0">
     <td class="candidate-field">
       {% if 4 in candidates %}
         <img src="{% static 'imgs/candidates/4.svg' %}" />
@@ -53,7 +55,7 @@
       {% endif %}
     </td>
   </tr>
-  <tr class="p-0"> {# Use Opacity to hide #}
+  <tr class="p-0">
     <td class="candidate-field">
       {% if 7 in candidates %}
         <img src="{% static 'imgs/candidates/7.svg' %}" />
@@ -77,3 +79,4 @@
     </td>
   </tr>
 </table>
+<input id="candidates_{{row}}_{{column}}" name="candidates_{{row}}_{{column}}" type="text" value="{{ candidates }}" style="display: None;" readonly/>

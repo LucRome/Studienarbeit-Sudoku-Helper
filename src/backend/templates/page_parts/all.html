@@ -3,15 +3,18 @@
 	Params:
 		(top)
 		show_clr: Show the clear button ?
-    text: quickinfo text
+    	text: quickinfo text
+		text_template: Template for the quickinfo text
+		dict: Dictionary for the text template
+		(Either text or text_template + dict)
 		(sudoku)
 		sudoku: Sudoku Class
-    range: range(0,9)
-    sudoku_readonly: if True -> all Sudoku Fields are readonly
+		range: range(0,9)
+		sudoku_readonly: if True -> all Sudoku Fields are readonly
 		(bottom)
 		nxt_action: The next Action ('validate' | 'solve')
 {% endcomment %}
 
-{% include 'page_parts/top_components.html' with show_clr=show_clr text=text %}
+{% include 'page_parts/top_components.html' with show_clr=show_clr text=text text_template=text_template dict=dict %}
 {% include 'page_parts/sudoku.html' with sudoku=sudoku range=range sudoku_readonly=sudoku_readonly %}
 {% include 'page_parts/bottom_components.html' with nxt_action=nxt_action %}

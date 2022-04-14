@@ -205,3 +205,36 @@ class Sudoku:
                     candidates.append(val)
             intersect_all_candidates(blk, candidates)
 
+    def recalculate_candidates(self) -> None:
+        """
+        Only removes wrong candidates from fields, adds no new ones
+        """
+        # List of all candidates (reused)
+        candidates: List[int] = list()
+
+        # by row
+        for y in NINE_RANGE:
+            candidates.clear()
+            row = self.get_row(y)
+            for val in ALL_FIELD_VALUES:
+                if not value_in_section(row, val):
+                    candidates.append(val)
+            intersect_all_candidates(row, candidates)
+        
+        # intersect with candidates by column
+        for x in NINE_RANGE:
+            candidates.clear()
+            col = self.get_column(x)
+            for val in ALL_FIELD_VALUES:
+                if not value_in_section(col, val):
+                    candidates.append(val)
+            intersect_all_candidates(col, candidates)
+
+        # intersect with candidates by block
+        for i in NINE_RANGE:
+            candidates.clear()
+            blk = self.get_block(i)
+            for val in ALL_FIELD_VALUES:
+                if not value_in_section(blk, val):
+                    candidates.append(val)
+            intersect_all_candidates(blk, candidates)
