@@ -2,6 +2,7 @@ import unittest
 from algorithms.algorithms import *
 from sudoku.base import Field, Sudoku
 
+# TODO: use Sudokus from dev_tools
 
 class TestAlgorithms(unittest.TestCase):
 
