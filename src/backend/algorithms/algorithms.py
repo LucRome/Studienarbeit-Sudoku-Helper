@@ -111,11 +111,13 @@ class Algorithm:
                 field = self.sudoku.get_field(row, col)
                 candidates = field.get_candidates()
                 if len(candidates) == 1:
-                    field.set_value(candidates[0])
+                    value = candidates[0]
+                    field.set_value(value)
                     field.set_candidates([])
                     return True, {
                         'algorithm': 'open_single',
-                        'field': (row, col)
+                        'field': (row, col),
+                        'value': value,
                     }   
         return False, None
 
