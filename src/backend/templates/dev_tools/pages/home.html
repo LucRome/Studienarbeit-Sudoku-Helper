@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+    The homepage for the dev_tools app
+    params:
+        algorithms: list of suported algorithms
+{% endcomment %}
+
+{% block content %}
+  <div class="container-fluid justify-content-center">
+    <h1>Sudoku Templates</h1>
+    <a class="btn btn-primary" href="{% url 'sudoku_templates' %}">Templates</a>
+  </div>
+  <div class="container-fluid justify-content-center">
+    <h1>Check Algorithms</h1>
+    <div class="container-fluid m-0 d-flex justify-content-around">
+      {% for al in algorithms %}
+        <a class="btn btn-primary" href="{% url 'test_single_algorithm' name=al %}">{{al}}</a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

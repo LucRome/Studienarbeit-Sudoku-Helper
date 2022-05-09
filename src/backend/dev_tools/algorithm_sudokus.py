@@ -4,10 +4,7 @@
 The Sudokus to test each algorithm
 """
 
-# mapping
-NAME_MAP = [
-
-]
+# TODO: add missing
 
 # Sudokus (only the values)
 GRID = [
@@ -23,6 +20,18 @@ GRID = [
 ]
 
 GRID2 = [
+    [None, 5, None, None, 6, 3, None, 9, None],
+    [1, None, None, None, 2, 5, None, None, None],
+    [None, None, 2, None, 1, 8, None, 4, None],
+    [None, None, None, None, 7, None, None, 2, None],
+    [None, None, 9, 2, None, None, 6, None, None],
+    [4, 2, None, 6, 5, None, 3, None, None],
+    [2, None, 5, None, None, 6, 4, None, None],
+    [9, None, 1, None, None, 7, None, None, None],
+    [7, None, 8, None, None, 2, None, None, None],
+]
+
+GRID3 = [
     [None, None, None, 1, 3, 7, None, None, None],
     [7, None, None, 5, 9, 6, 1, 3, None],
     [None, None, 9, None, 8, None, None, 6, None],
@@ -129,7 +138,8 @@ GRID10 = [
     [None, None, None, 3, None, None, 9, None, 1],
     [None, 5, None, 9, 1, None, 2, None, 7],
 ]
-    
+
+# TODO: Algorithm??   
 GRID11 = [
     [9, None, None, None, None, None, None, None, 5],
     [7, None, 2, None, 1, None, 8, None, None],
@@ -154,3 +164,18 @@ GRID12 = [
     [5, None, None, 8, 4, 6, 7, 9, 2],
     [6, 2, 9, 7, None, 3, 8, None, 1],
 ]
+
+# mapping
+NAME_MAP = {
+    'hidden_single': GRID,
+    'open_single': GRID2,
+    'naked_pair': GRID3,
+    'hidden_pair': GRID4,
+    'naked_three': GRID5,
+    'hidden_three': GRID6,
+    'naked_hidden_four': GRID7,
+    'row_block_check': GRID8,
+    'block_row_check': GRID9,
+    'x_wing': GRID10, # TODO: acknowledge seperation in row, col
+    'third_eye': GRID12,
+}

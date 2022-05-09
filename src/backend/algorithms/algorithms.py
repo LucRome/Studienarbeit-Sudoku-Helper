@@ -52,6 +52,30 @@ class Algorithm:
             self.algorithm_9,
             self.algorithm_10,
         ]
+    
+    def get_name_fn_dict(self) -> Dict[str, Callable[[], Tuple[bool, Optional[Dict[str, Any]]]]]:
+        """
+        returns the dict that maps the functions to the algorithm names
+        """
+        return {
+            'hidden_single': self.algorithm_1,
+            'open_single': self.algorithm_2,
+            'open_pair': self.algorithm_3,
+            'hidden_pair': self.algorithm_4,
+            'naked_three': self.algorithm_5,
+            'hidden_three': self.algorithm_6,
+            'naked_hidden_four': self.algorithm_7,
+            'hidden_four': self.algorithm_8,
+            'row_block_check': self.algorithm_9,
+            'block_row_check': self.algorithm_10,
+            'x_wing_row': self.algorithm_11_1,
+            'x_wing_col': self.algorithm_11_2,
+            'stonebutt': self.algorithm_12,
+            'third_eye': self.algorithm_13,
+            'skyscraper': self.algorithm_14,
+            'swordfish': self.algorithm_15,
+            'dragon': self.algorithm_16,
+        }
 
     # hidden single
     def algorithm_1(self) -> Tuple[bool, Optional[str]]:
