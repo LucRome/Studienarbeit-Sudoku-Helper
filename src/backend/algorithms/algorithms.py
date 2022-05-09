@@ -1,4 +1,3 @@
-from tkinter.tix import Tree
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 
@@ -281,7 +280,7 @@ class Algorithm:
                             return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Row:{i}' 
         return (False,None)
 
-    # Nackter Vierer
+    # Nackter/Versteckter Vierer
     def algorithm_7(self) -> Tuple[bool, Optional[str]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)

@@ -1,0 +1,23 @@
+{% comment %} 
+    Saves the serialized dictionary from the algorithms to process it later
+    Params:
+        algo_script: Name of the Script to visualise the Algorithm results
+        dict_str: serialized dictionary
+{% endcomment %}
+
+{% load static %}
+
+<p id="dict_str" style="display: none;">{{dict_str}}</p> 
+
+{# css for algorithm visu #}
+<link rel="stylesheet" href="{% static 'css/algo_visu.css' %}">
+
+{# load the script that provides the visualise_algorithm function #}
+<script src="{% static algo_script %}"></script>
+<script>
+    $(document).ready(function() {
+        dict_str = $("#dict_str").text();
+        dict = JSON.parse(dict_str);
+        visualise_algorithm(dict);
+    })
+</script>
