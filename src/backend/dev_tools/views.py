@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http.request import HttpRequest
 from django.conf import settings
 
-from .utils import TEMPLATES
+from .templates import TEMPLATES
 from sudoku.base import NINE_RANGE
 
 
