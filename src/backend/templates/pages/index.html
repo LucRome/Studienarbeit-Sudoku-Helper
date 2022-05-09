@@ -7,7 +7,14 @@
     failed_tests: Was a Sudoku rejected from the server
     error_msg: The Error Message, in case the backend tests failed
     quickinfo: quickinfo text
+    link_dev_tools: link the dev tools home ?
 {% endcomment %}
+
+{% block navbar-content %}
+  {% if link_dev_tools %}
+    <a href="{% url 'dev_tools_home' %}">Dev Tools</a>
+  {% endif %}
+{% endblock navbar-content %}
 
 {% block content %}
   {# Error message if backend checks failed #}

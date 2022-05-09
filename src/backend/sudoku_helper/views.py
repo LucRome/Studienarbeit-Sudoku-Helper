@@ -1,6 +1,7 @@
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
+from django.conf import settings
 from algorithms.algorithms import Algorithm
 from sudoku.base import NINE_RANGE
 from validation.validation import *
@@ -22,7 +23,8 @@ def index(request: HttpRequest):
     context={
         'sudoku': sudoku,
         'range': NINE_RANGE,
-        'quickinfo': 'Welcome, please enter the numbers into the sudoku and press validate to proceed!'
+        'quickinfo': 'Welcome, please enter the numbers into the sudoku and press validate to proceed!',
+        'link_dev_tools': settings.DEBUG # only link settings tools when debug config is active
     }
     return render(request, 'pages/index.html', context)
 
