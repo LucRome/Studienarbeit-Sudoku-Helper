@@ -11,7 +11,11 @@
         dict_str: serialized dictionary
 {% endcomment %}
 
+{% load static %}
+
 {% block content %}
+    <script src="{% static 'js/solve_steps.js' %}"></script>
+
     {# Error Message when no solution is found #}
     {% if no_solution %}
         <div class="alert alert-danger alert-dismissible d-flex align-items-center">

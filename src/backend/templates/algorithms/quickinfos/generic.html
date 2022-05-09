@@ -1,0 +1,36 @@
+{% comment %} 
+  The Generic quickinfo for an algorithm
+{% endcomment %}
+
+{% load static %}
+
+{# The descriptions for the steps #}
+<p id="quickinfo-step-1">{% block step-1 %}{% endblock step-1 %}</p>
+<p id="quickinfo-step-3" hidden>{% block step-3 %}{% endblock step-3 %}</p>
+<p id="quickinfo-step-4" hidden>{% block step-4 %}{% endblock step-4 %}</p>
+
+{# The legend for the candidates #}
+<div id="candidate-legend" hidden>
+  <b>Candidate Legend</b>
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <td><img src="{% static 'imgs/candidates/1.svg' %}"/></td>
+        <td>standard candidate</td>
+      </tr>
+      <tr>
+        <td><img src="{% static 'imgs/candidates_marked_delete/1.svg' %}"/></td>
+        <td>candidates that will be deleted</td>
+      </tr>
+      <tr>
+        <td><img src="{% static 'imgs/candidates_marked_use/1.svg' %}"/></td>
+        <td>candidates that will be used as the field value</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{# The Legend for the fields #}
+<div id="field-legend" hidden>
+  TODO: Field Legend
+</div>

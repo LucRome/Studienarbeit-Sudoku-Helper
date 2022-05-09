@@ -17,11 +17,13 @@
       Validate
     </button>
   {% elif nxt_action == "solve" %}
-    <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="show-candidates">
-      Show Candidates
+    {# Show next hints #}
+    <button type="button" class="btn btn-lg btn-primary rounded-pill" id="nxt-hint-btn">
+      Next Hint
     </button>
-    <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
-      Solve
+    {# Submit to server for next step #}
+    <button hidden formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+      Submit and Solve
     </button>
   {% endif %}
 
