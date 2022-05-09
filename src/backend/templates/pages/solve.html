@@ -14,6 +14,8 @@
 {% load static %}
 
 {% block content %}
+    {% include 'algorithms/script.html' with dict_str=dict_str algo_script=algo_script %}
+    <script src="{% static 'js/algorithm_scripts/utils.js' %}"></script>
     <script src="{% static 'js/solve_steps.js' %}"></script>
 
     {# Error Message when no solution is found #}
@@ -27,5 +29,4 @@
     {% endif %}
 
     {% include 'page_parts/all.html' with show_clr="" text=quickinfo text_template=quickinfo_template dict=dict sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
-    {% include 'algorithms/script.html' with dict_str=dict_str algo_script=algo_script %}
 {% endblock content %}

@@ -38,6 +38,7 @@ function resize_all() {
     size_candidates = Number.parseFloat(size) / 3;
     size_candidates_str = size_candidates + unit;
     $(".candidate-field img").css("width", size_candidates_str);
+    $(".candidate-field img").css("height", size_candidates_str);
     $(".candidate-field div").css("height", size_candidates_str);
     $(".candidate-field div").css("width", size_candidates_str);
 }
