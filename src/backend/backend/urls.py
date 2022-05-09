@@ -20,4 +20,5 @@ from django.urls.conf import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sudoku_helper.urls')),
+    path('dev-tools/', include('dev_tools.urls'))
 ]

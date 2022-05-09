@@ -1,9 +1,8 @@
 from .views import *
-from django.urls import path
+from django.urls import include, path
 
 urlpatterns = [
     path('', index, name='index'),
     path('check-sudoku', check_sudoku, name='submit-sudoku'),
     path('solve-sudoku', solve_sudoku, name='solve-sudoku'),
-    path('sudoku-templates', sudoku_templates, name='sudoku-templates')
 ]
