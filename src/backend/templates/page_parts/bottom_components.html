@@ -22,7 +22,7 @@
       Next Hint
     </button>
     {# Submit to server for next step #}
-    <button hidden formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+    <button style="display: none;" formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
       Submit and Solve
     </button>
   {% endif %}

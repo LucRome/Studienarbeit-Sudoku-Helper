@@ -3,3 +3,16 @@
     background-color: var(--bs-teal);
 }
 
+/* For areas that are affected by an algorithm */
+.field-affected {
+    background-color: var(--bs-yellow);
+}
+
+.field-affected input, .field-affected img {
+    background-color: var(--bs-yellow);   
+}
+
+/* Make images without src hidden */
+img[src=""] {
+    visibility: hidden;
+}

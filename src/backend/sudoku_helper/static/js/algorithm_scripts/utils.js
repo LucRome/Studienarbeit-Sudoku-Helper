@@ -3,35 +3,35 @@ EMPTY_CANDIDATE_TABLE =
     `<table class="candidate-table">
         <tr class="p-0">
             <td class="candidate-field">
-                <img nr="1" src="${img_folder}/white.svg" />
+                <img nr="1" src="" />
             </td>
             <td class="candidate-field">
-                <img nr="2" src="${img_folder}/white.svg" />
+                <img nr="2" src="" />
             </td>
             <td class="candidate-field">
-                <img nr="3" src="${img_folder}/white.svg" />
-            </td>
-        </tr>
-        <tr class="p-0">
-            <td class="candidate-field">
-                <img nr="4" src="${img_folder}/white.svg" />
-            </td>
-            <td class="candidate-field">
-                <img nr="5" src="${img_folder}/white.svg" />
-            </td>
-            <td class="candidate-field">
-                <img nr="6" src="${img_folder}/white.svg" />
+                <img nr="3" src="" />
             </td>
         </tr>
         <tr class="p-0">
             <td class="candidate-field">
-                <img nr="7" src="${img_folder}/white.svg" />
+                <img nr="4" src="" />
             </td>
             <td class="candidate-field">
-                <img nr="8" src="${img_folder}/white.svg" />
+                <img nr="5" src="" />
             </td>
             <td class="candidate-field">
-                <img nr="9" src="${img_folder}/white.svg" />
+                <img nr="6" src="" />
+            </td>
+        </tr>
+        <tr class="p-0">
+            <td class="candidate-field">
+                <img nr="7" src="" />
+            </td>
+            <td class="candidate-field">
+                <img nr="8" src="" />
+            </td>
+            <td class="candidate-field">
+                <img nr="9" src="" />
             </td>
         </tr>
     </table>`
