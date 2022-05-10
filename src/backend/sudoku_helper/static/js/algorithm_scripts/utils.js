@@ -1,5 +1,5 @@
 // A empty candidate Table
-EMPTY_CANDIDATE_TABLE = 
+const EMPTY_CANDIDATE_TABLE = 
     `<table class="candidate-table">
         <tr class="p-0">
             <td class="candidate-field">
@@ -37,9 +37,10 @@ EMPTY_CANDIDATE_TABLE =
     </table>`
 
 function get_candidate_field_by_nr(row, col, nr) {
-    nr_str = nr.toString();
-    candidate_fields = $(`#field_${row}_${col} .candidate-field`);
+    let nr_str = nr.toString();
+    let candidate_fields = $(`#field_${row}_${col} .candidate-field`);
     return candidate_fields.filter(
+        // filter the candidate fields by the attribute number of the <img>
         function(index) {return $(this).children("img").attr("nr") === nr_str; }
     )
 }

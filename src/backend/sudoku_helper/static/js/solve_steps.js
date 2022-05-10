@@ -1,8 +1,7 @@
-current_step = 1;
+var current_step = 1;
 
 $(document).ready( function() {
     $("#nxt-hint-btn").click(function() {
-        // TODO: implement show/hide for modal
         current_step += 1;
         if (current_step == 2) {
             // Show candidates

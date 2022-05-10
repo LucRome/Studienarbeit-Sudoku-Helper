@@ -14,7 +14,8 @@
 
 {# load the script that provides the visualise_algorithm function #}
 <script>
-    img_folder = "{% static 'imgs' %}";
+    let img_folder = "{% static 'imgs' %}";
+    var dict;
     $(document).ready(function() {
         dict_str = $("#dict_str").text();
         dict = JSON.parse(dict_str);

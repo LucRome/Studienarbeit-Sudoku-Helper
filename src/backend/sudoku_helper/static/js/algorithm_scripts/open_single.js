@@ -6,7 +6,7 @@ $(document).ready(function() {
     $(`input#${y}_${x}`).hide();
 
     // highlight the corresponding row
-    for (i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
         $(`#field_${y}_${i}`).addClass("field-affected");
     }
 })
