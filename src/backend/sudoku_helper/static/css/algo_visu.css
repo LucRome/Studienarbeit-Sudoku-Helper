@@ -5,7 +5,12 @@
 
 /* Fields where candidates are removed */
 .field-removed-candidate {
-    background-color: var(--bs-secondary) !important;
+    background-color: var(--bs-gray) !important;
+}
+
+/* Fields where candidates are locked */
+.field-locked-candidates {
+    background-color: var(--bs-orange) !important;
 }
 
 /* For areas that are affected by an algorithm */

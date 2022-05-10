@@ -19,15 +19,19 @@
       <tbody>
         <tr>
           <td class="align-middle"><img class="mx-auto align-middle" src="{% static 'imgs/candidates/1.svg' %}"/></td>
-          <td><p>standard candidate<p></td>
+          <td><p>Standard candidate<p></td>
         </tr>
         <tr>
           <td class="align-middle"><img src="{% static 'imgs/candidates_marked_delete/1.svg' %}"/></td>
-          <td><p>candidates that will be deleted<p></td>
+          <td><p>Candidates that will be deleted<p></td>
         </tr>
         <tr>
           <td class="align-middle"><img src="{% static 'imgs/candidates_marked_use/1.svg' %}"/></td>
-          <td><p>candidates that will be used as the field value<p></td>
+          <td><p>Candidates that will be used as the field value<p></td>
+        </tr>
+        <tr>
+          <td class="align-middle"><img src="{% static 'imgs/candidates_marked_field_candidates/1.svg' %}"/></td>
+          <td><p>Candidates that must be in the respective Fields<p></td>
         </tr>
       </tbody>
     </table>
@@ -41,6 +45,10 @@
         <tr>
           <td class="p-0 field-new-value"><img src=""/></td>
           <td><p>Fields that got a new value</p></td>
+        </tr>
+        <tr>
+          <td class="p-0 field-locked-candidates"><img src=""/></td>
+          <td><p>Fields where Candidates are locked</p></td>
         </tr>
         <tr>
           <td class="p-0 field-removed-candidate"><img src=""/></td>
