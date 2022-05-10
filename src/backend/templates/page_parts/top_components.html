@@ -38,7 +38,7 @@
         <div class="modal-body">
           <p>
             {% if text_template %}
-              {% include text_template with dict=dict %}
+              {% include text_template with dict=dict modal="true" %}
             {% else %}
               {{text}}
             {% endif %}

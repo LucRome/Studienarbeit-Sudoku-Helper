@@ -17,7 +17,7 @@ $(document).ready(
 )
 
 function resize_all() {
-    // Resize Text around the sudoku form (also Spinner animations)
+    // Resize Text around the sudoku form (also Spinner animations and images in legends)
     fs_in_str = $($("#form-sudoku input")[1]).css("font-size");
     unit = fs_in_str.substr(fs_in_str.length - 2);
     size_inputs = fs_in_str.substr(0, fs_in_str.length - 2);
@@ -25,9 +25,13 @@ function resize_all() {
 
     fs_rest_str = size_rest + unit;
 
-    $("p, span, button, a, strong").css("font-size", fs_rest_str)
+    $("p, span, button, a, strong, b").css("font-size", fs_rest_str)
     $(".spinner-grow").css("width", fs_rest_str);
     $(".spinner-grow").css("height", fs_rest_str);
+    
+    // Resize images in legends
+    $(".candidate-legend img").css("height", fs_rest_str);
+    $(".field-legend img").css("height", fs_rest_str).css("width", fs_rest_str);
 
     // Resize Candidates
     // First get size of the input fields

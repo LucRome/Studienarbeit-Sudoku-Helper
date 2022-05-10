@@ -1,6 +1,11 @@
+/* For fields that get a (new) value */
 .field-new-value {
-    /* For fields that get a (new) value */
-    background-color: var(--bs-teal);
+    background-color: var(--bs-teal) !important;
+}
+
+/* Fields where candidates are removed */
+.field-removed-candidate {
+    background-color: var(--bs-secondary) !important;
 }
 
 /* For areas that are affected by an algorithm */

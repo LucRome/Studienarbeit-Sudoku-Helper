@@ -1,36 +1,52 @@
 {% comment %} 
   The Generic quickinfo for an algorithm
+  param:
+    modal: is in Modal
 {% endcomment %}
 
 {% load static %}
 
 {# The descriptions for the steps #}
-<p id="quickinfo-step-1">{% block step-1 %}{% endblock step-1 %}</p>
-<p id="quickinfo-step-3" style="display: none;">{% block step-3 %}{% endblock step-3 %}</p>
-<p id="quickinfo-step-4" style="display: none;">{% block step-4 %}{% endblock step-4 %}</p>
+<p class="quickinfo-step" step=1>{% block step-1 %}{% endblock step-1 %}</p>
+<p class="quickinfo-step" step=3 style="display: none;">{% block step-3 %}{% endblock step-3 %}</p>
+<p class="quickinfo-step" step=4 style="display: none;">{% block step-4 %}{% endblock step-4 %}</p>
 
-{# The legend for the candidates #}
-<div id="candidate-legend" style="display: none;">
-  <b>Candidate Legend</b>
-  <table class="table table-borderless">
-    <tbody>
-      <tr>
-        <td><img src="{% static 'imgs/candidates/1.svg' %}"/></td>
-        <td>standard candidate</td>
-      </tr>
-      <tr>
-        <td><img src="{% static 'imgs/candidates_marked_delete/1.svg' %}"/></td>
-        <td>candidates that will be deleted</td>
-      </tr>
-      <tr>
-        <td><img src="{% static 'imgs/candidates_marked_use/1.svg' %}"/></td>
-        <td>candidates that will be used as the field value</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+{% if modal %}
+  {# The legend for the candidates #}
+  <div class="candidate-legend" style="display: none;">
+    <b>Candidate Legend</b>
+    <table class="table table-sm table-bordered">
+      <tbody>
+        <tr>
+          <td class="align-middle"><img class="mx-auto align-middle" src="{% static 'imgs/candidates/1.svg' %}"/></td>
+          <td><p>standard candidate<p></td>
+        </tr>
+        <tr>
+          <td class="align-middle"><img src="{% static 'imgs/candidates_marked_delete/1.svg' %}"/></td>
+          <td><p>candidates that will be deleted<p></td>
+        </tr>
+        <tr>
+          <td class="align-middle"><img src="{% static 'imgs/candidates_marked_use/1.svg' %}"/></td>
+          <td><p>candidates that will be used as the field value<p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-{# The Legend for the fields #}
-<div id="field-legend" style="display: none;">
-  TODO: Field Legend
-</div>
+  {# The Legend for the fields #}
+  <div class="field-legend" style="display: none;">
+    <b>Field Legend</b>
+    <table class="table table-sm table-bordered">
+      <tbody>
+        <tr>
+          <td class="p-0 field-new-value"><img src=""/></td>
+          <td><p>Fields that got a new value</p></td>
+        </tr>
+        <tr>
+          <td class="p-0 field-removed-candidate"><img src=""/></td>
+          <td><p>Field where one or more candidates where removed</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endif %}

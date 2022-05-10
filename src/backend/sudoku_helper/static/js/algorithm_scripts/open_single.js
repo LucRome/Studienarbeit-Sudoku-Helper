@@ -14,6 +14,7 @@ $(document).ready(function() {
 // Step 2
 function add_candidates() {
     $(`td#field_${y}_${x}`).append(EMPTY_CANDIDATE_TABLE);
+    resize_all();
     get_candidate_field_by_nr(y, x, dict.value).children("img").attr("src", get_img_src(dict.value, del=false, use=false));
 }
 
