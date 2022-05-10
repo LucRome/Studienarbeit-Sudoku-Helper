@@ -1,12 +1,16 @@
-var y,x;
+var y, x;
 
 // Step 1
 $(document).ready(function() {
     [y, x] = dict.field
     $(`input#${y}_${x}`).hide();
 
-    // highlight the corresponding row
-    mark_row_affected(y);
+    // highlight the corresponding unit
+    switch (dict.reason) {
+        case 'block': mark_block_affected(y, x); break;
+        case 'row': mark_row_affected(y); break;
+        case 'column': mark_column_affected(x); break;
+    }
 })
 
 // Step 2

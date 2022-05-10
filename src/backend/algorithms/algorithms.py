@@ -78,7 +78,7 @@ class Algorithm:
         }
 
     # hidden single
-    def algorithm_1(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_1(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         blockCounter = 0
         rowCounter = 0
         colCounter = 0
@@ -91,13 +91,23 @@ class Algorithm:
                         rowCounter = rowCounter + 1
                     if (colCounter <= 1) and (value in self.cols[i][j]):
                         colCounter = colCounter + 1     
-                                     
+
+                reason = None           
                 if blockCounter == 1:
-                    return (True, f'hidden Single in Row:{self.get_row_by_block(i,j)}, Colum:{self.get_col_by_block(i,j)}, because its the only Field in the Block:{i} with a {value} in the Candidates.')
+                    reason = 'block'
                 elif rowCounter == 1:
-                    return (True, f'hidden Single in Row:{i}, Colum:{j}, because its the only Field in the Row:{i} with a {value} in the Candidates.')
+                    reason = 'row'
                 elif colCounter == 1:
-                    return (True, f'hidden Single in Row:{j}, Colum:{i}, because its the only Field in the Colum:{i} with a {value} in the Candidates.')    
+                    reason = 'column'
+                
+                if reason:
+                    self.sudoku.get_field(i, j).set_value(value)
+                    return (True, {
+                        'algorithm': 'hidden_single',
+                        'field': (i, j),
+                        'value': value,
+                        'reason': reason,
+                    })
                 else:    
                     blockCounter = 0    
                     rowCounter = 0    

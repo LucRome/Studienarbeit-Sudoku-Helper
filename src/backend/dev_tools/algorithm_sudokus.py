@@ -16,7 +16,7 @@ GRID = [
     [None, None, 2, 7, 4, None, None, 9, None],
     [4, None, None, None, None, None, None, 2, None],
     [7, None, 3, None, None, 6, None, None, None],
-    [None, None, None, 3, None, None, None, 8, 1],
+    [None, None, None, None, 3, None, None, 8, 1],
 ]
 
 GRID2 = [

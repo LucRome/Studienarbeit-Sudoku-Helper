@@ -51,6 +51,28 @@ function get_img_src(nr, del, use) {
     } else if (use) {
         return `${img_folder}/candidates_marked_use/${nr}.svg`;
     } else {
-        return `${img_folder}/candidates/${nr}.svg`
+        return `${img_folder}/candidates/${nr}.svg`;
+    }
+}
+
+function mark_row_affected(row_nr) {
+    for (let i = 0; i < 10; i++) {
+        $(`#field_${row_nr}_${i}`).addClass("field-affected");
+    }
+}
+
+function mark_column_affected(col_nr) {
+    for (let i = 0; i < 10; i++) {
+        $(`#field_${i}_${col_nr}`).addClass("field-affected");
+    }
+}
+
+function mark_block_affected(y_field, x_field) {
+    y_start = Math.floor(y_field / 3) * 3;
+    x_start = Math.floor(x_field / 3) * 3;
+    for (let y = y_start; y < (y_start + 3); y++) {
+        for (let x = x_start; x < (x_start + 3); x++) {
+            $(`#field_${y}_${x}`).addClass("field-affected");
+        }
     }
 }
