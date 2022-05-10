@@ -132,27 +132,40 @@ class Algorithm:
         return False, None
 
     # Open pair
-    def algorithm_3(self) -> Tuple[bool, Optional[str]]:
-        for i in range(0,81):
-            row=i//9
-            col=i%9
-            for value1 in ALL_FIELD_VALUES:
-                for value2 in range(value1+1,10): 
-                    if (len(self.rows[row][col]) == 2 and value1 in self.rows[row][col] and value2 in self.rows[row][col]):
-                        if col <= 8:
-                            for a in range(col+1,9):
-                                if (value1 in self.rows[row][a] and value2 in self.rows[row][a] and len(self.rows[row][a]) == 2):
-                                    return (True, f'Row: Open pair ({value1},{value2}) in (Row:{row}, Colum:{col}) and (Row:{row}, Colum:{a}), you can erase {value1} and {value2} from all Fields in the same Unit')
-                        if row <= 8:
-                            for a in range(row+1,9):
-                                if (value1 in self.cols[col][a] and value2 in self.cols[col][a] and len(self.cols[col][a]) == 2):
-                                    return (True, f'Col: Open pair ({value1},{value2}) in (Row:{row}, Colum:{col}) and (Row:{a}, Colum:{col}), you can erase {value1} and {value2} from all Fields in the same Unit')
-                        if self.get_block_by_row_col(row,col) <= 8:
-                            for a in range(self.get_block_by_row_col(row,col)+1,9):
-                                blockNr = Sudoku.get_block_nr(row,col)
-                                if value1 in self.blocks[blockNr][a] and value2 in self.blocks[blockNr][a] and len(self.blocks[blockNr][a]) == 2:
-                                    return (True, f'Block: Open pair ({value1},{value2}) in (Row:{row}, Colum:{col}) and (Row:{self.get_row_by_block(blockNr,a)}, Colum:{self.get_col_by_block(blockNr,a)}), you can erase {value1} and {value2} from all Fields in the same Unit')
-
+    def algorithm_3(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
+        for row in NINE_RANGE:
+            for col in NINE_RANGE:
+                for value1 in ALL_FIELD_VALUES:
+                    for value2 in range(value1+1,10): 
+                        if (len(self.rows[row][col]) == 2 and value1 in self.rows[row][col] and value2 in self.rows[row][col]):
+                            reason = None
+                            fields = None
+                            if col <= 8:
+                                for a in range(col+1,9):
+                                    if (value1 in self.rows[row][a] and value2 in self.rows[row][a] and len(self.rows[row][a]) == 2):
+                                        reason = 'row'
+                                        fields = ((row, col), (row, a))
+                                        break
+                            elif row <= 8:
+                                for a in range(row+1,9):
+                                    if (value1 in self.cols[col][a] and value2 in self.cols[col][a] and len(self.cols[col][a]) == 2):
+                                        reason = 'column'
+                                        fields = ((row, col), (a, col))
+                                        break
+                            elif self.get_block_by_row_col(row,col) <= 8:
+                                for a in range(self.get_block_by_row_col(row,col)+1,9):
+                                    blockNr = Sudoku.get_block_nr(row,col)
+                                    if value1 in self.blocks[blockNr][a] and value2 in self.blocks[blockNr][a] and len(self.blocks[blockNr][a]) == 2:
+                                        reason = 'block'
+                                        fields = ((row, col), (self.get_row_by_block(blockNr,a), self.get_col_by_block(blockNr,a)))
+                                        break
+                            if reason and fields:
+                                return (True, {
+                                    'algorithm': 'open_pair',
+                                    'values': [value1, value2],
+                                    'fields': fields,
+                                    'reason': reason
+                                })
         return (False,None)
 
     # Verstecktes Paar
