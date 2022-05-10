@@ -1,3 +1,4 @@
+import re
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
@@ -76,7 +77,6 @@ def solve_sudoku(request: HttpRequest):
         success, dict = al_fn()
         
         if success:
-            sudoku.recalculate_candidates()
             context = {
                 'sudoku': sudoku,
                 'range': NINE_RANGE,
@@ -88,4 +88,24 @@ def solve_sudoku(request: HttpRequest):
             return render(request, 'pages/solve.html', context)
 
     # TODO: Wenn nie success: Error Message
-   
+
+
+@require_http_methods(['POST'])
+def compute_candidates(request: HttpRequest):
+    """
+    Compute the candidates for the sudoku
+    (Called after each algorithm, in case a field got a value)
+    """
+    sudoku, response = check_sudoku_view(request)
+
+    if response:
+        return response
+    
+    sudoku.recalculate_candidates()
+    context = {
+        'sudoku': sudoku,
+        'range': NINE_RANGE,
+        'quickinfo': 'After the changes of the last algorithm, the sudoku and the candidates look like this.'
+    }
+
+    return render(request, 'pages/computed_candidates.html', context)

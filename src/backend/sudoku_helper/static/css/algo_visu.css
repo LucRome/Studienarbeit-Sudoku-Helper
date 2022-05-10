@@ -16,8 +16,3 @@
 .field-affected input, .field-affected img {
     background-color: var(--bs-yellow);   
 }
-
-/* Make images without src hidden */
-img[src=""] {
-    visibility: hidden;
-}

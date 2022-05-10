@@ -3,6 +3,11 @@
   font-size: 0px;
 }
 
+/* Make images without src hidden */
+img[src=""] {
+  visibility: hidden;
+}
+
 /* Outer Border and Shadow */
 .sudoku {
   border-radius: 10px;

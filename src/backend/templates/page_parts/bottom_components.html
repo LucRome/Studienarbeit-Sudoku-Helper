@@ -16,14 +16,23 @@
     <button formaction="{% url 'submit-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="submit-sudoku-btn" form="form-sudoku" type="submit">
       Validate
     </button>
-  {% elif nxt_action == "solve" %}
+  {% elif nxt_action == "show_candidates" %}
     {# Show next hints #}
     <button type="button" class="btn btn-lg btn-primary rounded-pill" id="nxt-hint-btn">
       Next Hint
     </button>
-    {# Submit to server for next step #}
-    <button style="display: none;" formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
-      Submit and Solve
+    {# Submit to server to recompute candidates #}
+    <button style="display: none;" formaction="{% url 'compute-candidates' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+      Compute Candidates
+    </button>
+  {% elif nxt_action == 'solve' %}
+    {# toggle candidates #}
+    <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="toggle-candidates-btn">
+      Toggle Candidates
+    </button>
+    {# submit to server for next iteration of algorithms #}
+    <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+      Solve
     </button>
   {% endif %}
 
