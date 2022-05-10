@@ -26,5 +26,5 @@ function mark_candidates() {
 // Step 4
 function enter_changes() {
     $(`#field_${y}_${x} .candidate-table`).hide();
-    $(`#${y}_${x}`).show();
+    $(`#${y}_${x}`).show().addClass("field-new-value");
 }
