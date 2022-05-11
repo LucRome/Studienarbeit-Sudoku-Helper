@@ -100,6 +100,18 @@ def compute_candidates(request: HttpRequest):
 
     if response:
         return response
+
+    candidates_correct = check_and_add_candidates_from_request(request, sudoku)
+    if not candidates_correct:
+        # error with candidates -> back to index
+        context = {
+            'sudoku': sudoku,
+            'range': NINE_RANGE,
+            'quickinfo': 'Please enter a correct sudoku and press Validate to proceed!',
+            'failed_tests': True,
+            'error_msg': 'Error: Something was wrong with the submitted candidates',
+        }
+        return render(request, 'pages/index.html', context)
     
     sudoku.recalculate_candidates()
     context = {

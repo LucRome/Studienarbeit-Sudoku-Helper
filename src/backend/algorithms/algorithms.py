@@ -1,5 +1,6 @@
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
+from .utils import UnitType, remove_candidates_from_fields_in_unit
 
 class Algorithm:
 
@@ -140,31 +141,37 @@ class Algorithm:
                         if (len(self.rows[row][col]) == 2 and value1 in self.rows[row][col] and value2 in self.rows[row][col]):
                             reason = None
                             fields = None
+                            nr: int
                             if col <= 8:
                                 for a in range(col+1,9):
                                     if (value1 in self.rows[row][a] and value2 in self.rows[row][a] and len(self.rows[row][a]) == 2):
-                                        reason = 'row'
-                                        fields = ((row, col), (row, a))
+                                        reason = UnitType.ROW
+                                        fields = [(row, col), (row, a)]
+                                        nr = row
                                         break
                             elif row <= 8:
                                 for a in range(row+1,9):
                                     if (value1 in self.cols[col][a] and value2 in self.cols[col][a] and len(self.cols[col][a]) == 2):
-                                        reason = 'column'
-                                        fields = ((row, col), (a, col))
+                                        reason = UnitType.COLUMN
+                                        fields = [(row, col), (a, col)]
+                                        nr = col
                                         break
                             elif self.get_block_by_row_col(row,col) <= 8:
                                 for a in range(self.get_block_by_row_col(row,col)+1,9):
                                     blockNr = Sudoku.get_block_nr(row,col)
                                     if value1 in self.blocks[blockNr][a] and value2 in self.blocks[blockNr][a] and len(self.blocks[blockNr][a]) == 2:
-                                        reason = 'block'
-                                        fields = ((row, col), (self.get_row_by_block(blockNr,a), self.get_col_by_block(blockNr,a)))
+                                        reason = UnitType.BLOCK
+                                        fields = [(row, col), (self.get_row_by_block(blockNr,a), self.get_col_by_block(blockNr,a))]
+                                        nr = blockNr
                                         break
                             if reason and fields:
+                                removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, [value1, value2], fields)
                                 return (True, {
                                     'algorithm': 'open_pair',
                                     'values': [value1, value2],
                                     'fields': fields,
-                                    'reason': reason
+                                    'reason': reason.value,
+                                    'removed_candidates': removed,
                                 })
         return (False,None)
 

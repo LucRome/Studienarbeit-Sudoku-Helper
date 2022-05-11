@@ -169,7 +169,7 @@ GRID12 = [
 NAME_MAP = {
     'hidden_single': GRID,
     'open_single': GRID2,
-    'naked_pair': GRID3,
+    'open_pair': GRID3,
     'hidden_pair': GRID4,
     'naked_three': GRID5,
     'hidden_three': GRID6,
