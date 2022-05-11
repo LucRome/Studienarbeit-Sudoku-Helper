@@ -2,7 +2,7 @@
 Base Classes for Sudoku
 """
 
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from .exceptions import *
 from math import floor
 
@@ -140,21 +140,7 @@ class Sudoku:
         if block_nr not in NINE_RANGE:
             raise OutOfFieldsException()
 
-        # Determine the rows and columns
-        columns: range
-        if (block_nr % 3) == 0:
-            columns = range(0,3)
-        elif (block_nr % 3) == 1:
-            columns = range(3, 6)
-        else:
-            columns = range(6, 9)
-        rows: range
-        if block_nr <= 2:
-            rows = range(0, 3)
-        elif block_nr <= 5:
-            rows = range(3, 6)
-        else:
-            rows = range(6, 9)
+        rows, columns = Sudoku.get_block_ranges(block_nr)
         
         # fill the return list
         ret: List[Field] = list()
@@ -169,6 +155,15 @@ class Sudoku:
         x: int = floor(column/3)
         y: int = floor(row/3)
         return y*3 + x
+    
+    def get_block_ranges(block_nr: int) -> Tuple[range, range]:
+        """
+        Get the ranges for row and column for the blocks
+        """
+        row_start = (block_nr // 3) * 3
+        col_start = (block_nr % 3) * 3
+
+        return (range(row_start, row_start+3), range(col_start, col_start+3))
     
     def select_candidates(self) -> None:
         """
