@@ -17,12 +17,12 @@ $(document).ready(function() {
 function add_candidates() {
     $(`td#field_${y}_${x}`).append(EMPTY_CANDIDATE_TABLE);
     resize_all();
-    get_candidate_field_by_nr(y, x, dict.value).children("img").attr("src", get_img_src(dict.value, del=false, use=false));
+    get_candidate_field_by_nr(y, x, dict.value).children("img").attr("src", get_img_src(dict.value, del=false, use=false, lock=false));
 }
 
 // Step 3
 function mark_candidates() {
-    get_candidate_field_by_nr(y, x, dict.value).children("img").attr("src", get_img_src(dict.value, del=false, use=true));
+    get_candidate_field_by_nr(y, x, dict.value).children("img").attr("src", get_img_src(dict.value, del=false, use=true, lock=false));
 }
 
 // Step 4

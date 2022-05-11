@@ -45,12 +45,14 @@ function get_candidate_field_by_nr(row, col, nr) {
     )
 }
 
-function get_img_src(nr, del, use) {
+function get_img_src(nr, del=false, use=false, lock=false) {
     if (del) {
         return `${img_folder}/candidates_marked_delete/${nr}.svg`;
     } else if (use) {
         return `${img_folder}/candidates_marked_use/${nr}.svg`;
-    } else {
+    } else if (lock){
+        return `${img_folder}/candidates_marked_lock/${nr}.svg`
+    }else{
         return `${img_folder}/candidates/${nr}.svg`;
     }
 }
