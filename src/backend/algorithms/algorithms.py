@@ -63,7 +63,7 @@ class Algorithm:
             'open_single': self.algorithm_2,
             'open_pair': self.algorithm_3,
             'hidden_pair': self.algorithm_4,
-            'naked_three': self.algorithm_5,
+            'open_three': self.algorithm_5,
             'hidden_three': self.algorithm_6,
             'naked_hidden_four': self.algorithm_7,
             'hidden_four': self.algorithm_8,
@@ -251,50 +251,82 @@ class Algorithm:
     # Nacktes Dreier
     def algorithm_5(self) -> Tuple[bool, Optional[str]]:
         for i in NINE_RANGE:
+            # iterate over all blocks, columns, rows
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
             block = self.sudoku.get_block(i)
             for value1 in ALL_FIELD_VALUES:
                 for value2 in range(value1+1,10):
                     for value3 in range(value2+1,10):
+                        # check all possible combinations
                         rowCounter = 0
+                        # _fields: the fields used to build the naked three in the corresponding unit
+                        # _candidates: the candidates of the respective fields
+                        row_fields: List[Tuple[int, int]] = list()
+                        row_candidates: List[List[int]] = list()
                         colCounter = 0
+                        col_fields: List[Tuple[int, int]] = list()
+                        col_candidates: List[List[int]] = list()
                         blockCounter = 0
-                        list = (value1,value2,value3)
+                        block_fields: List[Tuple[int, int]] = list()
+                        block_candidates: List[List[int]] = list()
+                        values = (value1,value2,value3)
                         for j in NINE_RANGE:
                             #block check
                             if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates():
+                                # one value in the candidates?
                                 err = False
                                 for testValue in block[j].get_candidates():
-                                    if not(testValue in list):
+                                    if not(testValue in values):
+                                        # when field has other candidates than the tested ones -> no success
                                         err = True
                                 if not err:
+                                    # success: increase counter by 1
+                                    block_fields.append(block[j].get_coordinates())
+                                    block_candidates.append(block[j].get_candidates())
                                     blockCounter = blockCounter + 1
                                 
                             #col check 
                             if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates():
+                                # same principle as block
                                 err = False
                                 for testValue in col[j].get_candidates():
-                                    if not(testValue in list):
+                                    if not(testValue in values):
                                         err = True
                                 if not err:
+                                    col_fields.append(col[j].get_coordinates())
+                                    col_candidates.append(col[j].get_candidates())
                                     colCounter = colCounter + 1
                             
                             #row check
                             if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates():
+                                # same principle as block
                                 err = False
                                 for testValue in row[j].get_candidates():
-                                    if not(testValue in list):
+                                    if not(testValue in values):
                                         err = True
                                 if not err:
-                                    rowCounter = rowCounter + 1 
-                                             
+                                    row_fields.append(row[j].get_coordinates())
+                                    row_candidates.append(row[j].get_candidates())
+                                    rowCounter = rowCounter + 1
+
+                        reason, fields, field_candidates ,nr = None, None, None, None        
                         if blockCounter == 3:
-                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Block:{i}' 
-                        if colCounter == 3:
-                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Col:{i}' 
-                        if rowCounter == 3:
-                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Row:{i}'        
+                            reason, fields, field_candidates, nr = UnitType.BLOCK, block_fields, block_candidates, i
+                        elif colCounter == 3:
+                            reason, fields, field_candidates, nr = UnitType.COLUMN, col_fields, col_candidates, i
+                        elif rowCounter == 3:
+                            reason, fields, field_candidates, nr = UnitType.ROW, row_fields, row_candidates, i
+                        if reason:
+                            removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, values, fields)
+                            return (True, {
+                                'algorithm': 'open_three',
+                                'values': values,
+                                'fields': fields,
+                                'field_candidates': field_candidates,
+                                'reason': reason.value,
+                                'removed_candidates': removed,
+                            })   
         return (False,None)
 
     # Versteckter Dreier
