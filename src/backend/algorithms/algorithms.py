@@ -1,6 +1,6 @@
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
-from .utils import UnitType, remove_candidates_from_fields_in_unit
+from .utils import UnitType, remove_candidates_from_fields_in_unit, enforce_hidden_algs
 
 class Algorithm:
 
@@ -225,13 +225,26 @@ class Algorithm:
                                 rowCounter = rowCounter + 1
                             else:
                                 rowCounter = 5
-
+                    
+                    reason, nr = None, None
                     if blockCounter == 4:
-                        return True, f'V1: {value1}, V2:{value2}, Block:{i}'
-                    if colCounter == 4:
-                        return True, f'V1: {value1}, V2:{value2}, Col:{i}'
-                    if rowCounter == 4:
-                        return True, f'V1: {value1}, V2:{value2}, Row:{i}'
+                        reason, nr = UnitType.BLOCK, i
+                        # return True, f'V1: {value1}, V2:{value2}, Block:{i}'
+                    elif colCounter == 4:
+                        reason, nr = UnitType.COLUMN, i
+                        # return True, f'V1: {value1}, V2:{value2}, Col:{i}'
+                    elif rowCounter == 4:
+                        reason, nr = UnitType.ROW, i
+                        # return True, f'V1: {value1}, V2:{value2}, Row:{i}'
+                    if reason:
+                        values = [value1, value2]
+                        removed_candidates = enforce_hidden_algs(self.sudoku, reason, nr, values)
+                        return (True, {
+                            'algorithm': 'hidden_pair',
+                            'values': values,
+                            'reason': reason.value,
+                            'removed_candidates': removed_candidates,
+                        })
 
         return (False,None)
 

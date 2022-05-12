@@ -9,19 +9,9 @@ class UnitType(Enum):
     COLUMN = 'column'
     BLOCK = 'block'
 
-def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int,
-    candidates_to_remove: List[int], excluded_fields: List[Tuple[int, int]]) -> Dict[Tuple[int, int], List[int]]:
-    """
-    Removes the given candidates from the fields of the given unit (except the excluded fields)
-    :param sudoku: the sudoku
-    :param type: The unit Type (row/block/column)
-    :param nr: The nr of the unit (row nr/block nr/column nr)
-    :param candidates_to_remove: The list of the candidates to remove
-    :param excluded fields: The coordinates of the fields to exclude
-    :returns: Dictionary of all the removed candidates
-    """
-    
-    unit: List[Tuple[int, int]] = list()  # the fields in the unit with their coordinates (except the excluded ones)
+
+def get_unit(type: UnitType, nr: int, excluded_fields: List[Tuple[int, int]] = []) -> List[Tuple[int, int]]:
+    unit: List[Tuple[int, int]] = list()  # the coordinates of the unit fields (except the excluded ones)
 
     if type == UnitType.ROW:
         for col in NINE_RANGE:
@@ -37,6 +27,22 @@ def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int
             for col in cols:
                 if (row, col) not in excluded_fields:
                     unit.append((row, col))
+
+    return unit
+
+def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int,
+    candidates_to_remove: List[int], excluded_fields: List[Tuple[int, int]]) -> Dict[int, List[int]]:
+    """
+    Removes the given candidates from the fields of the given unit (except the excluded fields)
+    :param sudoku: the sudoku
+    :param type: The unit Type (row/block/column)
+    :param nr: The nr of the unit (row nr/block nr/column nr)
+    :param candidates_to_remove: The list of the candidates to remove
+    :param excluded fields: The coordinates of the fields to exclude
+    :returns: Dictionary of all the removed candidates
+    """
+    
+    unit = get_unit(type, nr, excluded_fields)
 
     removed_candidates: Dict[int, List[int]] = dict() #Key: y*10+x
     for (y,x) in unit:
@@ -55,5 +61,34 @@ def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int
 
     return removed_candidates
 
+def enforce_hidden_algs(sudoku: Sudoku, type: UnitType, nr: int,
+    candidates_to_lock: List[int]) -> Dict[int, List[int]]:
+    """
+    Enforces the hidden algorithms (e.g. hidden pair) 
+    -> sets the candidates in the fields if they are the only ones and removes the others from the fields
+    :param sudoku: Sudoku class
+    :param type: Type of the unit
+    :param nr: Number of the unit
+    :param candidates_to_lock: The candidates to set as the field candidates
+    :returns: Dictionary of all the removed candidates (key: Field coordinates (key = y*10 + x))
+    """
+
+    unit = get_unit(type, nr)
+    removed_candidates: Dict[int, List[int]] = dict() #Key: y*10+x
+
+    for (y, x) in unit:
+        field_candidates = sudoku.get_field(y, x).get_candidates()
+        if all(list(map(lambda c: c in field_candidates, candidates_to_lock))):
+            # remove all other candidates
+            rm: List[int] = list()
+            for c in field_candidates:
+                if c not in candidates_to_lock:
+                    rm.append(c)
+            for c in rm:  # needs to be seperated, otherwise errors occur
+                field_candidates.remove(c)
+
+            removed_candidates.update({y*10+x: rm})
+    
+    return removed_candidates
 
         
