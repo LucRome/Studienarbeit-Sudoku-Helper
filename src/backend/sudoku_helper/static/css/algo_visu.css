@@ -13,6 +13,11 @@
     background-color: var(--bs-orange) !important;
 }
 
+/* Fields where candidates are locked and others are removed */
+.field-locked-and-removed-candidates {
+    background-color: rgb(136, 113, 70) !important;
+}
+
 /* For areas that are affected by an algorithm */
 .field-affected {
     background-color: var(--bs-yellow);
