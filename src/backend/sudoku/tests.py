@@ -1,5 +1,5 @@
 from typing import Type, Optional
-from .base import Field, Sudoku, FIELD_VALUE_MAX, FIELD_VALUE_MIN
+from .base import NINE_RANGE, Field, Sudoku, FIELD_VALUE_MAX, FIELD_VALUE_MIN
 from .exceptions import OutOfFieldsException, WrongFieldCandidateException, WrongFieldValueException
 import unittest
 
@@ -23,14 +23,14 @@ class TestField(unittest.TestCase):
     def test_value(self):
         # set values
         val = 8
-        field: Field = Field(value=val)
+        field: Field = Field(coordinates=(0,0), value=val)
         self.assertEqual(val, field.get_value())
         val = 3
         field.set_value(val=val)
         self.assertEqual(val, field.get_value())
         field.remove_value()
         self.assertIsNone(field.get_value())
-        field = Field()
+        field = Field(coordinates=(0,0))
         self.assertIsNone(field.get_value())
 
         # throw error
@@ -40,7 +40,7 @@ class TestField(unittest.TestCase):
             field.set_value(val=(FIELD_VALUE_MIN - 1))
 
     def test_candidates(self):
-        field: Field = Field()
+        field: Field = Field(coordinates=(0,0))
         self.assertListEqual(field.get_candidates(), [])
         field.add_candidate(1)
         field.add_candidate(3)
@@ -109,6 +109,13 @@ class SudokuTest(unittest.TestCase):
         target_values = [1,2,3,4,5,6,7,8,9]
         block_values = list(map(field_to_value, sudoku.get_block(Sudoku.get_block_nr(row=4, column=7))))
         self.assertListEqual(target_values, block_values)
+
+    def test_coordinates(self):
+        sudoku = Sudoku()
+        for row in NINE_RANGE:
+            for col in NINE_RANGE:
+                coords = (row, col)
+                self.assertEqual(coords, sudoku.get_field(row, col).get_coordinates())
 
 """
     Candidate Select Tests
