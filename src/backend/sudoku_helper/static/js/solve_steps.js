@@ -18,6 +18,8 @@ $(document).ready( function() {
         }
         if (current_step == 4) {
             // enter changes
+            // only highlight the fields that are actually affected
+            $(".field-affected").removeClass("field-affected");
             // function from algorithm scripts
             enter_changes();
             $(".quickinfo-step[step=3]").hide();

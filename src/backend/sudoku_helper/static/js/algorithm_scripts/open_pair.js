@@ -54,7 +54,7 @@ function mark_candidates() {
 
 // Step 4
 function enter_changes() {
-    // remove candidates to delete
+    // remove candidates to delete and mark fields
     let array = Object.entries(dict.removed_candidates);
     array.forEach(element => {
         let pos_nr = Number.parseInt(element[0]);
@@ -62,8 +62,16 @@ function enter_changes() {
         x = pos_nr % 10;
 
         let candidates = element[1];
+
+        if (candidates.length > 0) {
+            $(`#field_${y}_${x}`).addClass("field-removed-candidate");
+        }
         candidates.forEach(candidate => {
             get_candidate_field_by_nr(y, x, candidate).children("img").attr("src", "");
         })
-    })
+    });
+
+    // Mark fields where candidates are locked
+    $(`#field_${y1}_${x1}`).addClass("field-locked-candidates");
+    $(`#field_${y2}_${x2}`).addClass("field-locked-candidates");
 }
