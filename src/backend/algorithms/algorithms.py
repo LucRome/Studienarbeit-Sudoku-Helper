@@ -176,7 +176,7 @@ class Algorithm:
         return (False,None)
 
     # Verstecktes Paar
-    def algorithm_4(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_4(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
@@ -249,7 +249,7 @@ class Algorithm:
         return (False,None)
 
     # Nacktes Dreier
-    def algorithm_5(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_5(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             # iterate over all blocks, columns, rows
             row = self.sudoku.get_row(i)
@@ -330,7 +330,7 @@ class Algorithm:
         return (False,None)
 
     # Versteckter Dreier
-    def algorithm_6(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_6(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
