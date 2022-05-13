@@ -78,3 +78,58 @@ function mark_block_affected(y_field, x_field) {
         }
     }
 }
+
+function handle_removed_candidates(removed_candidates, marked_to_delete=false, remove = false) {
+    for (var key in removed_candidates) {
+        let [y,x] = [Math.floor(key/10), key%10];
+        let candidates = removed_candidates[key];
+        candidates.forEach(candidate => {
+            if (marked_to_delete) {
+                get_candidate_field_by_nr(y, x, candidate).children("img").attr("src", get_img_src(candidate, del=true, use=false, lock=false));
+            } else if (remove) {
+                get_candidate_field_by_nr(y, x, candidate).children("img").attr("src", "");
+            } else {
+                get_candidate_field_by_nr(y, x, candidate).children("img").attr("src", get_img_src(candidate, del=false, use=false, lock=false));
+            }
+        })
+    }
+}
+
+function mark_candidates_lock(values, fields) {
+    values.forEach(value => {
+        fields.forEach(element => {
+            let img = get_candidate_field_by_nr(element[0], element[1], value).children("img");
+            if (img.attr("src") != "") {
+                img.attr("src", get_img_src(value, del=false, use=false, lock=true));
+            }
+        })
+    });
+}
+
+function highlight_fields(fields, css_class) {
+    fields.forEach(element => {
+        $(`#field_${element[0]}_${element[1]}`).addClass(css_class);
+    })
+}
+
+function parse_fields_from_removed_candidates(removed_candidates) {
+    let fields = []
+    for (var key in removed_candidates) {
+        if (removed_candidates[key].length > 0) {
+            let field = [Math.floor(key/10), key%10];
+            fields.push(field);
+        }
+    }
+    return fields;
+}
+
+// function handle_inputs(fields, show=false) {
+//     fields.forEach(element => {
+//         let inp = $(`input#${element[0]}_${element[1]}`);
+//         if (show) {
+//             inp.hide();
+//         } else {
+//             inp.show();
+//         }
+//     })
+// }
