@@ -332,12 +332,14 @@ class Algorithm:
     # Versteckter Dreier
     def algorithm_6(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
+            # iterate over all blocks, columns, rows
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
             block = self.sudoku.get_block(i)
             for value1 in ALL_FIELD_VALUES:
                 for value2 in range(value1+1,10):
                     for value3 in range(value2+1,10):
+                        # iterate over all possible value combinations
                         rowCounter = 0
                         colCounter = 0
                         blockCounter = 0
@@ -347,14 +349,17 @@ class Algorithm:
                         for j in NINE_RANGE:
                             #block check
                             if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates():
+                                # any of the values in the field candidates
+                                # mark which ones
                                 if value1 in block[j].get_candidates():
                                     blockList[0] = True
                                 if value2 in block[j].get_candidates():  
                                     blockList[1] = True 
                                 if value3 in block[j].get_candidates():
                                     blockList[2] = True
+                                # count how many fields contain the candidates in the unit
                                 blockCounter = blockCounter + 1
-                            #col check
+                            #col check (same principle as block)
                             if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates():
                                 if value1 in col[j].get_candidates():
                                     colList[0] = True
@@ -363,7 +368,7 @@ class Algorithm:
                                 if value3 in col[j].get_candidates():
                                     colList[2] = True
                                 colCounter = colCounter + 1
-                            #row check
+                            #row check (same principle as block)
                             if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates():
                                 if value1 in row[j].get_candidates():
                                     rowList[0] = True
@@ -373,12 +378,23 @@ class Algorithm:
                                     rowList[2] = True
                                 rowCounter = rowCounter + 1
                                 
-                        #if blockCounter == 3 and blockList[0]and blockList[1]and blockList[2]:
-                            #return True, f'V1: {value1}, V2:{value2}, V3:{value3}, block:{i}'   
-                        if colCounter == 3 and colList[0]and colList[1]and colList[2]:
-                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Col:{i}' 
-                        if rowCounter == 3 and rowList[0]and rowList[1]and rowList[2]:
-                            return True, f'V1: {value1}, V2:{value2}, V3:{value3}, Row:{i}' 
+                        reason, nr = None, None
+                        # 3 fields with the values in the candidates and each candidate occurs at least once
+                        if blockCounter == 3 and all(blockList):
+                            reason, nr = UnitType.BLOCK, i  
+                        if colCounter == 3 and all(colList):
+                            reason, nr = UnitType.COLUMN, i
+                        if rowCounter == 3 and all(rowList):
+                            reason, nr = UnitType.ROW, i
+                        if reason:
+                            values = [value1, value2, value3]
+                            removed_candidates = enforce_hidden_algs(self.sudoku, reason, nr, values)
+                            return (True, {
+                                'algorithm': 'hidden_three',
+                                'values': values,
+                                'reason': reason.value,
+                                'removed_candidates': removed_candidates,
+                            })
         return (False,None)
 
     # Nackter/Versteckter Vierer

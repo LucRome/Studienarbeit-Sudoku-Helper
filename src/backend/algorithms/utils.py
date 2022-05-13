@@ -78,7 +78,7 @@ def enforce_hidden_algs(sudoku: Sudoku, type: UnitType, nr: int,
 
     for (y, x) in unit:
         field_candidates = sudoku.get_field(y, x).get_candidates()
-        if all(list(map(lambda c: c in field_candidates, candidates_to_lock))):
+        if any(list(map(lambda c: c in field_candidates, candidates_to_lock))):
             # remove all other candidates
             rm: List[int] = list()
             for c in field_candidates:
