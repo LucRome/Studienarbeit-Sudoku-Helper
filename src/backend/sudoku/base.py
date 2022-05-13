@@ -44,6 +44,7 @@ class Field:
             raise WrongFieldValueException(val)
         else:
             self.__value = val
+            self.__candidates = []
     
     def remove_value(self) -> None:
         self.__value = None

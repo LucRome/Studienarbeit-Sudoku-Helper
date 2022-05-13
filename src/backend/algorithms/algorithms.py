@@ -1,6 +1,6 @@
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
-from .utils import UnitType, remove_candidates_from_fields_in_unit, enforce_hidden_algs
+from .utils import UnitType, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value
 
 class Algorithm:
 
@@ -103,11 +103,13 @@ class Algorithm:
                 
                 if reason:
                     self.sudoku.get_field(i, j).set_value(value)
+                    removed_candidates = recalc_candidates_with_new_value(self.sudoku, (i, j))
                     return (True, {
                         'algorithm': 'hidden_single',
                         'field': (i, j),
                         'value': value,
                         'reason': reason,
+                        'removed_candidates': removed_candidates
                     })
                 else:    
                     blockCounter = 0    
@@ -124,11 +126,12 @@ class Algorithm:
                 if len(candidates) == 1:
                     value = candidates[0]
                     field.set_value(value)
-                    field.set_candidates([])
+                    removed_candidates = recalc_candidates_with_new_value(self.sudoku, (row, col))
                     return True, {
                         'algorithm': 'open_single',
                         'field': (row, col),
                         'value': value,
+                        'removed_candidates': removed_candidates,
                     }   
         return False, None
 

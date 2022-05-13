@@ -20,7 +20,7 @@ def get_unit(type: UnitType, nr: int, excluded_fields: List[Tuple[int, int]] = [
     elif type == UnitType.COLUMN:
         for row in NINE_RANGE:
             if (row, nr) not in excluded_fields:
-                unit.append((nr, col))
+                unit.append((row, nr))
     elif type == UnitType.BLOCK:
         rows, cols = Sudoku.get_block_ranges(nr)
         for row in rows:
@@ -60,6 +60,22 @@ def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int
                     removed_candidates.update({key: [v]})
 
     return removed_candidates
+
+def recalc_candidates_with_new_value(sudoku: Sudoku, field: Tuple[int, int]) -> Dict[int, List[int]]:
+    """
+    Removes the obsolete candidates from the sudoku, when a new value is set
+    :param sudoku: the Sudoku
+    :param field: the field with the new value (y, x)
+    :returns: a Dictionary of all the deleted candidates, sorted by field (key: y*10+x)
+    """
+    y,x = field
+    value_to_remove = [sudoku.get_field(y, x).get_value()]
+    dict_row = remove_candidates_from_fields_in_unit(sudoku, UnitType.ROW, y, value_to_remove, [])
+    dict_col = remove_candidates_from_fields_in_unit(sudoku, UnitType.COLUMN, x, value_to_remove, [])
+    dict_block = remove_candidates_from_fields_in_unit(sudoku, UnitType.BLOCK, Sudoku.get_block_nr(y, x), value_to_remove, [])
+
+    return {**dict_row, **dict_col, **dict_block}  # merge the dicts (keys that are double are overwritten)
+
 
 def enforce_hidden_algs(sudoku: Sudoku, type: UnitType, nr: int,
     candidates_to_lock: List[int]) -> Dict[int, List[int]]:
