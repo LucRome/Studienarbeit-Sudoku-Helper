@@ -173,7 +173,7 @@ NAME_MAP = {
     'hidden_pair': GRID4,
     'open_three': GRID5,
     'hidden_three': GRID6,
-    'naked_hidden_four': GRID7,
+    'open_four': GRID7,
     'row_block_check': GRID8,
     'block_row_check': GRID9,
     'x_wing': GRID10, # TODO: acknowledge seperation in row, col

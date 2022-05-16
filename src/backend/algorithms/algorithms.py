@@ -65,7 +65,7 @@ class Algorithm:
             'hidden_pair': self.algorithm_4,
             'open_three': self.algorithm_5,
             'hidden_three': self.algorithm_6,
-            'naked_hidden_four': self.algorithm_7,
+            'open_four': self.algorithm_7,
             'hidden_four': self.algorithm_8,
             'row_block_check': self.algorithm_9,
             'block_row_check': self.algorithm_10,
