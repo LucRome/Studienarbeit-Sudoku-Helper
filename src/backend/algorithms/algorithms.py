@@ -606,18 +606,19 @@ class Algorithm:
         return (False,None)
    
     # Block-Reihe_Check 
-    def algorithm_10(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_10(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             block = self.sudoku.get_block(i)
+            # iterate over all blocks
             for value in ALL_FIELD_VALUES:
                 row1 = False
                 row2 = False
                 row3 = False
                 count = 0
                 for j in NINE_RANGE:
+                    # iterate over all fields in the block
                     if value in block[j].get_candidates():
                         if j in range(0,3):
-                            print(self.get_row_by_block(i,j))
                             rowNr = self.get_row_by_block(i,j)
                             count = count + 1
                             row1=True
@@ -630,13 +631,21 @@ class Algorithm:
                             count = count + 1
                             row3=True
                 if (row1 and not row2 and not row3) or (row2 and not row1 and not row3) or (row3 and not row2 and not row1):
+                    # check if there are any benefits
                     rowCount = 0
                     row = self.sudoku.get_row(rowNr)
                     for a in NINE_RANGE:
                         if(value in row[a].get_candidates()):
                             rowCount = rowCount + 1
                     if rowCount > count:
-                        return True,f'Value: {value}, Row: {rowNr}, Block:{i}'
+                        intersect_fields = intersection_of_units(UnitType.ROW, rowNr, UnitType.BLOCK, i)  # the fields that are in the row and in the block
+                        removed_candidates = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, rowNr, [value], intersect_fields)
+                        return (True, {
+                            'algorithm': 'block_row_check',
+                            'value': value,
+                            'intersect_fields': intersect_fields,
+                            'removed_candidates': removed_candidates
+                        })
         return (False,None)        
 
     # X-Wing Row
