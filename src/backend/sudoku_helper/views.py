@@ -76,6 +76,8 @@ def solve_sudoku(request: HttpRequest):
     for al_fn in algorithms.get_all_algorithms():
         success, dict = al_fn()
         
+        # TODO: check if algorithm brought any use (i.e. candidates were deleted)
+
         if success:
             context = {
                 'sudoku': sudoku,

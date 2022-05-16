@@ -1,0 +1,11 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %} 
+  Quickinfo for hidden pair
+  Params:
+    dict: dictionary 
+{% endcomment %}
+{% block step-1 %}There is a hidden foursome in the highlighted area{% endblock step-1 %}
+{% block step-3 %}Using the hidden foursome algorithm, the marked candidates are used as candidates for the marked fields. 
+Because {{dict.values.0}}, {{dict.values.1}}, {{dict.values.2}} and {{dict.values.3}} only occur as candidates in these three fields.{% endblock step-3 %}
+{% block step-4 %}Using the hidden foursome algorithm, the candidates were used as the candidates in the highlighted fields.{% endblock step-4 %}
