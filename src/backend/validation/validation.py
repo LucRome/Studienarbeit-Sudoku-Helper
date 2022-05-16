@@ -30,11 +30,11 @@ class Validation:
   def validate(self, sudoku:Sudoku) -> Tuple[bool, Optional[str]]:
     counter = self.validate_sudoku(sudoku,0,0)
     if counter == 0:
-      return (False, f'The Sudoku is not valid! No Solutions exist!')
+      return (False, f'Das Sudoku ist ungültig, es existiert keine Lösung!')
     elif counter == 1:
       return (True, None)
     else:
-      return (False, f'The Sudoku is not valid! Multiple Solutions exist!')  
+      return (False, f'Das Sudoku ist ungültig, es existieren mehrere Lösungen!')  
 
   
   def validate_sudoku(self, sudoku:Sudoku, counter, pos):

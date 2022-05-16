@@ -12,8 +12,24 @@
     <div class="alert alert-success alert-dismissible d-flex align-items-center">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <strong class="material-icons-outlined mb">check_circle</strong> 
-        <p class="mb-0">The submitted Sudoku is valid!<p>
+        <p class="mb-0">Das eingegbene Sudoku ist gültig!<p>
     </div>
+
+     {# script to toggle candidates is in-place since its not used often and its short #}
+    <script>
+        var candid_visible = false;
+
+        $(document).ready(function() {
+        $("#toggle-candidates-btn").click(function() {
+            if (candid_visible) {
+            $(".candidate-table").addClass("invisible");
+            } else {
+            $(".candidate-table").removeClass("invisible");
+            }
+            candid_visible = !candid_visible;
+        })
+        })
+    </script>
 
     {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
 {% endblock content %}

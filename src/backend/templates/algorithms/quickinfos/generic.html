@@ -13,24 +13,24 @@
 {% if modal %}
   {# The legend for the candidates #}
   <div class="candidate-legend" style="display: none;">
-    <b>Candidate Legend</b>
+    <b>Legende für Kandidaten</b>
     <table class="table table-sm table-bordered">
       <tbody>
         <tr>
           <td class="align-middle"><img class="mx-auto align-middle" src="{% static 'imgs/candidates/1.svg' %}"/></td>
-          <td><p>Standard candidate<p></td>
+          <td><p>Standard Kandidaten<p></td>
         </tr>
         <tr>
           <td class="align-middle"><img src="{% static 'imgs/candidates_marked_delete/1.svg' %}"/></td>
-          <td><p>Candidates that will be deleted<p></td>
+          <td><p>Kandidaten, die gelöscht werden<p></td>
         </tr>
         <tr>
           <td class="align-middle"><img src="{% static 'imgs/candidates_marked_use/1.svg' %}"/></td>
-          <td><p>Candidates that will be used as the field value<p></td>
+          <td><p>Kanidaten, die als Wert in das Feld eingetragen werden<p></td>
         </tr>
         <tr>
           <td class="align-middle"><img src="{% static 'imgs/candidates_marked_lock/1.svg' %}"/></td>
-          <td><p>Candidates that must be in the respective Fields<p></td>
+          <td><p>Kandidaten, die in den jeweiligen Feldern sein müssen<p></td>
         </tr>
       </tbody>
     </table>
@@ -38,24 +38,24 @@
 
   {# The Legend for the fields #}
   <div class="field-legend" style="display: none;">
-    <b>Field Legend</b>
+    <b>Legende für Felder</b>
     <table class="table table-sm table-bordered">
       <tbody>
         <tr>
           <td class="p-0 field-new-value"><img src=""/></td>
-          <td><p>Fields that got a new value</p></td>
+          <td><p>Felder mit einem neuen Wert</p></td>
         </tr>
         <tr>
           <td class="p-0 field-locked-candidates"><img src=""/></td>
-          <td><p>Fields where Candidates are locked</p></td>
+          <td><p>Felder in denen Kandidaten festgelegt werden</p></td>
         </tr>
         <tr>
           <td class="p-0 field-removed-candidate"><img src=""/></td>
-          <td><p>Field where one or more candidates where removed</p></td>
+          <td><p>Felder in denen Kandidaten entfernt werden</p></td>
         </tr>
         <tr>
           <td class="p-0 field-locked-and-removed-candidates"><img src=""/></td>
-          <td><p>Fields where Candidates are locked and others are removed</p></td>
+          <td><p>Felder in denen Kandidaten sowohl festgelegt, als auch entfernt werden</p></td>
         </tr>
       </tbody>
     </table>
