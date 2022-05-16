@@ -1,6 +1,6 @@
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
-from .utils import UnitType, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value
+from .utils import UnitType, intersection_of_units, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units
 
 class Algorithm:
 
@@ -562,15 +562,18 @@ class Algorithm:
         return (False,None)
 
     # Reihe-Block-Check 
-    def algorithm_9(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_9(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
+            # iterate over all rows
             for value in ALL_FIELD_VALUES:
+                # iterate over all values
                 block1 = False
                 block2 = False
                 block3 = False
                 count = 0
                 for j in NINE_RANGE:
+                    # iterate over all Fields in the row
                     if value in row[j].get_candidates():
                         if j in range(0,3):
                             blockNr = Sudoku.get_block_nr(i,j)
@@ -585,13 +588,21 @@ class Algorithm:
                             count = count + 1
                             block3=True
                 if (block1 and not block2 and not block3) or (block2 and not block1 and not block3) or (block3 and not block2 and not block1):
+                    # check if there are any benefits
                     blockCount = 0
                     block = self.sudoku.get_block(blockNr)
                     for a in NINE_RANGE:
                         if(value in block[a].get_candidates()):
                             blockCount = blockCount + 1
                     if blockCount > count:
-                        return True,f'Value: {value}, Row: {i}, Block:{blockNr}'
+                        intersect_fields = intersection_of_units(UnitType.ROW, i, UnitType.BLOCK, blockNr)  # the fields that are in the row and in the block
+                        removed_candidates = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.BLOCK, blockNr, [value], intersect_fields)
+                        return (True, {
+                            'algorithm': 'row_block_check',
+                            'value': value,
+                            'intersect_fields': intersect_fields,
+                            'removed_candidates': removed_candidates
+                        })
         return (False,None)
    
     # Block-Reihe_Check 

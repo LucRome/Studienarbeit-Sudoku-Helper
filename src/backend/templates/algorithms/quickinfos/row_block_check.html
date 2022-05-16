@@ -1,0 +1,11 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %} 
+  Quickinfo for open three
+  Params:
+    dict: dictionary 
+{% endcomment %}
+{# TODO: correct name? #}
+{% block step-1 %}Der Algorithmus Reihe-Block-Check kann auf den markierten Bereich angewandt werden.{% endblock step-1 %}
+{% block step-3 %}Mit dem Reihe-Block-Check Algorithmus können alle Kandidaten vom Wert {{dict.value}} aus den Feldern in dem Block entfernt werden
+(außer aus den Feldern die auch in der Reihe liegen).{% endblock step-3 %}
