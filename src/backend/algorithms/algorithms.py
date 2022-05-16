@@ -400,8 +400,8 @@ class Algorithm:
                             })
         return (False,None)
 
-    # Nackter/Versteckter Vierer
-    def algorithm_7(self) -> Tuple[bool, Optional[str]]:
+    # Nackter Vierer
+    def algorithm_7(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
@@ -410,44 +410,73 @@ class Algorithm:
                 for value2 in range(value1+1,10):
                     for value3 in range(value2+1,10):
                         for value4 in range(value3+1,10):
+                            # _fields: the fields used to build the naked three in the corresponding unit
+                            # _candidates: the candidates of the respective fields
                             rowCounter = 0
+                            row_fields: List[Tuple[int, int]] = list()
+                            row_candidates: List[List[int]] = list()
                             colCounter = 0
+                            col_fields: List[Tuple[int, int]] = list()
+                            col_candidates: List[List[int]] = list()
                             blockCounter = 0
-                            list = (value1,value2,value3,value4)
+                            block_fields: List[Tuple[int, int]] = list()
+                            block_candidates: List[List[int]] = list()
+                            values = (value1,value2,value3,value4)
                             for j in NINE_RANGE:
                                 #block check
                                 if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates() or value4 in block[j].get_candidates():
+                                    # any testvalue in the candidates
                                     err = False
                                     for testValue in block[j].get_candidates():
-                                        if not(testValue in list):
+                                        if not(testValue in values):
                                             err = True
+                                            # when field has other candidates than the tested values -> no success
                                     if not err:
+                                        block_fields.append(block[j].get_coordinates())
+                                        block_candidates.append(block[j].get_candidates())
                                         blockCounter = blockCounter + 1
                                     
                                 #col check 
                                 if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates() or value4 in col[j].get_candidates():
+                                    # same principle as block
                                     err = False
                                     for testValue in col[j].get_candidates():
-                                        if not(testValue in list):
+                                        if not(testValue in values):
                                             err = True
                                     if not err:
+                                        col_fields.append(block[j].get_coordinates())
+                                        col_candidates.append(block[j].get_candidates())
                                         colCounter = colCounter + 1
                                 
                                 #row check
                                 if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates() or value4 in row[j].get_candidates():
+                                    # same principle as block
                                     err = False
                                     for testValue in row[j].get_candidates():
-                                        if not(testValue in list):
+                                        if not(testValue in values):
                                             err = True
                                     if not err:
+                                        row_fields.append(block[j].get_coordinates())
+                                        row_candidates.append(block[j].get_candidates())
                                         rowCounter = rowCounter + 1 
-                                                
+
+                            reason, fields, field_candidates ,nr = None, None, None, None
                             if blockCounter == 4:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Block:{i}' 
-                            if colCounter == 4:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Col:{i}' 
-                            if rowCounter == 4:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Row:{i}'        
+                                reason, fields, field_candidates, nr = UnitType.BLOCK, block_fields, block_candidates, i
+                            elif colCounter == 4:
+                                reason, fields, field_candidates, nr = UnitType.COLUMN, col_fields, col_candidates, i
+                            elif rowCounter == 4:
+                                reason, fields, field_candidates, nr = UnitType.ROW, row_fields, row_candidates, i
+                            if reason:
+                                removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, values, fields)
+                                return (True, {
+                                    'algorithm': 'open_four',
+                                    'values': values,
+                                    'fields': fields,
+                                    'field_candidates': field_candidates,
+                                    'reason': reason.value,
+                                    'removed_candidates': removed,
+                                })
         return (False,None)
         
     
