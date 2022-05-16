@@ -22,8 +22,6 @@ $(document).ready( function() {
             $(".field-affected").removeClass("field-affected");
             // function from algorithm scripts
             enter_changes();
-            $(".quickinfo-step[step=3]").hide();
-            $(".quickinfo-step[step=4]").show();
             $("#nxt-hint-btn").hide();
             $("#solve-sudoku-btn").show();
             $(".field-legend").show();

@@ -1,4 +1,3 @@
-import re
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
@@ -24,7 +23,7 @@ def index(request: HttpRequest):
     context={
         'sudoku': sudoku,
         'range': NINE_RANGE,
-        'quickinfo': 'Welcome, please enter the numbers into the sudoku and press validate to proceed!',
+        'quickinfo': 'Willkommen, bitte geben Sie die Nummern in das Sudoku ein und drücken Sie Validieren um fortzufahren!',
         'link_dev_tools': settings.DEBUG # only link settings tools when debug config is active
     }
     return render(request, 'pages/index.html', context)
@@ -43,7 +42,7 @@ def check_sudoku(request: HttpRequest):
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
-            'quickinfo': 'Your sudoku was verified, now you can start solving it by pressing solve!'
+            'quickinfo': 'Ihr Sudoku wurde verifiziert, jetzt können Sie beginnen es zu lösen! Drücken Sie Lösen um fortzufahren!'
         }
         return render(request, 'pages/verified.html', context)
 
@@ -66,9 +65,9 @@ def solve_sudoku(request: HttpRequest):
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
-            'quickinfo': 'Please enter a correct sudoku and press Validate to proceed!',
+            'quickinfo': 'Bitte geben Sie ein korrektes Sudoku ein und drücken Sie Validieren um fortzufahren!',
             'failed_tests': True,
-            'error_msg': 'Error: Something was wrong with the submitted candidates',
+            'error_msg': 'Fehler: Die übertragenen Kandidaten können nicht stimmten.',
         }
         return render(request, 'pages/index.html', context)
     
