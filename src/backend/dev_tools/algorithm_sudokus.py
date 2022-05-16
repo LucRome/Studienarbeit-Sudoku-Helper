@@ -129,7 +129,7 @@ GRID9 = [
 
 GRID10 = [
     [1, None, None, None, None, None, None, 8, None],
-    [8, None, 1, None, None, None, None, 2, 4],
+    [8, None, None, 1, None, None, None, 2, 4],
     [7, None, None, None, None, 3, 1, 5, None],
     [None, None, None, None, 4, 1, 6, 9, 2],
     [None, 9, None, 6, 7, None, 4, 1, 3],
@@ -177,6 +177,7 @@ NAME_MAP = {
     'hidden_four': GRID7,
     'row_block_check': GRID8,
     'block_row_check': GRID9,
-    'x_wing': GRID10, # TODO: acknowledge seperation in row, col
+    'x_wing_row': GRID10,
+    'x_wing_col': GRID10,
     'third_eye': GRID12,
 }

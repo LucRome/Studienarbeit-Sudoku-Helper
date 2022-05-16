@@ -653,37 +653,52 @@ class Algorithm:
         Pair1 = []
         Pair2 = []        
         for value in ALL_FIELD_VALUES:
+            # iterate over all values
             Counter = 0
             Pair1.clear()
             Pair2.clear()
             for i in NINE_RANGE:
                 row = self.sudoku.get_row(i)
+                # iterate over all rows
                 for j in NINE_RANGE:
+                    # iterate over all fields in rows
                     if value in row[j].get_candidates():
                         Counter = Counter + 1
-                        Pair1.append([i,j])
+                        Pair1.append((i,j))
                 if(Counter==2):
-                    
+                    # success for first pair -> add to pair2 and continue (pair 2: List of all pairs in all rows)
                     Pair2.append([Pair1[0],Pair1[1]]) 
                     Pair1.clear()
                     Counter = 0
                 else:
+                    # no success for this pair
                     Pair1.clear()
                     Counter = 0     
             if(len(Pair2)>=2):
                 for a in range(0,len(Pair2)):
                     for b in range(a+1,len(Pair2)):
+                        # check all pairs whether there are some that meet the requirements
                         if Pair2[a][0][1] == Pair2[b][0][1] and Pair2[a][1][1] == Pair2[b][1][1]:
                             colCount = 0
                             col1 = self.sudoku.get_column(Pair2[a][0][1])
                             col2 = self.sudoku.get_column(Pair2[a][1][1])
                             for l in NINE_RANGE:
+                                # check whether the algorithm brings a benefit
                                 if(value in col1[l].get_candidates()):
                                     colCount = colCount + 1
                                 if(value in col2[l].get_candidates()):
                                     colCount = colCount + 1
                                 if colCount > 4:
-                                    return True,f'Value: {value}, Col1: { Pair2[a][0][1]}, Col2: {Pair2[a][1][1]}'
+                                    intersect_fields = [Pair2[a][0], Pair2[a][1], Pair2[b][0], Pair2[b][1]]
+                                    removed_candidates_1 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, Pair2[a][0][1], [value], intersect_fields)
+                                    removed_candidates_2 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, Pair2[a][1][1], [value], intersect_fields)
+                                    removed_candidates = {**removed_candidates_1, **removed_candidates_2}
+                                    return (True, {
+                                        'algorithm': 'x_wing_row',
+                                        'value': value,
+                                        'intersect_fields': intersect_fields,
+                                        'removed_candidates': removed_candidates
+                                    })
         return (False,None)
     
     # X-Wing Col
