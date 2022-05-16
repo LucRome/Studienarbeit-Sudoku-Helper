@@ -12,7 +12,8 @@
             "cwd": "${workspaceFolder}/src/backend",
             "args": [
                 "sudoku.tests",
-                "validation.test_validation"
+                "validation.test_validation",
+                "algorithms.test_utils"
             ],
             "justMyCode": true
         },

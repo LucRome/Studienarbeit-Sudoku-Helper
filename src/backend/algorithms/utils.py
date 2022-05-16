@@ -107,4 +107,16 @@ def enforce_hidden_algs(sudoku: Sudoku, type: UnitType, nr: int,
     
     return removed_candidates
 
-        
+def intersection_of_units(a_type: UnitType, a_nr: int, b_type: UnitType, b_nr: int) -> List[Tuple[int, int]]:
+    """
+    Creates the intersection of the two given units
+    :returns: Coordinates of the fields in the intersection
+    """
+    a = get_unit(a_type, a_nr)
+    b = get_unit(b_type, b_nr)
+
+    intersection: List[Tuple[int, int]] = list()
+    for coords in a:
+        if coords in b:
+            intersection.append(coords)
+    return intersection
