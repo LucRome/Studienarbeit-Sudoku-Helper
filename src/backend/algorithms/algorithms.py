@@ -649,7 +649,7 @@ class Algorithm:
         return (False,None)        
 
     # X-Wing Row
-    def algorithm_11_1(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_11_1(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Pair1 = []
         Pair2 = []        
         for value in ALL_FIELD_VALUES:
@@ -702,7 +702,7 @@ class Algorithm:
         return (False,None)
     
     # X-Wing Col
-    def algorithm_11_2(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_11_2(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Pair1 = []
         Pair2 = []        
         for value in ALL_FIELD_VALUES:
