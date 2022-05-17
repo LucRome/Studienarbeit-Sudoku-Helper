@@ -65,7 +65,7 @@ def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int
     removed_candidates: Dict[int, List[int]] = dict() #Key: y*10+x
     for (y,x) in unit:
         field = sudoku.get_field(y, x)
-        key = y*10 + x
+        key = coordinates_to_key(y, x)
         field_candidates = field.get_candidates()
         for v in candidates_to_remove:
             if v in field_candidates:
