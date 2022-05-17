@@ -1,6 +1,8 @@
+import math
 from sudoku.base import Sudoku, Field, NINE_RANGE
 from typing import List, Tuple, Literal, Dict
 from enum import Enum
+
 
 # TODO: implement Function that removes the given candidates from the fields in the given unit, except the given fields
 
@@ -29,6 +31,22 @@ def get_unit(type: UnitType, nr: int, excluded_fields: List[Tuple[int, int]] = [
                     unit.append((row, col))
 
     return unit
+
+
+def coordinates_to_key(y: int, x: int) -> int:
+    """
+    Transforms the Coordinates into a key for the dictionary
+    """
+    return y*10 + x
+
+
+def key_to_coordinates(key: int) -> Tuple[int, int]:
+    """
+    Transforms the key for the dictionary back into coordinates
+    :returns: (y, x)
+    """
+    return (key//10, key%10)
+
 
 def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int,
     candidates_to_remove: List[int], excluded_fields: List[Tuple[int, int]]) -> Dict[int, List[int]]:

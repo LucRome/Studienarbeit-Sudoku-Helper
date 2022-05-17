@@ -1,6 +1,7 @@
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
-from .utils import UnitType, intersection_of_units, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units
+from .utils import UnitType, intersection_of_units, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units, \
+    key_to_coordinates, coordinates_to_key
 
 class Algorithm:
 
@@ -761,19 +762,24 @@ class Algorithm:
 
 
     # Drittes Auge
-    def algorithm_13(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_13(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         counter = 0
         rowPos = 0
         colPos= 0
         value = 0
+        reason = None
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
+            # iterate over all rows
             for j in NINE_RANGE:
+                # iterate over all fields in row
                 if len(row[j].get_candidates()) == 3:
+                    # field has 3 candidates
                     for a in ALL_FIELD_VALUES:
                         rowCounter = 0
                         blockCounter = 0
                         colCounter = 0
+                        # check whether the candidate occurs 3 times in a unit
                         block = self.sudoku.get_block(Sudoku.get_block_nr(i,j))
                         col = self.sudoku.get_column(j)
                         for j2 in NINE_RANGE:
@@ -784,23 +790,42 @@ class Algorithm:
                             if a in col[j2].get_candidates():
                                 colCounter = colCounter + 1
                         if blockCounter == 3:
+                            reason = UnitType.BLOCK
                             value = a
                             rowPos = i
                             colPos = j
                         if rowCounter == 3:
+                            reason = UnitType.ROW
                             value = a
                             rowPos = i
                             colPos = j
                         if colCounter == 3:
+                            reason = UnitType.COLUMN
                             value = a
                             rowPos = i
                             colPos = j                               
                     counter = counter + 1
                 if len(row[j].get_candidates()) > 3:
                     counter = 2
+                    # no success
+                    break
         
         if counter == 1:
-            return (True,f'Value:{value}, Row:{rowPos}, Col:{colPos}')
+            # success -> remove obsolete candidates
+            candidates = self.sudoku.get_field(rowPos, colPos).get_candidates()
+            to_remove = list(self.sudoku.get_field(rowPos, colPos).get_candidates())
+            to_remove.remove(value)
+            removed_candidates = {coordinates_to_key(rowPos, colPos): to_remove}
+            for v in to_remove:
+                candidates.remove(v)
+            return (True,{
+                'algorithm': 'third_eye',
+                'value': value,
+                'field': (rowPos, colPos),
+                'removed_candidates': removed_candidates,
+                'reason': reason.value
+            })
+            
         return (False,None)
 
     # Wolkenkratzer
