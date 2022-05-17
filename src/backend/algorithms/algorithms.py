@@ -706,37 +706,52 @@ class Algorithm:
         Pair1 = []
         Pair2 = []        
         for value in ALL_FIELD_VALUES:
+            # iterate over all values
             Counter = 0
             Pair1.clear()
             Pair2.clear()
             for i in NINE_RANGE:
+                # iterate over all columns
                 col = self.sudoku.get_column(i)
                 for j in NINE_RANGE:
+                    # iterate over all fields in column
                     if value in col[j].get_candidates():
                         Counter = Counter + 1
-                        Pair1.append([i,j])
+                        Pair1.append((j, i))
                 if(Counter==2):
-                    
+                    # success for first pair -> add to pair2 and continue (pair 2: List of all pairs in all rows)
                     Pair2.append([Pair1[0],Pair1[1]]) 
                     Pair1.clear()
                     Counter = 0
                 else:
+                    # no success for this pair
                     Pair1.clear()
                     Counter = 0     
             if(len(Pair2)>=2):
                 for a in range(0,len(Pair2)):
                     for b in range(a+1,len(Pair2)):
-                        if Pair2[a][0][1] == Pair2[b][0][1] and Pair2[a][1][1] == Pair2[b][1][1]:
+                        # check all pairs whether there are some that meet the requirements
+                        if Pair2[a][0][0] == Pair2[b][0][0] and Pair2[a][1][0] == Pair2[b][1][0]:
                             rowCount = 0
-                            row1 = self.sudoku.get_row(Pair2[a][0][1])
-                            row2 = self.sudoku.get_row(Pair2[a][1][1])
+                            row1 = self.sudoku.get_row(Pair2[a][0][0])
+                            row2 = self.sudoku.get_row(Pair2[a][1][0])
                             for l in NINE_RANGE:
+                                # check whether the algorithm brings a benefit
                                 if(value in row1[l].get_candidates()):
                                     rowCount = rowCount + 1
                                 if(value in row2[l].get_candidates()):
                                     rowCount = rowCount + 1
                                 if rowCount > 4:
-                                    return True,f'Value: {value}, Row1: { Pair2[a][0][1]}, Row2: {Pair2[a][1][1]}'
+                                    intersect_fields = [Pair2[a][0], Pair2[a][1], Pair2[b][0], Pair2[b][1]]
+                                    removed_candidates_1 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, Pair2[a][0][0], [value], intersect_fields)
+                                    removed_candidates_2 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, Pair2[a][1][0], [value], intersect_fields)
+                                    removed_candidates = {**removed_candidates_1, **removed_candidates_2}
+                                    return (True, {
+                                        'algorithm': 'x_wing_col',
+                                        'value': value,
+                                        'intersect_fields': intersect_fields,
+                                        'removed_candidates': removed_candidates
+                                    })
         return (False,None)
     
     # Steinbutt
