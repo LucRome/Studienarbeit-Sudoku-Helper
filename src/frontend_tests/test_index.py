@@ -8,6 +8,7 @@ from typing import List
 from .utils.web_driver_utils import start_driver, quit_driver
 from .utils.input_utils import write_value_in_field, clear_all_fields
 from backend.sudoku.base import ALL_FIELD_VALUES, FIELD_VALUE_MAX, FIELD_VALUE_MIN, NINE_RANGE
+from .utils.modal_tests import test_modals
 
 class TestIndex(ut.TestCase):
     """
@@ -118,3 +119,7 @@ class TestIndex(ut.TestCase):
         for input in inputs:
             self.assertEqual(input.get_attribute('class'), '')
 
+    def test_modals(self):
+        test_modals(self, self.driver, True, True)
+
+    # TODO: Clear button
