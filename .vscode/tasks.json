@@ -31,6 +31,20 @@
                 "runserver"
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "Run Frontend Tests",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "args": [
+                "-m",
+                "unittest",
+                "frontend_tests.test_index"
+            ],
+            "problemMatcher": []
         }
     ]
 }

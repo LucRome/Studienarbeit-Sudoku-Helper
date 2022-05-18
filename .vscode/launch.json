@@ -34,6 +34,19 @@
                 "runserver"
             ],
             "django": true
-        }
+        },
+        {
+            "name": "Python: Frontend Tests",
+            "type": "python",
+            "request": "launch",
+            "module": "unittest",
+            "cwd": "${workspaceFolder}/src",
+            
+            "args": [
+                "frontend_tests.test_index",
+            ],
+            "justMyCode": true,
+            "subProcess": true,
+        },
     ]
 }
