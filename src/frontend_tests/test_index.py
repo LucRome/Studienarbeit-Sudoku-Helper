@@ -51,7 +51,19 @@ class TestIndex(ut.TestCase):
         # unsupported symbols (e.g. letters)
         write_value_in_field(input, 'a')
         self.assertEqual(input.get_attribute('value'), '')
-    
+
+        # delete all button
+        # write sth in fields:
+        ids = ('0_0', '2_3', '4_5', '6_2', '1_2')
+        for id in ids:
+            write_value_in_field(self.driver.find_element(by=By.ID, value=id), 2)
+        # press button
+        self.driver.find_element(by=By.ID, value='clear-sudoku-btn').click()
+        # check
+        for row in NINE_RANGE:
+            for col in NINE_RANGE:
+                self.assertEqual(self.driver.find_element(by=By.ID, value=f'{row}_{col}').get_attribute('value'), '')
+            
 
     def test_inputs_combined(self):
         """
@@ -121,5 +133,3 @@ class TestIndex(ut.TestCase):
 
     def test_modals(self):
         test_modals(self, self.driver, True, True)
-
-    # TODO: Clear button
