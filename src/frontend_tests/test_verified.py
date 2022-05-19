@@ -70,3 +70,28 @@ class TestVerified(ut.TestCase):
             self.assertFalse(can.is_displayed())
 
         test_modals(self, self.driver, quickinfo=True, help=True)
+    
+    def test_invalid(self):
+        """
+        test when a invalid sudoku is entered
+        """
+        enter_sudoku(self.driver, SUDOKU_INVALID)
+        submit_sudoku(self.driver)
+
+        # error message
+        error_msg = self.driver.find_element(by=By.CSS_SELECTOR, value='div.alert-danger')
+        self.assertTrue(error_msg.is_displayed())
+        error_msg.find_element(by=By.CSS_SELECTOR, value='button[data-bs-dismiss="alert"]').click()
+        # (alerts are completely removed from the DOM, when closed)
+        self.assertRaises(StaleElementReferenceException, error_msg.is_displayed)
+
+        # inputs are not readonly
+        inputs = self.driver.find_elements(by=By.CSS_SELECTOR, value='input[type="number"]')
+        for input in inputs:
+            self.assertEqual(input.get_attribute('readonly'), None)
+
+        # validate button is present
+        self.assertTrue(self.driver.find_element(by=By.ID, value='submit-sudoku-btn').is_enabled())
+
+        # modals
+        test_modals(self, self.driver, quickinfo=True, help=True)
