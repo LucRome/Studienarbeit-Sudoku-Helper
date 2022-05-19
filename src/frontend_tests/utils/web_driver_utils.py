@@ -3,16 +3,18 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
 
+from .waits import wait_for_page_to_load
+
 
 def start_driver() -> WebDriver:
     """
     start the driver for Firefox and open the correct Page
     """
     driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
-    driver.implicitly_wait(30)
-    driver.maximize_window()
+    # driver.maximize_window()
     driver.get("http://127.0.0.1:8000/")
-    driver.implicitly_wait(30)
+    # driver.implicitly_wait(60)
+    wait_for_page_to_load(driver)
     return driver
 
 
