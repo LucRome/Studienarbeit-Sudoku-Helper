@@ -1,5 +1,6 @@
+from ssl import CHANNEL_BINDING_TYPES
 from sudoku.base import Sudoku, Field, NINE_RANGE
-from typing import List, Tuple, Literal, Dict
+from typing import List, Tuple, Literal, Dict, Optional
 from enum import Enum
 
 # TODO: implement Function that removes the given candidates from the fields in the given unit, except the given fields
@@ -107,4 +108,88 @@ def enforce_hidden_algs(sudoku: Sudoku, type: UnitType, nr: int,
     
     return removed_candidates
 
+
+
+        
+def find_chain_12(sudoku:Sudoku,field:Field,value:int) -> Tuple[bool,List[Field]]:  
+    chain: List[Field] = list()
+    col = sudoku.get_column(field.get_coordinates()[1])
+    chain.append(field)
+    for i in NINE_RANGE:
+        if value in col[i].get_candidates() and col[i].get_coordinates()[0] != field.get_coordinates()[0]:
+            chain.append(col[i])
+    if len(chain)>=3:
+        return False, chain
+    if len(chain) < 2:
+        return True, None
+    block =  sudoku.get_block(Sudoku.get_block_nr(chain[1].get_coordinates()[0],chain[1].get_coordinates()[1]))
+    for i in NINE_RANGE:
+        if value in block[i].get_candidates() and block[i].get_coordinates()[0]!= chain[1].get_coordinates()[0] and block[i].get_coordinates()[0]!= chain[0].get_coordinates()[0]:
+            chain.append(block[i])
+    if len(chain) < 3:
+            return True, None
+    row = sudoku.get_row(chain[2].get_coordinates()[0])
+    for i in NINE_RANGE:
+        if value in row[i].get_candidates() and row[i].get_coordinates()[1]!= chain[2].get_coordinates()[1]:
+            chain.append(row[i])
+    if len(chain) == 2:
+        return False,chain
+    return True, chain   
+
+def check_Same_Block_Rows(b:Tuple[int,int],y:Tuple[int,int]) ->bool:
+    if b[1]==0 and y[1]!=0 and y[1]!=1 and y[1]!=2:
+        return True 
+    elif b[1]==0 and y[1]!=0 and y[1]!=1 and y[1]!=2:
+        return True 
+    elif b[1]==0 and y[1]!=0 and y[1]!=1 and y[1]!=2:
+        return True  
+    elif b[1]==3 and y[1]!=3 and y[1]!=4 and y[1]!=5:
+        return True  
+    elif b[1]==3 and y[1]!=3 and y[1]!=4 and y[1]!=5:
+        return True 
+    elif b[1]==3 and y[1]!=3 and y[1]!=4 and y[1]!=5:
+        return True  
+    elif b[1]==6 and y[1]!=6 and y[1]!=7 and y[1]!=8:
+        return True  
+    elif b[1]==6 and y[1]!=6 and y[1]!=7 and y[1]!=8:
+        return True  
+    elif b[1]==6 and y[1]!=6 and y[1]!=7 and y[1]!=8:
+        return True 
+    return False     
+                    
+def find_chain_16(sudoku:Sudoku,field:Field,value:int) -> Tuple[bool,List[Field]]:  
+    chain: List[Field] = list()
+    block = sudoku.get_block(Sudoku.get_block_nr(field.get_coordinates()[0],field.get_coordinates()[1]))
+    chain.append(field)
+    for i in NINE_RANGE:
+        if value in block[i].get_candidates() and block[i].get_coordinates()[0] != field.get_coordinates()[0]:
+            chain.append(block[i])
+    if len(chain)>=3:
+        return False, chain
+    if len(chain) < 2:
+        return True, None
+    col = sudoku.get_column(chain[1].get_coordinates()[1])
+    for i in NINE_RANGE:
+        if value in col[i].get_candidates() and col[i].get_coordinates()[0]!= chain[1].get_coordinates()[0] and col[i].get_coordinates()[0]!= chain[0].get_coordinates()[0]:
+            chain.append(col[i])
+    if len(chain) < 3:
+            return True, None
+    row = sudoku.get_row(chain[2].get_coordinates()[0])
+    for i in NINE_RANGE:
+        if value in row[i].get_candidates() and row[i].get_coordinates()[1]!= chain[2].get_coordinates()[1]:
+            chain.append(row[i])
+    if len(chain) == 2:
+        return False,chain
+    return True, chain          
+
+def find_chain_16_1(sudoku:Sudoku,field:Field,value:int) -> Tuple[bool,List[Field]]:  
+    chain: List[Field] = list()
+    col = sudoku.get_column(field.get_coordinates()[1])
+    chain.append(field)
+    for i in NINE_RANGE:
+        if value in col[i].get_candidates() and col[i].get_coordinates()[0] != field.get_coordinates()[0]:
+            chain.append(col[i])
+    if len(chain) > 1:
+        return True,chain
+    return False,None
         
