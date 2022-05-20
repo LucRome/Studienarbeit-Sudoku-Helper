@@ -133,5 +133,3 @@ class TestIndex(ut.TestCase):
 
     def test_modals(self):
         test_modals(self, self.driver, True, True)
-
-    # TODO: Clear button
