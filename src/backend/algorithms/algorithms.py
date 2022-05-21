@@ -1113,30 +1113,25 @@ class Algorithm:
                                 fields2.append(fields1[d])
                                 if self.check_Viereck(fields2):
                                     if value1 == 4 and value2 == 6:
-                                        print(fields2)
+                                        print('aa',fields2)
                                     counter = 0
                                     for l in fields2:
-                                        if len(self.sudoku.get_field(l[0],l[1]).get_candidates())==2:
-                                            counter = counter +1
-                                            returnField.append(self.sudoku.get_field(l[0],l[1]))
-                                        elif len(self.sudoku.get_field(l[0],l[1]).get_candidates())>=3 and len(returnField2)==0:
-                                            for k in self.sudoku.get_field(l[0],l[1]).get_candidates():
-                                                if k != value1 and k != value2:
-                                                    values.append(k)
-                                            for k in values:
-                                                chain = self.get_chain_19(self.sudoku.get_field(l[0],l[1]),self.sudoku.get_block(Sudoku.get_block_nr(l[0],l[1])),[value1,value2])
-                                                if chain!=None:
-                                                    if len(chain[0]) < len(self.sudoku.get_block(Sudoku.get_block_nr(l[0],l[1]))):
-                                                        return True,f'Value1: {value1} Value2: {value2} Values: {chain[1]} Fields:{fields2} Start: ({l[0]},{l[1]}) Chain: {chain[0]}'
-                                                chain = self.get_chain_19(self.sudoku.get_field(l[0],l[1]),self.sudoku.get_row(l[0]),[value1,value2])
-                                                if chain!=None:
-                                                    if len(chain[0]) < len(self.sudoku.get_row(l[0])):
-                                                        return True,f'Value1: {value1} Value2: {value2} Values: {chain[1]} Fields:{fields2} Start: ({l[0]},{l[1]}) Chain: {chain[0]}'
-                                                            
-                                    if counter == 2 and len(returnField2)==2:
-                                        return True,f'Value1: {value1} Value2: {value2} Remove:{returnValue} Field1:{returnField2[0].get_coordinates()} Field2:{returnField2[1].get_coordinates()}'
-                                    returnField.clear()
-                                    returnField2.clear()
+                                        if len(self.sudoku.get_field(l[0],l[1]).get_candidates())>=3:
+                                            if value1 == 4 and value2 == 6:
+                                                print(fields2)
+                                            chain = self.get_chain_19(self.sudoku.get_field(l[0],l[1]),self.sudoku.get_block(Sudoku.get_block_nr(l[0],l[1])),[value1,value2])
+                                            if chain!=None:
+                                                if value1 == 4 and value2 == 6:
+                                                    print(f'Value1: {value1} Value2: {value2} Values: {chain[1]} Fields:{fields2} Start: ({l[0]},{l[1]}) Chain: {chain[0]}')
+                                                if len(chain[0]) < len(self.sudoku.get_block(Sudoku.get_block_nr(l[0],l[1]))):
+                                                    return True,f'Value1: {value1} Value2: {value2} Values: {chain[1]} Fields:{fields2} Start: ({l[0]},{l[1]}) Chain: {chain[0]}'
+                                            chain = self.get_chain_19(self.sudoku.get_field(l[0],l[1]),self.sudoku.get_row(l[0]),[value1,value2])
+                                            if chain!=None:
+                                                if value1 == 4 and value2 == 6:
+                                                    print(f'Value1: {value1} Value2: {value2} Values: {chain[1]} Fields:{fields2} Start: ({l[0]},{l[1]}) Chain: {chain[0]}')
+                                                if len(chain[0]) < len(self.sudoku.get_row(l[0])):
+                                                    return True,f'Value1: {value1} Value2: {value2} Values: {chain[1]} Fields:{fields2} Start: ({l[0]},{l[1]}) Chain: {chain[0]}'
+                                                        
                                 fields2.clear()
                 fields1.clear()
                                             
@@ -1154,16 +1149,10 @@ class Algorithm:
                         if b in field.get_candidates() and not(b in values):
                             for c in a.get_candidates():
                                 if c!=b:
-                                    if field.get_coordinates()[0] == 0 and field.get_coordinates()[1]==1 and values[0]==4 and values[1]==6:
-                                        print('1--',a.get_coordinates())
                                     for d in section:
                                         if d.get_coordinates()[0]!=field.get_coordinates()[0] and d.get_coordinates()[1]!=field.get_coordinates()[1] and d.get_coordinates()[0]!=a.get_coordinates()[0] and d.get_coordinates()[1]!=a.get_coordinates()[1]:
-                                            if field.get_coordinates()[0] == 0 and field.get_coordinates()[1]==1 and values[0]==4 and values[1]==6:
-                                                print('3--',d.get_coordinates())
                                             for e in d.get_candidates():
                                                 if e!=c and e!=b and not(e in values):
-                                                    if field.get_coordinates()[0] == 0 and field.get_coordinates()[1]==1 and values[0]==4 and values[1]==6:
-                                                        print('---')
                                                     returnChain.append(a.get_coordinates())
                                                     returnChain.append(d.get_coordinates())
                                                     removeValues.append(b)
