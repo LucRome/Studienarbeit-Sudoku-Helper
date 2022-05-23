@@ -2,6 +2,8 @@ import unittest as ut
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.remote.webelement import WebElement
 from typing import List
 
@@ -16,11 +18,12 @@ from backend.dev_tools.algorithm_sudokus import NAME_MAP
 class TestGeneral(ut.TestCase):
     """
     Test Cases which are usefull for all algorithm pages
+    !Needs Dev Tools to Work!
     """
     driver: WebDriver = None
 
     def setUp(self) -> None:
-        self.driver = start_driver()
+        self.driver = start_driver('dev-tools/test_algorithm/third_eye')
 
     def tearDown(self) -> None:
         quit_driver(self.driver)
@@ -31,13 +34,6 @@ class TestGeneral(ut.TestCase):
         """
         iterates over the hints (for all algorithm pages)
         """
-        # first enter sudoku
-        enter_sudoku(self.driver, NAME_MAP['third_eye'])
-        submit_sudoku(self.driver)
-
-        # skip verified page
-        self.driver.find_element(by=By.ID, value='solve-sudoku-btn').click()
-        wait_for_page_to_load(self.driver, timeout=120, poll_frequency=5)
 
         # actual tests
 
