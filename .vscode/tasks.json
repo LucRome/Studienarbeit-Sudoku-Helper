@@ -42,11 +42,26 @@
             "args": [
                 "-m",
                 "unittest",
-                "frontend_tests.algorithm_pages.test_open_pair",
-                // "frontend_tests.test_index",
-                // "frontend_tests.test_verified",
-                // "frontend_tests.algorithm_pages",
+                "discover",
+                "-s",
+                "${workspaceFolder}/src/frontend_tests",
+                "-t",
+                "${workspaceFolder}/src",
                 "-v"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Defined Frontend Tests",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "args": [
+                "-m",
+                "unittest",
+                "frontend_tests.algorithm_pages.test_hidden_pair"
             ],
             "problemMatcher": []
         }
