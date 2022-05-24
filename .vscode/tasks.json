@@ -61,7 +61,8 @@
             "args": [
                 "-m",
                 "unittest",
-                "frontend_tests.algorithm_pages.test_hidden_three"
+                "frontend_tests.algorithm_pages.test_open_four",
+                "frontend_tests.algorithm_pages.test_hidden_four",
             ],
             "problemMatcher": []
         }
