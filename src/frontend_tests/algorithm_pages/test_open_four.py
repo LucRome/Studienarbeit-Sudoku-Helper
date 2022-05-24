@@ -18,7 +18,7 @@ from .utils import get_page_sub_url
 from .general_tests import GeneralTests
 
 
-class TestOpenPair(ut.TestCase):
+class TestOpenFour(ut.TestCase):
     """
     the Tests for the Open Foursome Algorithm Page
     """
