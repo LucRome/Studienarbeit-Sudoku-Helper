@@ -17,20 +17,20 @@ from .utils import get_page_sub_url
 from .general_tests import GeneralTests
 
 
-class TestHiddenSingle(ut.TestCase):
+class TestOpenSingle(ut.TestCase):
     """
-    the Tests for the Hidden Single Algorithm Page
+    the Tests for the Open Single Algorithm Page
     """
     driver: WebDriver = None
 
     def setUp(self) -> None:
-        self.driver = start_driver(get_page_sub_url('hidden_single'))
+        self.driver = start_driver(get_page_sub_url('open_single'))
 
     def tearDown(self) -> None:
         quit_driver(self.driver)
         self.driver = None
 
-    def test_hidden_single(self):
+    def test_open_single(self):
         gt = GeneralTests(self.driver, self)
         gt.step_1()
 
@@ -43,9 +43,14 @@ class TestHiddenSingle(ut.TestCase):
         gt.step_3()
         # one candidate is marked to be the field value (+1 from Legend)
         self.assertEqual(2, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_use"')))
+        # multiple candidates are marked to be deleted (+ 1 from legend)
+        self.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_delete"')))
 
         gt.nxt_hint_btn.click()
 
         gt.step_4()
         # one field has a new value (+ the field in the legend)
-        self.assertEqual(2, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value')))
+        self.assertEqual(2, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value'))) 
+        # multiple fields have lost candidates (+ 1 from Legend)
+        self.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-removed-candidate')))
+        
