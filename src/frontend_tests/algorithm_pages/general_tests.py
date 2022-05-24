@@ -72,9 +72,15 @@ class GeneralTests:
         self.tc.assertFalse(self.comp_cands_btn.is_displayed())
 
 
-    def step_3(self, use = 0, lock=0, delete=False):
+    def step_3(self, use=0, use_b=False, lock=0, lock_b=False, delete=False):
         """
         tests for step 3
+        :param use: the amount of Candidates that are marked to be used  
+        :param use_b: are candidates marked to be used? (Use when exact amount isnt given)
+        :param lock: the amount of Candidates that are marked to be locked  
+        :param use: the amount of Candidates that are marked to be used  
+        :param lock_b: are candidates marked to be locked? (Use when exact amount isnt given)
+        :param delete: are candidates marked to be deleted
         """
         # quickinfo for step 3
         self.tc.assertTrue(self.q_i_s3.is_displayed() and not self.q_i_s1.is_displayed())
@@ -83,18 +89,29 @@ class GeneralTests:
         self.tc.assertFalse(self.comp_cands_btn.is_displayed())
 
         # (+ 1, > 1: because of Legend)
-        if use > 0:
+        if use_b:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_use"')))
+        else:
             self.tc.assertEqual(use + 1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_use"')))
-        if lock > 0:
+        if lock_b:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_lock"')))
+        else:
             self.tc.assertEqual(lock + 1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_lock"')))
         if delete:
             self.tc.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_delete"')))
             
 
 
-    def step_4(self, new=0, locked=0, removed_n_locked=0, removed=False):
+    def step_4(self, new=0, new_b=False, locked=0, locked_b=False, removed_n_locked=0, removed_n_locked_b=False, removed=False):
         """
         tests for step 4
+        :param new: amount of fields with new value
+        :param new_b: are there fields with new value? (use when exact amount isnt given)
+        :param locked: amount of fields with locked candidates
+        :param locked_b: are there fields with locked candidates? (use when exact amount isnt given)
+        :param removed_n_locked: amount fo fields with locked and removed candidates
+        :param removed_n_locked_b: are there fields with locked and removed candidates? (use when exact amount isnt given)
+        :param removed: are there fields with removed candidates?
         """
         # quickinfo for step 4
         self.tc.assertTrue(self.q_i_s3.is_displayed() and not self.q_i_s1.is_displayed())
@@ -103,11 +120,17 @@ class GeneralTests:
         self.tc.assertTrue(self.comp_cands_btn.is_displayed())
 
         # (+ 1, > 1: because of Legend)
-        if new > 0:
+        if new_b:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value')))
+        else:
             self.tc.assertEqual(new + 1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value')))
-        if locked > 0:
-            self.tc.assertEqual(3, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-candidates')))
-        if removed_n_locked > 0:
-            self.tc.assertEqual(3, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-and-removed-candidates')))
+        if locked_b:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-candidates')))
+        else:
+            self.tc.assertEqual(locked + 1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-candidates')))
+        if removed_n_locked_b:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-and-removed-candidates')))
+        else:
+            self.tc.assertEqual(removed_n_locked + 1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-and-removed-candidates')))
         if removed:
             self.tc.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-removed-candidate')))
