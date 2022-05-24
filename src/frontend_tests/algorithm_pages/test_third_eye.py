@@ -18,14 +18,14 @@ from .utils import get_page_sub_url
 from .general_tests import GeneralTests
 
 
-class TestHiddenFour(ut.TestCase):
+class TestThirdEye(ut.TestCase):
     """
-    the Tests for the Hidden Foursome Algorithm Page
+    the Tests for the Third-Eye Algorithm Page
     """
     driver: WebDriver = None
 
     def setUp(self) -> None:
-        self.driver = start_driver(get_page_sub_url('hidden_four'))
+        self.driver = start_driver(get_page_sub_url('third_eye'))
 
     def tearDown(self) -> None:
         quit_driver(self.driver)
@@ -45,4 +45,4 @@ class TestHiddenFour(ut.TestCase):
 
         gt.nxt_hint_btn.click()
 
-        gt.step_4(removed_n_locked=4)
+        gt.step_4(removed_n_locked=1)
