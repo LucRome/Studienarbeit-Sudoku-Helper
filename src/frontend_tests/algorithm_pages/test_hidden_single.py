@@ -40,12 +40,8 @@ class TestHiddenSingle(ut.TestCase):
 
         gt.nxt_hint_btn.click()
 
-        gt.step_3()
-        # one candidate is marked to be the field value (+1 from Legend)
-        self.assertEqual(2, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_use"')))
+        gt.step_3(use=1) # TODO: Delete = True
 
         gt.nxt_hint_btn.click()
 
-        gt.step_4()
-        # one field has a new value (+ the field in the legend)
-        self.assertEqual(2, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value')))
+        gt.step_4(new=1) # TODO: Delete = True

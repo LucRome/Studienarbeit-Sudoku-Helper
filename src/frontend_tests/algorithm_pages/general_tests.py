@@ -72,7 +72,7 @@ class GeneralTests:
         self.tc.assertFalse(self.comp_cands_btn.is_displayed())
 
 
-    def step_3(self):
+    def step_3(self, use = 0, lock=0, delete=False):
         """
         tests for step 3
         """
@@ -82,8 +82,17 @@ class GeneralTests:
         self.tc.assertTrue(self.nxt_hint_btn.is_displayed())
         self.tc.assertFalse(self.comp_cands_btn.is_displayed())
 
+        # (+ 1, > 1: because of Legend)
+        if use > 0:
+            self.tc.assertEqual(use + 1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_use"')))
+        if lock > 0:
+            self.tc.assertEqual(lock + 1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_lock"')))
+        if delete:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_delete"')))
+            
 
-    def step_4(self):
+
+    def step_4(self, new=0, locked=0, removed_n_locked=0, removed=False):
         """
         tests for step 4
         """
@@ -92,4 +101,13 @@ class GeneralTests:
         # compute candidates button is available
         self.tc.assertFalse(self.nxt_hint_btn.is_displayed())
         self.tc.assertTrue(self.comp_cands_btn.is_displayed())
-    
+
+        # (+ 1, > 1: because of Legend)
+        if new > 0:
+            self.tc.assertEqual(new + 1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value')))
+        if locked > 0:
+            self.tc.assertEqual(3, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-candidates')))
+        if removed_n_locked > 0:
+            self.tc.assertEqual(3, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-and-removed-candidates')))
+        if removed:
+            self.tc.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-removed-candidate')))

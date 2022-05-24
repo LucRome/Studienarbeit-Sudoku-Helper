@@ -1,4 +1,5 @@
 import unittest as ut
+from requests import delete
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -40,16 +41,8 @@ class TestOpenPair(ut.TestCase):
 
         gt.nxt_hint_btn.click()
 
-        gt.step_3()
-        # 4 candidates are marked lock (+ 1 from Legend)
-        self.assertEqual(5, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_lock"')))
-        # multiple candidates are marked delete (+ 1 from Legend)
-        self.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_delete"')))
+        gt.step_3(lock=4, delete=True)
 
         gt.nxt_hint_btn.click()
 
-        gt.step_4()
-        # 2 fields have locked candidates (+ the field in the legend)
-        self.assertEqual(3, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-locked-candidates')))
-        # fields have lost candidates (+ 1 from Legend)
-        self.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-removed-candidate')))
+        gt.step_4(locked=2, removed=True)

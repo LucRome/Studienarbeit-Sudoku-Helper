@@ -40,17 +40,9 @@ class TestOpenSingle(ut.TestCase):
 
         gt.nxt_hint_btn.click()
 
-        gt.step_3()
-        # one candidate is marked to be the field value (+1 from Legend)
-        self.assertEqual(2, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_use"')))
-        # multiple candidates are marked to be deleted (+ 1 from legend)
-        self.assertLess(1, len(self.driver.find_elements(by=By.CSS_SELECTOR, value='img[src*="marked_delete"')))
+        gt.step_3(use=1, delete=True)
 
         gt.nxt_hint_btn.click()
 
-        gt.step_4()
-        # one field has a new value (+ the field in the legend)
-        self.assertEqual(2, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-new-value'))) 
-        # multiple fields have lost candidates (+ 1 from Legend)
-        self.assertLess(1, len(self.driver.find_elements(by=By.CLASS_NAME, value='field-removed-candidate')))
+        gt.step_4(new=1, removed=True)
         
