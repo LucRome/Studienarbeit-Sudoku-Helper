@@ -61,8 +61,7 @@
             "args": [
                 "-m",
                 "unittest",
-                "frontend_tests.algorithm_pages.test_block_row_check",
-                "frontend_tests.algorithm_pages.test_row_block_check",
+                "frontend_tests.algorithm_pages.test_x_wing",
             ],
             "problemMatcher": []
         }
