@@ -1,7 +1,8 @@
 import re
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
-from .utils import UnitType, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, find_chain_16_1, find_chain_16, find_chain_12, check_Same_Block_Rows
+from .utils import UnitType, intersection_of_units, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units, \
+    key_to_coordinates, coordinates_to_key
 
 class Algorithm:
 
@@ -65,7 +66,7 @@ class Algorithm:
             'hidden_pair': self.algorithm_4,
             'open_three': self.algorithm_5,
             'hidden_three': self.algorithm_6,
-            'naked_hidden_four': self.algorithm_7,
+            'open_four': self.algorithm_7,
             'hidden_four': self.algorithm_8,
             'row_block_check': self.algorithm_9,
             'block_row_check': self.algorithm_10,
@@ -401,8 +402,8 @@ class Algorithm:
                             })
         return (False,None)
 
-    # Nackter/Versteckter Vierer
-    def algorithm_7(self) -> Tuple[bool, Optional[str]]:
+    # Nackter Vierer
+    def algorithm_7(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
@@ -411,50 +412,80 @@ class Algorithm:
                 for value2 in range(value1+1,10):
                     for value3 in range(value2+1,10):
                         for value4 in range(value3+1,10):
+                            # _fields: the fields used to build the naked three in the corresponding unit
+                            # _candidates: the candidates of the respective fields
                             rowCounter = 0
+                            row_fields: List[Tuple[int, int]] = list()
+                            row_candidates: List[List[int]] = list()
                             colCounter = 0
+                            col_fields: List[Tuple[int, int]] = list()
+                            col_candidates: List[List[int]] = list()
                             blockCounter = 0
-                            list = (value1,value2,value3,value4)
+                            block_fields: List[Tuple[int, int]] = list()
+                            block_candidates: List[List[int]] = list()
+                            values = (value1,value2,value3,value4)
                             for j in NINE_RANGE:
                                 #block check
                                 if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates() or value4 in block[j].get_candidates():
+                                    # any testvalue in the candidates
                                     err = False
                                     for testValue in block[j].get_candidates():
-                                        if not(testValue in list):
+                                        if not(testValue in values):
                                             err = True
+                                            # when field has other candidates than the tested values -> no success
                                     if not err:
+                                        block_fields.append(block[j].get_coordinates())
+                                        block_candidates.append(block[j].get_candidates())
                                         blockCounter = blockCounter + 1
                                     
                                 #col check 
                                 if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates() or value4 in col[j].get_candidates():
+                                    # same principle as block
                                     err = False
                                     for testValue in col[j].get_candidates():
-                                        if not(testValue in list):
+                                        if not(testValue in values):
                                             err = True
                                     if not err:
+                                        col_fields.append(block[j].get_coordinates())
+                                        col_candidates.append(block[j].get_candidates())
                                         colCounter = colCounter + 1
                                 
                                 #row check
                                 if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates() or value4 in row[j].get_candidates():
+                                    # same principle as block
                                     err = False
                                     for testValue in row[j].get_candidates():
-                                        if not(testValue in list):
+                                        if not(testValue in values):
                                             err = True
                                     if not err:
+                                        row_fields.append(block[j].get_coordinates())
+                                        row_candidates.append(block[j].get_candidates())
                                         rowCounter = rowCounter + 1 
-                                                
+
+                            reason, fields, field_candidates ,nr = None, None, None, None
                             if blockCounter == 4:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Block:{i}' 
-                            if colCounter == 4:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Col:{i}' 
-                            if rowCounter == 4:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Row:{i}'        
+                                reason, fields, field_candidates, nr = UnitType.BLOCK, block_fields, block_candidates, i
+                            elif colCounter == 4:
+                                reason, fields, field_candidates, nr = UnitType.COLUMN, col_fields, col_candidates, i
+                            elif rowCounter == 4:
+                                reason, fields, field_candidates, nr = UnitType.ROW, row_fields, row_candidates, i
+                            if reason:
+                                removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, values, fields)
+                                return (True, {
+                                    'algorithm': 'open_four',
+                                    'values': values,
+                                    'fields': fields,
+                                    'field_candidates': field_candidates,
+                                    'reason': reason.value,
+                                    'removed_candidates': removed,
+                                })
         return (False,None)
         
     
     # Versteckter Vierer
-    def algorithm_8(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_8(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
+            # iterate over all blocks, columns, rows
             row = self.sudoku.get_row(i)
             col = self.sudoku.get_column(i)
             block = self.sudoku.get_block(i)
@@ -462,7 +493,8 @@ class Algorithm:
                 for value2 in range(value1+1,10):
                     for value3 in range(value2+1,10):
                         for value4 in range(value3+1,10):
-                            blockBenefit = False
+                            values = [value1, value2, value3, value4]
+                            blockBenefit = False # TODO: what is the use of these variables???
                             colBenefit = False
                             rowBenefit = False
                             rowCounter = 0
@@ -474,6 +506,8 @@ class Algorithm:
                             for j in NINE_RANGE:
                                 #block check
                                 if  value1 in block[j].get_candidates() or value2 in block[j].get_candidates() or value3 in block[j].get_candidates() or value4 in block[j].get_candidates():
+                                    # any of the values in the field candidates
+                                    # mark which ones
                                     if value1 in block[j].get_candidates():
                                         blockList[0] = True
                                     if value2 in block[j].get_candidates():  
@@ -485,7 +519,7 @@ class Algorithm:
                                     blockCounter = blockCounter + 1
                                 elif block[j].get_candidates() != []:
                                     blockBenefit = True
-                                #col check
+                                #col check (same principle as block)
                                 if  value1 in col[j].get_candidates() or value2 in col[j].get_candidates() or value3 in col[j].get_candidates() or value4 in col[j].get_candidates():
                                     if value1 in col[j].get_candidates():
                                         colList[0] = True
@@ -498,7 +532,7 @@ class Algorithm:
                                     colCounter = colCounter + 1
                                 elif col[j].get_candidates() != []:
                                     colBenefit = True
-                                #row check
+                                #row check (same principle as block)
                                 if  value1 in row[j].get_candidates() or value2 in row[j].get_candidates() or value3 in row[j].get_candidates() or value4 in row[j].get_candidates():
                                     if value1 in row[j].get_candidates():
                                         rowList[0] = True
@@ -511,25 +545,37 @@ class Algorithm:
                                     rowCounter = rowCounter + 1
                                 elif row[j].get_candidates() != []:
                                     rowBenefit = True
-                                     
-                            if blockBenefit and blockCounter == 4 and blockList[0]and blockList[1]and blockList[2]and blockList[3]:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, block:{i}'   
-                            if colBenefit and colCounter == 4 and colList[0]and colList[1]and colList[2]and colList[3]:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Col:{i}' 
-                            if rowBenefit and rowCounter == 4 and rowList[0]and rowList[1]and rowList[2]and rowList[3]:
-                                return True, f'V1: {value1}, V2:{value2}, V3:{value3}, V4:{value4}, Row:{i}' 
+
+                            reason, nr = None, None
+                            if blockCounter == 4 and blockBenefit and all(blockList):
+                                reason, nr = UnitType.BLOCK, i
+                            if colCounter == 4 and colBenefit and all(colList):
+                                reason, nr = UnitType.COLUMN, i
+                            if rowCounter == 4 and rowBenefit and all(rowList):
+                                reason, nr = UnitType.ROW, i
+                            if reason:
+                                removed_candidates = enforce_hidden_algs(self.sudoku, reason, nr, values)
+                                return (True, {
+                                    'algorithm': 'hidden_four',
+                                    'values': values,
+                                    'reason': reason.value,
+                                    'removed_candidates': removed_candidates
+                                })
         return (False,None)
 
     # Reihe-Block-Check 
-    def algorithm_9(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_9(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
+            # iterate over all rows
             for value in ALL_FIELD_VALUES:
+                # iterate over all values
                 block1 = False
                 block2 = False
                 block3 = False
                 count = 0
                 for j in NINE_RANGE:
+                    # iterate over all Fields in the row
                     if value in row[j].get_candidates():
                         if j in range(0,3):
                             blockNr = Sudoku.get_block_nr(i,j)
@@ -544,28 +590,37 @@ class Algorithm:
                             count = count + 1
                             block3=True
                 if (block1 and not block2 and not block3) or (block2 and not block1 and not block3) or (block3 and not block2 and not block1):
+                    # check if there are any benefits
                     blockCount = 0
                     block = self.sudoku.get_block(blockNr)
                     for a in NINE_RANGE:
                         if(value in block[a].get_candidates()):
                             blockCount = blockCount + 1
                     if blockCount > count:
-                        return True,f'Value: {value}, Row: {i}, Block:{blockNr}'
+                        intersect_fields = intersection_of_units(UnitType.ROW, i, UnitType.BLOCK, blockNr)  # the fields that are in the row and in the block
+                        removed_candidates = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.BLOCK, blockNr, [value], intersect_fields)
+                        return (True, {
+                            'algorithm': 'row_block_check',
+                            'value': value,
+                            'intersect_fields': intersect_fields,
+                            'removed_candidates': removed_candidates
+                        })
         return (False,None)
    
     # Block-Reihe_Check 
-    def algorithm_10(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_10(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         for i in NINE_RANGE:
             block = self.sudoku.get_block(i)
+            # iterate over all blocks
             for value in ALL_FIELD_VALUES:
                 row1 = False
                 row2 = False
                 row3 = False
                 count = 0
                 for j in NINE_RANGE:
+                    # iterate over all fields in the block
                     if value in block[j].get_candidates():
                         if j in range(0,3):
-                            print(self.get_row_by_block(i,j))
                             rowNr = self.get_row_by_block(i,j)
                             count = count + 1
                             row1=True
@@ -578,90 +633,196 @@ class Algorithm:
                             count = count + 1
                             row3=True
                 if (row1 and not row2 and not row3) or (row2 and not row1 and not row3) or (row3 and not row2 and not row1):
+                    # check if there are any benefits
                     rowCount = 0
                     row = self.sudoku.get_row(rowNr)
                     for a in NINE_RANGE:
                         if(value in row[a].get_candidates()):
                             rowCount = rowCount + 1
                     if rowCount > count:
-                        return True,f'Value: {value}, Row: {rowNr}, Block:{i}'
+                        intersect_fields = intersection_of_units(UnitType.ROW, rowNr, UnitType.BLOCK, i)  # the fields that are in the row and in the block
+                        removed_candidates = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, rowNr, [value], intersect_fields)
+                        return (True, {
+                            'algorithm': 'block_row_check',
+                            'value': value,
+                            'intersect_fields': intersect_fields,
+                            'removed_candidates': removed_candidates
+                        })
         return (False,None)        
 
     # X-Wing Row
-    def algorithm_11_1(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_11_1(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Pair1 = []
         Pair2 = []        
         for value in ALL_FIELD_VALUES:
+            # iterate over all values
             Counter = 0
             Pair1.clear()
             Pair2.clear()
             for i in NINE_RANGE:
                 row = self.sudoku.get_row(i)
+                # iterate over all rows
                 for j in NINE_RANGE:
+                    # iterate over all fields in rows
                     if value in row[j].get_candidates():
                         Counter = Counter + 1
-                        Pair1.append([i,j])
+                        Pair1.append((i,j))
                 if(Counter==2):
-                    
+                    # success for first pair -> add to pair2 and continue (pair 2: List of all pairs in all rows)
                     Pair2.append([Pair1[0],Pair1[1]]) 
                     Pair1.clear()
                     Counter = 0
                 else:
+                    # no success for this pair
                     Pair1.clear()
                     Counter = 0     
             if(len(Pair2)>=2):
                 for a in range(0,len(Pair2)):
                     for b in range(a+1,len(Pair2)):
+                        # check all pairs whether there are some that meet the requirements
                         if Pair2[a][0][1] == Pair2[b][0][1] and Pair2[a][1][1] == Pair2[b][1][1]:
                             colCount = 0
                             col1 = self.sudoku.get_column(Pair2[a][0][1])
                             col2 = self.sudoku.get_column(Pair2[a][1][1])
                             for l in NINE_RANGE:
+                                # check whether the algorithm brings a benefit
                                 if(value in col1[l].get_candidates()):
                                     colCount = colCount + 1
                                 if(value in col2[l].get_candidates()):
                                     colCount = colCount + 1
                                 if colCount > 4:
-                                    return True,f'Value: {value}, Col1: { Pair2[a][0][1]}, Col2: {Pair2[a][1][1]}'
+                                    intersect_fields = [Pair2[a][0], Pair2[a][1], Pair2[b][0], Pair2[b][1]]
+                                    removed_candidates_1 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, Pair2[a][0][1], [value], intersect_fields)
+                                    removed_candidates_2 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, Pair2[a][1][1], [value], intersect_fields)
+                                    removed_candidates = {**removed_candidates_1, **removed_candidates_2}
+                                    return (True, {
+                                        'algorithm': 'x_wing_row',
+                                        'value': value,
+                                        'intersect_fields': intersect_fields,
+                                        'removed_candidates': removed_candidates
+                                    })
         return (False,None)
     
     # X-Wing Col
-    def algorithm_11_2(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_11_2(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Pair1 = []
         Pair2 = []        
         for value in ALL_FIELD_VALUES:
+            # iterate over all values
             Counter = 0
             Pair1.clear()
             Pair2.clear()
             for i in NINE_RANGE:
+                # iterate over all columns
                 col = self.sudoku.get_column(i)
                 for j in NINE_RANGE:
+                    # iterate over all fields in column
                     if value in col[j].get_candidates():
                         Counter = Counter + 1
-                        Pair1.append([i,j])
+                        Pair1.append((j, i))
                 if(Counter==2):
-                    
+                    # success for first pair -> add to pair2 and continue (pair 2: List of all pairs in all rows)
                     Pair2.append([Pair1[0],Pair1[1]]) 
                     Pair1.clear()
                     Counter = 0
                 else:
+                    # no success for this pair
                     Pair1.clear()
                     Counter = 0     
             if(len(Pair2)>=2):
                 for a in range(0,len(Pair2)):
                     for b in range(a+1,len(Pair2)):
-                        if Pair2[a][0][1] == Pair2[b][0][1] and Pair2[a][1][1] == Pair2[b][1][1]:
+                        # check all pairs whether there are some that meet the requirements
+                        if Pair2[a][0][0] == Pair2[b][0][0] and Pair2[a][1][0] == Pair2[b][1][0]:
                             rowCount = 0
-                            row1 = self.sudoku.get_row(Pair2[a][0][1])
-                            row2 = self.sudoku.get_row(Pair2[a][1][1])
+                            row1 = self.sudoku.get_row(Pair2[a][0][0])
+                            row2 = self.sudoku.get_row(Pair2[a][1][0])
                             for l in NINE_RANGE:
+                                # check whether the algorithm brings a benefit
                                 if(value in row1[l].get_candidates()):
                                     rowCount = rowCount + 1
                                 if(value in row2[l].get_candidates()):
                                     rowCount = rowCount + 1
                                 if rowCount > 4:
-                                    return True,f'Value: {value}, Row1: { Pair2[a][0][1]}, Row2: {Pair2[a][1][1]}'
+                                    intersect_fields = [Pair2[a][0], Pair2[a][1], Pair2[b][0], Pair2[b][1]]
+                                    removed_candidates_1 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, Pair2[a][0][0], [value], intersect_fields)
+                                    removed_candidates_2 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, Pair2[a][1][0], [value], intersect_fields)
+                                    removed_candidates = {**removed_candidates_1, **removed_candidates_2}
+                                    return (True, {
+                                        'algorithm': 'x_wing_col',
+                                        'value': value,
+                                        'intersect_fields': intersect_fields,
+                                        'removed_candidates': removed_candidates
+                                    })
         return (False,None)
+  
+    # Drittes Auge
+    def algorithm_13(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
+        counter = 0
+        rowPos = 0
+        colPos= 0
+        value = 0
+        reason = None
+        for i in NINE_RANGE:
+            row = self.sudoku.get_row(i)
+            # iterate over all rows
+            for j in NINE_RANGE:
+                # iterate over all fields in row
+                if len(row[j].get_candidates()) == 3:
+                    # field has 3 candidates
+                    for a in ALL_FIELD_VALUES:
+                        rowCounter = 0
+                        blockCounter = 0
+                        colCounter = 0
+                        # check whether the candidate occurs 3 times in a unit
+                        block = self.sudoku.get_block(Sudoku.get_block_nr(i,j))
+                        col = self.sudoku.get_column(j)
+                        for j2 in NINE_RANGE:
+                            if a in block[j2].get_candidates():
+                                blockCounter = blockCounter + 1
+                            if a in row[j2].get_candidates():
+                                rowCounter = rowCounter + 1
+                            if a in col[j2].get_candidates():
+                                colCounter = colCounter + 1
+                        if blockCounter == 3:
+                            reason = UnitType.BLOCK
+                            value = a
+                            rowPos = i
+                            colPos = j
+                        if rowCounter == 3:
+                            reason = UnitType.ROW
+                            value = a
+                            rowPos = i
+                            colPos = j
+                        if colCounter == 3:
+                            reason = UnitType.COLUMN
+                            value = a
+                            rowPos = i
+                            colPos = j                               
+                    counter = counter + 1
+                if len(row[j].get_candidates()) > 3:
+                    counter = 2
+                    # no success
+                    break
+        
+        if counter == 1:
+            # success -> remove obsolete candidates
+            candidates = self.sudoku.get_field(rowPos, colPos).get_candidates()
+            to_remove = list(self.sudoku.get_field(rowPos, colPos).get_candidates())
+            to_remove.remove(value)
+            removed_candidates = {coordinates_to_key(rowPos, colPos): to_remove}
+            for v in to_remove:
+                candidates.remove(v)
+            return (True,{
+                'algorithm': 'third_eye',
+                'value': value,
+                'field': (rowPos, colPos),
+                'removed_candidates': removed_candidates,
+                'reason': reason.value
+            })
+            
+        return (False,None)
+
     
     # Steinbutt
     def algorithm_12(self) -> Tuple[bool, Optional[str]]:
@@ -698,49 +859,6 @@ class Algorithm:
                         
         return False,None
 
-
-    # Drittes Auge
-    def algorithm_13(self) -> Tuple[bool, Optional[str]]:
-        counter = 0
-        rowPos = 0
-        colPos= 0
-        value = 0
-        for i in NINE_RANGE:
-            row = self.sudoku.get_row(i)
-            for j in NINE_RANGE:
-                if len(row[j].get_candidates()) == 3:
-                    for a in ALL_FIELD_VALUES:
-                        rowCounter = 0
-                        blockCounter = 0
-                        colCounter = 0
-                        block = self.sudoku.get_block(Sudoku.get_block_nr(i,j))
-                        col = self.sudoku.get_column(j)
-                        for j2 in NINE_RANGE:
-                            if a in block[j2].get_candidates():
-                                blockCounter = blockCounter + 1
-                            if a in row[j2].get_candidates():
-                                rowCounter = rowCounter + 1
-                            if a in col[j2].get_candidates():
-                                colCounter = colCounter + 1
-                        if blockCounter == 3:
-                            value = a
-                            rowPos = i
-                            colPos = j
-                        if rowCounter == 3:
-                            value = a
-                            rowPos = i
-                            colPos = j
-                        if colCounter == 3:
-                            value = a
-                            rowPos = i
-                            colPos = j                               
-                    counter = counter + 1
-                if len(row[j].get_candidates()) > 3:
-                    counter = 2
-        
-        if counter == 1:
-            return (True,f'Value:{value}, Row:{rowPos}, Col:{colPos}')
-        return (False,None)
 
     # Wolkenkratzer
     def algorithm_14(self) -> Tuple[bool, Optional[str]]:
@@ -822,7 +940,8 @@ class Algorithm:
                                             return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}' 
                 vCol.clear()
                 fields.clear()      
-        return False,None    
+        return False,None 
+       
   # Schwertfisch-Col
     def algorithm_15_1(self) -> Tuple[bool, Optional[str]]:
         Fields1 = []

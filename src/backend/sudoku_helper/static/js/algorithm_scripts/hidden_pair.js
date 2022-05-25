@@ -4,6 +4,7 @@ var fields;
 $(document).ready(function() {
     fields = parse_fields_from_removed_candidates(dict.removed_candidates);
 
+    let [y, x] = fields[0];
     // highlight the corresponding unit
     switch (dict.reason) {
         case 'block': mark_block_affected(y, x); break;

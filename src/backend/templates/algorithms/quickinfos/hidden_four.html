@@ -1,0 +1,10 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %} 
+  Quickinfo for hidden pair
+  Params:
+    dict: dictionary 
+{% endcomment %}
+{% block step-1 %}Es gibt einen versteckten Vierer in dem hervorgehobenen Bereich.{% endblock step-1 %}
+{% block step-3 %}Mit dem versteckten Vierer Algorithmus werden die hervorgehobenen Kandidaten als die Kandidaten für die jeweiligen Felder verwendet.
+Denn {{dict.values.0}}, {{dict.values.1}}, {{dict.values.2}} und {{dict.values.3}} treten innerhalb ihrer Einheit nur in diesen vier Feldern als Kandidaten auf.{% endblock step-3 %}

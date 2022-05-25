@@ -56,7 +56,7 @@ def test_single_algorithm(request: HttpRequest, name: str):
 
     success, dict = algo_fn()
     if not success:
-        raise HttpResponseServerError('Algorithm wasnt successfull')
+        return HttpResponseServerError('Algorithm wasnt successfull')
     context = {
         'sudoku': sudoku,
         'range': NINE_RANGE,

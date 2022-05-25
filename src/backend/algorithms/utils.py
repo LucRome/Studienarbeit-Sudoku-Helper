@@ -1,7 +1,8 @@
-from ssl import CHANNEL_BINDING_TYPES
+import math
 from sudoku.base import Sudoku, Field, NINE_RANGE
-from typing import List, Tuple, Literal, Dict, Optional
+from typing import List, Tuple, Literal, Dict
 from enum import Enum
+
 
 # TODO: implement Function that removes the given candidates from the fields in the given unit, except the given fields
 
@@ -31,6 +32,22 @@ def get_unit(type: UnitType, nr: int, excluded_fields: List[Tuple[int, int]] = [
 
     return unit
 
+
+def coordinates_to_key(y: int, x: int) -> int:
+    """
+    Transforms the Coordinates into a key for the dictionary
+    """
+    return y*10 + x
+
+
+def key_to_coordinates(key: int) -> Tuple[int, int]:
+    """
+    Transforms the key for the dictionary back into coordinates
+    :returns: (y, x)
+    """
+    return (key//10, key%10)
+
+
 def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int,
     candidates_to_remove: List[int], excluded_fields: List[Tuple[int, int]]) -> Dict[int, List[int]]:
     """
@@ -48,7 +65,7 @@ def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int
     removed_candidates: Dict[int, List[int]] = dict() #Key: y*10+x
     for (y,x) in unit:
         field = sudoku.get_field(y, x)
-        key = y*10 + x
+        key = coordinates_to_key(y, x)
         field_candidates = field.get_candidates()
         for v in candidates_to_remove:
             if v in field_candidates:
@@ -193,3 +210,16 @@ def find_chain_16_1(sudoku:Sudoku,field:Field,value:int) -> Tuple[bool,List[Fiel
         return True,chain
     return False,None
         
+def intersection_of_units(a_type: UnitType, a_nr: int, b_type: UnitType, b_nr: int) -> List[Tuple[int, int]]:
+    """
+    Creates the intersection of the two given units
+    :returns: Coordinates of the fields in the intersection
+    """
+    a = get_unit(a_type, a_nr)
+    b = get_unit(b_type, b_nr)
+
+    intersection: List[Tuple[int, int]] = list()
+    for coords in a:
+        if coords in b:
+            intersection.append(coords)
+    return intersection

@@ -10,7 +10,7 @@
 {% block content %}
   {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
 
-  {# script is in-place since its only used here and its short #}
+  {# script to toggle candidates is in-place since its not used often and its short #}
   <script>
     var candid_visible = false;
 

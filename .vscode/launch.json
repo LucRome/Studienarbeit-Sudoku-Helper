@@ -12,7 +12,8 @@
             "cwd": "${workspaceFolder}/src/backend",
             "args": [
                 "sudoku.tests",
-                "validation.test_validation"
+                "validation.test_validation",
+                "algorithms.test_utils"
             ],
             "justMyCode": true
         },
@@ -33,6 +34,21 @@
                 "runserver"
             ],
             "django": true
-        }
+        },
+        {
+            "name": "Python: Frontend Tests",
+            "type": "python",
+            "request": "launch",
+            "module": "unittest",
+            "cwd": "${workspaceFolder}/src",
+            
+            "args": [
+                // "frontend_tests.test_index",
+                // "frontend_tests.test_verified",
+                "frontend_tests.algorithm_pages.test_hidden_single",
+            ],
+            "justMyCode": true,
+            "subProcess": true,
+        },
     ]
 }

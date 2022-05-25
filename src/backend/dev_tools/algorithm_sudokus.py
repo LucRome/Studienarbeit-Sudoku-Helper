@@ -129,7 +129,7 @@ GRID9 = [
 
 GRID10 = [
     [1, None, None, None, None, None, None, 8, None],
-    [8, None, 1, None, None, None, None, 2, 4],
+    [8, None, None, 1, None, None, None, 2, 4],
     [7, None, None, None, None, 3, 1, 5, None],
     [None, None, None, None, 4, 1, 6, 9, 2],
     [None, 9, None, 6, 7, None, 4, 1, 3],
@@ -161,8 +161,8 @@ GRID12 = [
     [None, 9, None, 4, 6, 2, 1, 8, 5],
     [1, 6, 5, 3, 8, 7, 9, 2, 4],
     [8, None, None, None, 2, 9, 6, 4, 3],
-    [5, None, None, 8, 4, 6, 7, 9, 2],
-    [6, 2, 9, 7, None, 3, 8, None, 1],
+    [5, None, None, 8, 1, 6, 7, 9, 2],
+    [6, 2, 9, 7, 4, 3, 8, None, 1],
 ]
 
 # mapping
@@ -173,9 +173,11 @@ NAME_MAP = {
     'hidden_pair': GRID4,
     'open_three': GRID5,
     'hidden_three': GRID6,
-    'naked_hidden_four': GRID7,
+    'open_four': GRID7,
+    'hidden_four': GRID7,
     'row_block_check': GRID8,
     'block_row_check': GRID9,
-    'x_wing': GRID10, # TODO: acknowledge seperation in row, col
+    'x_wing_row': GRID10,
+    'x_wing_col': GRID10,
     'third_eye': GRID12,
 }
