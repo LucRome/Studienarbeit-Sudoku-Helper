@@ -74,7 +74,8 @@ class Algorithm:
             'stonebutt': self.algorithm_12,
             'third_eye': self.algorithm_13,
             'skyscraper': self.algorithm_14,
-            'swordfish': self.algorithm_15,
+            'swordfish_col': self.algorithm_15_1,
+            'swordfish_row': self.algorithm_15_1,
             'dragon': self.algorithm_16,
         }
 
