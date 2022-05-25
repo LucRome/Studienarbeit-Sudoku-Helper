@@ -12,71 +12,73 @@
   <tr class="p-0">
     <td class="candidate-field">
       {% if 1 in candidates %}
-        <img src="{% static 'imgs/candidates/1.svg' %}" />
+        <img nr="1" src="{% static 'imgs/candidates/1.svg' %}" />
       {% else %}
-        <div></div>
+        <img nr="1" src="" />
       {% endif %}
     </td>
     <td class="candidate-field">
       {% if 2 in candidates %}
-        <img src="{% static 'imgs/candidates/2.svg' %}" />
+        <img nr="2" src="{% static 'imgs/candidates/2.svg' %}" />
       {% else %}
-        <div></div>
+        <img nr="2" src="" />
       {% endif %}
     </td>
     <td class="candidate-field">
       {% if 3 in candidates %}
-        <img src="{% static 'imgs/candidates/3.svg' %}" />
+        <img nr="3" src="{% static 'imgs/candidates/3.svg' %}" />
       {% else %}
-        <div></div>
+        <img nr="3" src="" />
       {% endif %}
     </td>
   </tr>
   <tr class="p-0">
     <td class="candidate-field">
       {% if 4 in candidates %}
-        <img src="{% static 'imgs/candidates/4.svg' %}" />
+        <img nr="4" src="{% static 'imgs/candidates/4.svg' %}" />
       {% else %}
-        <div></div>
+      <img nr="4" src="" />
       {% endif %}
     </td>
     <td class="candidate-field">
       {% if 5 in candidates %}
-        <img src="{% static 'imgs/candidates/5.svg' %}" />
+        <img nr="5" src="{% static 'imgs/candidates/5.svg' %}" />
       {% else %}
-        <div></div>
+      <img nr="5" src="" />
       {% endif %}
     </td>
     <td class="candidate-field">
       {% if 6 in candidates %}
-        <img src="{% static 'imgs/candidates/6.svg' %}" />
+        <img nr="6" src="{% static 'imgs/candidates/6.svg' %}" />
       {% else %}
-        <div></div>
+      <img nr="6" src="" />
       {% endif %}
     </td>
   </tr>
   <tr class="p-0">
     <td class="candidate-field">
       {% if 7 in candidates %}
-        <img src="{% static 'imgs/candidates/7.svg' %}" />
+        <img nr="7" src="{% static 'imgs/candidates/7.svg' %}" />
       {% else %}
-        <div></div>
+        <img nr="7" src="" />
       {% endif %}
     </td>
     <td class="candidate-field">
       {% if 8 in candidates %}
-        <img src="{% static 'imgs/candidates/8.svg' %}" />
+        <img nr="8" src="{% static 'imgs/candidates/8.svg' %}" />
       {% else %}
-        <div></div>
+        <img nr="8" src="" />
       {% endif %}
     </td>
     <td class="candidate-field">
       {% if 9 in candidates %}
-        <img src="{% static 'imgs/candidates/9.svg' %}" />
+        <img nr="9" src="{% static 'imgs/candidates/9.svg' %}" />
       {% else %}
-        <div></div>
+        <img nr="9" src="" />
       {% endif %}
     </td>
   </tr>
 </table>
+
+{# Used to save the candidates, since most algorithms only affect the candidates #}
 <input id="candidates_{{row}}_{{column}}" name="candidates_{{row}}_{{column}}" type="text" value="{{ candidates }}" style="display: None;" readonly/>

@@ -1,0 +1,10 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %} 
+  Quickinfo for open three
+  Params:
+    dict: dictionary 
+{% endcomment %}
+{% block step-1 %}Es gibt einen offenen Vierer in dem markierten Bereich.{% endblock step-1 %}
+{% block step-3 %}Mit dem offenen Vierer Algorithmus werden die hervorgehobenen Kandidaten als Kandidaten für die markierten Felder festgelegt.
+Denn die markierten Felder haben keine anderen Kandidaten als {{dict.values.0}}, {{dict.values.1}}, {{dict.values.2}} und {{dict.values.3}}.{% endblock step-3 %}

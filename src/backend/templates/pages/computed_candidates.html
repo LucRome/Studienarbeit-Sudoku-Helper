@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+  Params:
+    sudoku: sudoku Class
+    range: range(0,9)
+    quickinfo: Quickinfo text
+{% endcomment %}
+
+{% block content %}
+  {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
+
+  {# script to toggle candidates is in-place since its not used often and its short #}
+  <script>
+    var candid_visible = false;
+
+    $(document).ready(function() {
+      $("#toggle-candidates-btn").click(function() {
+        if (candid_visible) {
+          $(".candidate-table").addClass("invisible");
+        } else {
+          $(".candidate-table").removeClass("invisible");
+        }
+        candid_visible = !candid_visible;
+      })
+    })
+  </script>
+{% endblock content %}

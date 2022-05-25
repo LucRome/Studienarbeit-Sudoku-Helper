@@ -11,16 +11,22 @@
         dict_str: serialized dictionary
 {% endcomment %}
 
+{% load static %}
+
 {% block content %}
+    {% include 'algorithms/script.html' with dict_str=dict_str algo_script=algo_script %}
+    <script src="{% static 'js/algorithm_scripts/utils.js' %}"></script>
+    <script src="{% static 'js/solve_steps.js' %}"></script>
+
     {# Error Message when no solution is found #}
     {% if no_solution %}
         <div class="alert alert-danger alert-dismissible d-flex align-items-center">
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong class="material-icons-outlined mb">warning</strong> 
-            <p class="mb-0">No of <p>
+            <p class="mb-0">Es wurde keine Lösung gefunden! Das Sudoku lässt sich mit den implementierten Algorithmen nicht lösen.<p>
         </div>
+        {# TODO: implement correctly #}
     {% endif %}
 
-    {% include 'page_parts/all.html' with show_clr="" text=quickinfo text_template=quickinfo_template dict=dict sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
-    {% include 'algorithms/script.html' with dict_str=dict_str algo_script=algo_script %}
+    {% include 'page_parts/all.html' with show_clr="" text=quickinfo text_template=quickinfo_template dict=dict sudoku=sudoku range=range sudoku_readonly="True" nxt_action="show_candidates" %}
 {% endblock content %}

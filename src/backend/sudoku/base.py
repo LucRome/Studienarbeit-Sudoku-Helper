@@ -2,7 +2,7 @@
 Base Classes for Sudoku
 """
 
-from typing import List, Optional
+from typing import List, Optional, Tuple
 from .exceptions import *
 from math import floor
 
@@ -27,19 +27,24 @@ class Field:
     """
     __value: Optional[int]
     __candidates: List[int]
+    __coordinates: Tuple[int, int]
 
-    def __init__(self, value: Optional[int] = None):
-        self.__candidates = list()
+    def __init__(self, coordinates: Tuple[int, int],value: Optional[int] = None):
+        self.__candidates, self.__coordinates = list(), coordinates
         if value is not None:
             self.set_value(value)
         else:
             self.remove_value()
+    
+    def get_coordinates(self) -> Tuple[int, int]:
+        return self.__coordinates
 
     def set_value(self, val: int) -> None:
         if val is not None and (val < FIELD_VALUE_MIN or val > FIELD_VALUE_MAX):
             raise WrongFieldValueException(val)
         else:
             self.__value = val
+            self.__candidates = []
     
     def remove_value(self) -> None:
         self.__value = None
@@ -110,12 +115,12 @@ class Sudoku:
             for row in NINE_RANGE:
                 self.fields.append(list())
                 for column in NINE_RANGE:
-                    self.fields[row].append(Field())
+                    self.fields[row].append(Field(coordinates=(row, column)))
         else:
             for row in NINE_RANGE:
                 self.fields.append(list())
                 for column in NINE_RANGE:
-                    self.fields[row].append(Field(values[row][column]))
+                    self.fields[row].append(Field(coordinates=(row, column),value=values[row][column]))
         
 
     def get_field(self, row: int, column: int) -> Field:
@@ -140,21 +145,7 @@ class Sudoku:
         if block_nr not in NINE_RANGE:
             raise OutOfFieldsException()
 
-        # Determine the rows and columns
-        columns: range
-        if (block_nr % 3) == 0:
-            columns = range(0,3)
-        elif (block_nr % 3) == 1:
-            columns = range(3, 6)
-        else:
-            columns = range(6, 9)
-        rows: range
-        if block_nr <= 2:
-            rows = range(0, 3)
-        elif block_nr <= 5:
-            rows = range(3, 6)
-        else:
-            rows = range(6, 9)
+        rows, columns = Sudoku.get_block_ranges(block_nr)
         
         # fill the return list
         ret: List[Field] = list()
@@ -169,6 +160,15 @@ class Sudoku:
         x: int = floor(column/3)
         y: int = floor(row/3)
         return y*3 + x
+    
+    def get_block_ranges(block_nr: int) -> Tuple[range, range]:
+        """
+        Get the ranges for row and column for the blocks
+        """
+        row_start = (block_nr // 3) * 3
+        col_start = (block_nr % 3) * 3
+
+        return (range(row_start, row_start+3), range(col_start, col_start+3))
     
     def select_candidates(self) -> None:
         """

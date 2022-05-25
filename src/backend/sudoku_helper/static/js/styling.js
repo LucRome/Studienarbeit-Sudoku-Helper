@@ -17,36 +17,44 @@ $(document).ready(
 )
 
 function resize_all() {
-    // Resize Text around the sudoku form (also Spinner animations)
-    fs_in_str = $($("#form-sudoku input")[1]).css("font-size");
-    unit = fs_in_str.substr(fs_in_str.length - 2);
-    size_inputs = fs_in_str.substr(0, fs_in_str.length - 2);
-    size_rest = Number.parseFloat(size_inputs) / 2;
+    {
+        // Resize Text around the sudoku form (also Spinner animations and images in legends)
+        let fs_in_str = $($("#form-sudoku input")[1]).css("font-size");
+        let unit = fs_in_str.substr(fs_in_str.length - 2);
+        let size_inputs = fs_in_str.substr(0, fs_in_str.length - 2);
+        let size_rest = Number.parseFloat(size_inputs) / 2;
 
-    fs_rest_str = size_rest + unit;
+        let fs_rest_str = size_rest + unit;
 
-    $("p, span, button, a, strong").css("font-size", fs_rest_str)
-    $(".spinner-grow").css("width", fs_rest_str);
-    $(".spinner-grow").css("height", fs_rest_str);
+        $("p, span, button, a, strong, b").css("font-size", fs_rest_str)
+        $(".spinner-grow").css("width", fs_rest_str);
+        $(".spinner-grow").css("height", fs_rest_str);
+        
+        // Resize images in legends
+        $(".candidate-legend img").css("height", fs_rest_str);
+        $(".field-legend img").css("height", fs_rest_str).css("width", fs_rest_str);
+    }
+    {
+        // Resize Candidates
+        // First get size of the input fields
+        let size_str = $($("#form-sudoku input")[1]).css("width");
+        let unit = size_str.substr(size_str.length - 2);
+        let size = size_str.substr(0, size_str.length - 2);
 
-    // Resize Candidates
-    // First get size of the input fields
-    size_str = $($("#form-sudoku input")[1]).css("width");
-    unit = size_str.substr(size_str.length - 2);
-    size = size_str.substr(0, size_str.length - 2);
-
-    size_candidates = Number.parseFloat(size) / 3;
-    size_candidates_str = size_candidates + unit;
-    $(".candidate-field img").css("width", size_candidates_str);
-    $(".candidate-field div").css("height", size_candidates_str);
-    $(".candidate-field div").css("width", size_candidates_str);
+        let size_candidates = Number.parseFloat(size) / 3;
+        let size_candidates_str = size_candidates + unit;
+        $(".candidate-field img").css("width", size_candidates_str);
+        $(".candidate-field img").css("height", size_candidates_str);
+        $(".candidate-field div").css("height", size_candidates_str);
+        $(".candidate-field div").css("width", size_candidates_str);
+    }
 }
 
-SPINNER_OBJECT = '<span class="spinner-grow spinner-grow-sm"></span>'
+const SPINNER_OBJECT = '<span class="spinner-grow spinner-grow-sm"></span>'
 
 function signal_loading(button) {
     // change content of button and add spinner object
-    text = $(button).text().trim();
+    let text = $(button).text().trim();
     if (text === "Validate") {
         text = "Validating..";
     } else if (text === "Solve") {
@@ -57,12 +65,12 @@ function signal_loading(button) {
     $(button).prop("disabled", true)
 
     // resize spinner
-    fs_in_str = $($("#form-sudoku input")[1]).css("font-size");
-    unit = fs_in_str.substr(fs_in_str.length - 2);
-    size_inputs = fs_in_str.substr(0, fs_in_str.length - 2);
-    size_rest = Number.parseFloat(size_inputs) / 2;
+    let fs_in_str = $($("#form-sudoku input")[1]).css("font-size");
+    let unit = fs_in_str.substr(fs_in_str.length - 2);
+    let size_inputs = fs_in_str.substr(0, fs_in_str.length - 2);
+    let size_rest = Number.parseFloat(size_inputs) / 2;
 
-    fs_rest_str = size_rest + unit;
+    let fs_rest_str = size_rest + unit;
 
     $(".spinner-grow").css("width", fs_rest_str);
     $(".spinner-grow").css("height", fs_rest_str);

@@ -13,11 +13,12 @@
 <link rel="stylesheet" href="{% static 'css/algo_visu.css' %}">
 
 {# load the script that provides the visualise_algorithm function #}
-<script src="{% static algo_script %}"></script>
 <script>
+    let img_folder = "{% static 'imgs' %}";
+    var dict;
     $(document).ready(function() {
         dict_str = $("#dict_str").text();
         dict = JSON.parse(dict_str);
-        visualise_algorithm(dict);
     })
 </script>
+<script src="{% static algo_script %}"></script>

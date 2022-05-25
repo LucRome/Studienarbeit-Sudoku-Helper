@@ -19,3 +19,7 @@
 .modal-dialog {
     max-width: 1320px !important;  /* Max-width of bootstrap container-lg */
 }
+
+.fl-color-part {
+    color: transparent;
+}

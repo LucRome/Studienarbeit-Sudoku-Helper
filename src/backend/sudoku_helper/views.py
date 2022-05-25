@@ -1,6 +1,7 @@
 from django.http.request import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
+from django.conf import settings
 from algorithms.algorithms import Algorithm
 from sudoku.base import NINE_RANGE
 from validation.validation import *
@@ -10,8 +11,6 @@ from sudoku.exceptions import WrongFieldValueException
 from .utils import get_values_from_request, sudoku_simple_check, check_sudoku_view, check_and_add_candidates_from_request
 
 from sudoku.base import Sudoku
-
-from .dev_tools import TEMPLATES
 
 import json
 
@@ -24,7 +23,8 @@ def index(request: HttpRequest):
     context={
         'sudoku': sudoku,
         'range': NINE_RANGE,
-        'quickinfo': 'Welcome, please enter the numbers into the sudoku and press validate to proceed!'
+        'quickinfo': 'Willkommen, bitte geben Sie die Nummern in das Sudoku ein und drücken Sie Validieren um fortzufahren!',
+        'link_dev_tools': settings.DEBUG # only link settings tools when debug config is active
     }
     return render(request, 'pages/index.html', context)
 
@@ -42,7 +42,7 @@ def check_sudoku(request: HttpRequest):
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
-            'quickinfo': 'Your sudoku was verified, now you can start solving it by pressing solve!'
+            'quickinfo': 'Ihr Sudoku wurde verifiziert, jetzt können Sie beginnen es zu lösen! Drücken Sie Lösen um fortzufahren!'
         }
         return render(request, 'pages/verified.html', context)
 
@@ -65,9 +65,9 @@ def solve_sudoku(request: HttpRequest):
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
-            'quickinfo': 'Please enter a correct sudoku and press Validate to proceed!',
+            'quickinfo': 'Bitte geben Sie ein korrektes Sudoku ein und drücken Sie Validieren um fortzufahren!',
             'failed_tests': True,
-            'error_msg': 'Error: Something was wrong with the submitted candidates',
+            'error_msg': 'Fehler: Die übertragenen Kandidaten können nicht stimmten.',
         }
         return render(request, 'pages/index.html', context)
     
@@ -75,8 +75,9 @@ def solve_sudoku(request: HttpRequest):
     for al_fn in algorithms.get_all_algorithms():
         success, dict = al_fn()
         
+        # TODO: check if algorithm brought any use (i.e. candidates were deleted)
+
         if success:
-            sudoku.recalculate_candidates()
             context = {
                 'sudoku': sudoku,
                 'range': NINE_RANGE,
@@ -88,17 +89,36 @@ def solve_sudoku(request: HttpRequest):
             return render(request, 'pages/solve.html', context)
 
     # TODO: Wenn nie success: Error Message
-   
 
 
-"""
-Dev Tool Views
-"""
+@require_http_methods(['POST'])
+def compute_candidates(request: HttpRequest):
+    """
+    Compute the candidates for the sudoku
+    (Called after each algorithm, in case a field got a value)
+    """
+    sudoku, response = check_sudoku_view(request)
 
-def sudoku_templates(request: HttpRequest):
+    if response:
+        return response
+
+    candidates_correct = check_and_add_candidates_from_request(request, sudoku)
+    if not candidates_correct:
+        # error with candidates -> back to index
+        context = {
+            'sudoku': sudoku,
+            'range': NINE_RANGE,
+            'quickinfo': 'Bitte geben Sie ein korrektes Sudoku ein und drücken Sie Validieren um fortzufahren!',
+            'failed_tests': True,
+            'error_msg': 'Fehler: Die übertragenen Kandidaten können nicht stimmen!',
+        }
+        return render(request, 'pages/index.html', context)
+    
+    sudoku.recalculate_candidates()
     context = {
-        'templates': TEMPLATES,
-        'range': NINE_RANGE
+        'sudoku': sudoku,
+        'range': NINE_RANGE,
+        'quickinfo': 'Nach den Änderungen durch den letzten Algorithmus sehen das Sudoku und die Kandidaten wie folgt aus.'
     }
 
-    return render(request, 'dev_tools/pages/sudoku_template_page.html', context)
+    return render(request, 'pages/computed_candidates.html', context)

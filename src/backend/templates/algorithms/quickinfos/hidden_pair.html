@@ -1,0 +1,10 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %} 
+  Quickinfo for hidden pair
+  Params:
+    dict: dictionary 
+{% endcomment %}
+{% block step-1 %}Es gibt ein verstecktes Paar in dem hervorgehobenen Bereich.{% endblock step-1 %}
+{% block step-3 %}Mit dem versteckten Paar Algorithmus werden die hervorgehobenen Kandidaten als Kandidaten für die markierten Felder festgelegt.
+Denn {{dict.values.0}} und {{dict.values.1}} treten innerhalb der Einheit nur in diesen Feldern als Kandidaten auf.{% endblock step-3 %}

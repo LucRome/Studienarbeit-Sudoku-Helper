@@ -1,5 +1,28 @@
+/* For fields that get a (new) value */
 .field-new-value {
-    /* For fields that get a (new) value */
-    background-color: var(--bs-teal);
+    background-color: var(--bs-teal) !important;
 }
 
+/* Fields where candidates are removed */
+.field-removed-candidate {
+    background-color: var(--bs-gray) !important;
+}
+
+/* Fields where candidates are locked */
+.field-locked-candidates {
+    background-color: var(--bs-orange) !important;
+}
+
+/* Fields where candidates are locked and others are removed */
+.field-locked-and-removed-candidates {
+    background-color: rgb(136, 113, 70) !important;
+}
+
+/* For areas that are affected by an algorithm */
+.field-affected {
+    background-color: var(--bs-yellow);
+}
+
+.field-affected input, .field-affected img {
+    background-color: var(--bs-yellow);   
+}

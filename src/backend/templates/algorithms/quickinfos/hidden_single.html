@@ -1,0 +1,10 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %} 
+  Quickinfo for hidden single
+  Params:
+    dict: dictionary 
+{% endcomment %}
+{% block step-1 %}Es gibt einen versteckten Single in dem hervorgehobenen Bereich.{% endblock step-1 %}
+{% block step-3 %}Mit dem versteckten Single Algorithmus wird der markierte Kandidat als Wert für das Feld verwendet. 
+Denn innerhalb der Einheit ist dies das einzige Feld mit {{dict.value}} in den Kandidaten.{% endblock step-3 %}

@@ -11,7 +11,6 @@
 
 <link rel="stylesheet" href="{% static 'css/sudoku.css' %}">
 <script src="{% static 'js/styling.js' %}"></script>
-<script src="{% static 'js/candidates.js' %}"></script>
 
 {% if not sudoku_readonly %}
   <script src="{% static 'js/sudoku.js' %}"></script>
@@ -26,7 +25,7 @@
         {% for row in range %}
           <tr class="sudoku-row">
             {% for column in range %}
-              <td class="sudoku-field">
+              <td class="sudoku-field" id="field_{{row}}_{{column}}">
                 {% with field=sudoku|row:row|column:column %}
                   {% if not sudoku_readonly %}
                     {# When not readonly: Normal Input #}

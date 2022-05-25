@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sudoku_helper'
+    'sudoku_helper',
+    'dev_tools' if DEBUG else None # only include Dev Tools when Debug is enabled
 ]
 
 MIDDLEWARE = [

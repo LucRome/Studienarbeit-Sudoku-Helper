@@ -1,7 +1,7 @@
 {% comment %}
   Components under the Sudoku Form (Settings, Next Action Button, Help)
   Params:
-    nxt_action: The next Action ('validate' | 'solve')
+    nxt_action: The next Action ('validate' | 'solve' | 'show_candidates')
 {% endcomment %}
 
 {# visible part (Buttons) #}
@@ -14,14 +14,25 @@
   {# Next Action Button #}
   {% if nxt_action == "validate" %}
     <button formaction="{% url 'submit-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="submit-sudoku-btn" form="form-sudoku" type="submit">
-      Validate
+      Validieren
+    </button>
+  {% elif nxt_action == "show_candidates" %}
+    {# Show next hints #}
+    <button type="button" class="btn btn-lg btn-primary rounded-pill" id="nxt-hint-btn">
+      Nächster Hinweis
+    </button>
+    {# Submit to server to recompute candidates #}
+    <button style="display: none;" formaction="{% url 'compute-candidates' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
+      Kandidaten Berechnen
     </button>
   {% elif nxt_action == "solve" %}
-    <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="show-candidates">
-      Show Candidates
+    {# toggle candidates #}
+    <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="toggle-candidates-btn">
+      Kandidaten an-/ausschalten
     </button>
+    {# submit to server for next iteration of algorithms #}
     <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
-      Solve
+      Lösen
     </button>
   {% endif %}
 
@@ -39,8 +50,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <p>Settings</p>
-        <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">Close</button>
+        <p>Einstellungen</p>
+        <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">
+          <span class="material-icons-outlined
+">close</span>
+        </button>
       </div>
       <div class="modal-content">
         {# TODO: Settings Content #}
@@ -55,7 +69,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <p></p> {# needed for float-end #}
-        <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">
+          <span class="material-icons-outlined
+">close</span>
+        </button>
       </div>
       <div class="modal-content">
         {# TODO: Help Text (maybe as iframe) #}

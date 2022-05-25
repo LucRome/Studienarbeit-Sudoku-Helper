@@ -71,9 +71,9 @@ $(document).ready(
 // get the field indexes from the input id
 function get_indexes_from_id(input_object) {
     // ID Format: "y_x"
-    str = input_object.id;
-    y = Number.parseInt(str[0]);
-    x = Number.parseInt(str[2]);
+    let str = input_object.id;
+    let y = Number.parseInt(str[0]);
+    let x = Number.parseInt(str[2]);
     return [y, x];
 }
 

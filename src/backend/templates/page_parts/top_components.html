@@ -33,12 +33,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <p></p> {# needed for float-end #}
-          <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">
+            <span class="material-icons-outlined
+">close</span>
+          </button>
         </div>
         <div class="modal-body">
           <p>
             {% if text_template %}
-              {% include text_template with dict=dict %}
+              {% include text_template with dict=dict modal="true" %}
             {% else %}
               {{text}}
             {% endif %}

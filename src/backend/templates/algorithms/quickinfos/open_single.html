@@ -1,7 +1,9 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
 {% comment %} 
   Quickinfo for open single
   Params:
     dict: dictionary 
 {% endcomment %}
-
-There is an open single in the highlighted Field
+{% block step-1 %}Es gibt einen offenen Single in dem markierten Bereich.{% endblock step-1 %}
+{% block step-3 %}Mit dem offenen Single Algorithmus wird der markierte Kandidat als Wert für das Feld eingesetzt, da es der einzige Kandidat für dieses Feld ist.{% endblock step-3 %}
