@@ -104,7 +104,7 @@ def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[
         sudoku = Sudoku(values)
         correct = True
     except WrongFieldValueException as e:
-        correct, msg = False, 'Some Field Values were not in the allowed range of 1 - 9 and therefore were removed!'
+        correct, msg = False, 'Einige Werte waren nicht in dem erlaubten Bereich (1-9) und wurden deshalb entfernt!'
         # Initialize Sudoku without wrong Field Values
         for y in NINE_RANGE:
             for x in NINE_RANGE:
@@ -124,7 +124,7 @@ def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[
         context = {
             'sudoku': sudoku,
             'range': NINE_RANGE,
-            'quickinfo': 'Please enter a correct sudoku and press Validate to proceed!',
+            'quickinfo': 'Bitte geben Sie ein valides Sudoku ein und drücken Sie validieren um fortzufahren!',
             'failed_tests': True,
             'error_msg': msg,
         }
