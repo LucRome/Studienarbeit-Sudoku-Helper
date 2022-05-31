@@ -13,8 +13,13 @@ def start_driver(page: str = '') -> WebDriver:
     driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
     # driver.maximize_window()
     driver.get(f'http://127.0.0.1:8000/{page}')
+
+    # use smartphone dimensions
+    driver.set_window_size(360, 800)
+
     # driver.implicitly_wait(60)
     wait_for_page_to_load(driver)
+
     return driver
 
 

@@ -16,7 +16,7 @@ def test_single_modal(tc: TestCase, driver: WebDriver, modal_id: str) -> None:
     tc.assertFalse(modal.is_displayed())
 
 
-def test_modals(tc: ut.TestCase, driver: WebDriver, quickinfo: bool, help: bool, settings: bool = False) -> None:
+def test_modals(tc: ut.TestCase, driver: WebDriver, quickinfo: bool, help: bool) -> None:
     """
     Tests whether the modals display correctly, doesn't test the content of the modals
     """
@@ -25,5 +25,3 @@ def test_modals(tc: ut.TestCase, driver: WebDriver, quickinfo: bool, help: bool,
         test_single_modal(tc, driver, 'quickinfo-modal')
     if help:
         test_single_modal(tc, driver, 'help-modal')
-    if settings:
-        test_single_modal(tc, driver, 'settings-modal')

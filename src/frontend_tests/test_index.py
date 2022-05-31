@@ -57,12 +57,16 @@ class TestIndex(ut.TestCase):
         ids = ('0_0', '2_3', '4_5', '6_2', '1_2')
         for id in ids:
             write_value_in_field(self.driver.find_element(by=By.ID, value=id), 2)
+        # some fields are incorrect
+        self.assertLess(0, len(self.driver.find_elements(by=By.CLASS_NAME, value='sudoku-field-incorrect')))
         # press button
         self.driver.find_element(by=By.ID, value='clear-sudoku-btn').click()
         # check
         for row in NINE_RANGE:
             for col in NINE_RANGE:
                 self.assertEqual(self.driver.find_element(by=By.ID, value=f'{row}_{col}').get_attribute('value'), '')
+                self.assertEqual(0, len(self.driver.find_elements(by=By.CLASS_NAME, value='sudoku-field-incorrect')))
+
             
 
     def test_inputs_combined(self):
