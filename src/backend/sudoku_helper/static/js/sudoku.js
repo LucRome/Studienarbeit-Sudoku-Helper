@@ -31,18 +31,7 @@ $(document).ready(
             // first value of array is ignored (its the prototype and not a relevant object)
             parse(inputs[i])
         }
-        // check all rows, columns and blocks
-        for (let y = 0; y < SUDOKU_SIZE; y++) {
-            check_row(y);
-        }
-        for (let x = 0; x < SUDOKU_SIZE; x++) {
-            check_column(x);
-        }
-        for (let y = 0; y < SUDOKU_SIZE; y = y+3) {
-            for (let x = 0; x < SUDOKU_SIZE; x = x+3) {
-                check_block(y, x);
-            }
-        }
+        check_whole_sudoku();
         check_validation_possible();
 
         // Add the listeners for input events
@@ -60,13 +49,34 @@ $(document).ready(
                 let inputs = $(".sudoku input")
                 // first value of array is ignored (its the prototype and not a relevant object)
                 for (let i = 1; i < inputs.length; i++) {
-                    inputs[i].value = NaN
-                    parse(inputs[i])
+                    inputs[i].value = NaN;
+                    $(inputs[i]).removeClass("sudoku-field-incorrect");
+                }
+                // reset sudoku values
+                for (let y = 0; y < sudoku_values.length; y++) {
+                    for (let x = 0; x < sudoku_values[y].length; x++) {
+                        sudoku_values[y][x] = NaN;
+                    }
                 }
             }
         )
     }
 )
+
+// check all rows, columns and blocks
+function check_whole_sudoku() {
+    for (let y = 0; y < SUDOKU_SIZE; y++) {
+        check_row(y);
+    }
+    for (let x = 0; x < SUDOKU_SIZE; x++) {
+        check_column(x);
+    }
+    for (let y = 0; y < SUDOKU_SIZE; y = y+3) {
+        for (let x = 0; x < SUDOKU_SIZE; x = x+3) {
+            check_block(y, x);
+        }
+    }
+}
 
 // get the field indexes from the input id
 function get_indexes_from_id(input_object) {
