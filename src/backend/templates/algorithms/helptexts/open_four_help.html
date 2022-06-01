@@ -1,0 +1,19 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for open four Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Nackter Vierer
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn in vier Feldern einer Einheit nur vier verschiedene Kandidaten (und keine anderen) auftauchen müssen sie sich auf diese Felder verteilen.
+D. h. sie werden aus den übrigen Feldern der Einheit gelöscht. <br>
+<i>Hinweis: Das Beispiel ist hier schlecht gewählt, da keine Kandidaten entfernt werden und der Algorithmus somit keinen Mehrwert hat.</i>
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/open_four.png' %}{% endblock img_src %}
