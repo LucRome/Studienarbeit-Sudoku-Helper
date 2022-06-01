@@ -20,11 +20,11 @@
 
 /* For areas that are affected by an algorithm */
 .field-affected {
-    background-color: var(--bs-yellow);
+    /* background-color: var(--bs-yellow); */
 }
 
 .field-affected input, .field-affected img {
-    background-color: var(--bs-yellow);   
+    /* background-color: var(--bs-yellow);    */
 }
 
 /* For the Explanation Text */

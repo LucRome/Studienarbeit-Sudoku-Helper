@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for open pair Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Nacktes Paar
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn zwei Felder in einer Einheit die gleichen Kandidaten besitzen (und keine anderen), müssen diese beiden Kandidaten auf die beiden Felder aufgeteilt werden.
+D. h. sie können sonst nicht in der Einheit vorkommen.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/open_pair.png' %}{% endblock img_src %}
