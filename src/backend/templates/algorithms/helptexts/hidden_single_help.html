@@ -1,0 +1,13 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %} 
+Explanation for hidden single Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block helptext %}
+Da jede eingetragene Zahl eine Zeile und eine Spalte abdeckt, bleibt in der Einheit nur noch das grün markierte Feld für die 7.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/hidden_single.png' %}{% endblock img_src %}
