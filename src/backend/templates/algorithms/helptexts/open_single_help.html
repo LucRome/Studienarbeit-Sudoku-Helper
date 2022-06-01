@@ -1,0 +1,13 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %} 
+Explanation for open single Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block helptext %}
+Das Feld liegt im Einflussbereich von 8 (von 9 möglichen) Zahlen. D. h. es gibt nur einen Kandidaten für dieses Feld.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/open_single.png' %}{% endblock img_src %}

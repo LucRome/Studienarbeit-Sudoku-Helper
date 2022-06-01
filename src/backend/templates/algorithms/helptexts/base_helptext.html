@@ -1,0 +1,28 @@
+{% comment %} 
+  The Base Template for a helptext
+{% endcomment %}
+
+<div class="modal-content">
+  <div class="container-fluid">
+    <blockquote>
+      {% block helptext %}
+        {# The textual explanations #}
+      {% endblock helptext %}
+    </blockquote>
+    {# the corresponding image #}
+    <div class="mx-auto">
+      <img class="explanation-img" src="{% block img_src %}{% endblock %}"/>
+    </div>
+  </div>
+</div>
+
+{# Credits Block (override to remove Credits) #}
+{% block credits %}
+  <div class="modal-footer">
+    <b>Quelle:</b>
+    <a href="https://www.thinkgym.de/r%C3%A4tselarten/sudoku/l%C3%B6sungsstrategien-1/">
+      www.thinkgym.de/rätselarten/sudoku/lösungsstrategien-1/
+    </a>
+    <i>(auch 2,3)</i>
+  </div>
+{% endblock credits %}

@@ -86,7 +86,7 @@ def solve_sudoku(request: HttpRequest):
                 'dict': dict,
                 'algo_script': f"js/algorithm_scripts/{dict['algorithm']}.js",
                 'dict_str': json.dumps(dict),
-                'help_template': f"algorithms/helptexts/{dict['algorithm']}.html"
+                'help_template': f"algorithms/helptexts/{dict['algorithm']}_help.html"
             }
             return render(request, 'pages/solve.html', context)
 

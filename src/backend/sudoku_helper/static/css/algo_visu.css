@@ -26,3 +26,16 @@
 .field-affected input, .field-affected img {
     background-color: var(--bs-yellow);   
 }
+
+/* For the Explanation Text */
+@media screen and (orientation: landscape) {
+    .explanation-img {
+        max-height: 50vh;
+    }   
+}
+
+@media screen and (orientation: portrait) {
+    .explanation-img {
+        max-width: 70vw;
+    }   
+}
