@@ -9,6 +9,7 @@
         algo_script: Name of the Script to visualise the Algorithm results
         dict: dictionary
         dict_str: serialized dictionary
+        help_template: The Template for the Algorithm explanation
 {% endcomment %}
 
 {% load static %}
@@ -28,5 +29,5 @@
         {# TODO: implement correctly #}
     {% endif %}
 
-    {% include 'page_parts/all.html' with show_clr="" text=quickinfo text_template=quickinfo_template dict=dict sudoku=sudoku range=range sudoku_readonly="True" nxt_action="show_candidates" %}
+    {% include 'page_parts/all.html' with show_clr="" text=quickinfo text_template=quickinfo_template dict=dict sudoku=sudoku range=range sudoku_readonly="True" nxt_action="show_candidates" show_help="True" help_template=help_template %}
 {% endblock content %}
