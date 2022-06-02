@@ -1,6 +1,6 @@
 import unittest
 from algorithms.algorithms import *
-from .utils import intersection_of_units
+from .utils import intersection_of_units, has_removed_candidates
 from sudoku.base import Field, Sudoku
 
 # TODO
@@ -20,3 +20,19 @@ class UtilTest(unittest.TestCase):
         expected = [(0, 0)]
         given = intersection_of_units(UnitType.ROW, 0, UnitType.COLUMN, 0)
         self.assertListEqual(expected, given)
+
+    def test_removed(self):
+        a = {
+            1: [],
+            2: []
+        }
+        self.assertFalse(has_removed_candidates(a))
+
+        b = {
+            1: [1],
+            2: []
+        }
+        self.assertTrue(has_removed_candidates(b))
+
+        c = {}
+        self.assertFalse(has_removed_candidates(c))
