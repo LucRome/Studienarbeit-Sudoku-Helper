@@ -1,0 +1,24 @@
+{
+    "help-text": {
+        "prefix": "help",
+        "body": [
+            "{% extends 'algorithms/helptexts/base_helptext.html' %}",
+            "",
+            "{% comment %}",
+            "Explanation for $1 Algorithm",
+            "{% endcomment %}",
+            "",
+            "{% load static %}",
+            "",
+            "{% block algo_name %}",
+            "$2",
+            "{% endblock algo_name %}",
+            "",
+            "{% block helptext %}",
+            "$3",
+            "{% endblock helptext %}",
+            "",
+            "{% block img_src %}{% static 'imgs/help_images/$4.png' %}{% endblock img_src %}$0"
+        ]
+    }
+}

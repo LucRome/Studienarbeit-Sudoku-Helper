@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for hidden four Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Versteckter Vierer
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn vier Kandidaten in nur vier Feldern einer Einheit vorkommen, müssen sie sich auf diese vier Felder verteilen.
+D. h. die anderen Kandidaten können aus diesen Feldern entfernt werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/hidden_four.png' %}{% endblock img_src %}

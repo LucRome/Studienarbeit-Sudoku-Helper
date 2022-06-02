@@ -63,6 +63,7 @@ def test_single_algorithm(request: HttpRequest, name: str):
         'quickinfo_template': f"algorithms/quickinfos/{dict['algorithm']}.html",
         'dict': dict,
         'algo_script': f"js/algorithm_scripts/{dict['algorithm']}.js",
-        'dict_str': json.dumps(dict)
+        'dict_str': json.dumps(dict),
+        'help_template': f"algorithms/helptexts/{dict['algorithm']}_help.html",
     }
     return render(request, 'pages/solve.html', context)

@@ -27,7 +27,7 @@
   {% endif %}
   
   {# Rest of the Page #}
-  {% include 'page_parts/all.html' with show_clr="True" text=quickinfo sudoku=sudoku range=range sudoku_readonly="" nxt_action="validate" %}
+  {% include 'page_parts/all.html' with show_clr="True" text=quickinfo sudoku=sudoku range=range sudoku_readonly="" nxt_action="validate" show_help=False %}
     {# ="" -> False #}
 
 {% endblock content %}

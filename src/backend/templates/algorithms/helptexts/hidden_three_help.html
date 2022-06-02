@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for hidden threesome Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Versteckter Dreier
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn drei Kandidaten in nur drei Feldern einer Einheit vorkommen, müssen sie sich auf diese drei Felder verteilen.
+D. h. die anderen Kandidaten können aus diesen Feldern entfernt werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/hidden_three.png' %}{% endblock img_src %}

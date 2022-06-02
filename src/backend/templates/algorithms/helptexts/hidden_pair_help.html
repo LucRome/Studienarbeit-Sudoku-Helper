@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for hidden pair Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Verstecktes Paar
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn zwei Kandidaten in nur zwei Feldern einer Einheit auftauchen, müssen sie sich auf diese Felder verteilen. 
+D. h. die anderen Kandidaten können aus diesen Feldern gelöscht werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/hidden_pair.png' %}{% endblock img_src %}

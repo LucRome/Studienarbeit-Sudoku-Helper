@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for x-wing (column) Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+X-Wing (Spalte)
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn ein Kandidatenwert (hier: 6) in zwei Spalten jeweils nur zweimal auftaucht und diese vier Felder in nur zwei Zeilen liegen, 
+können alle weiteren Kandidaten dieses Wertes aus den Zeilen entfernt werden. 
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/x_wing_col.png' %}{% endblock img_src %}
