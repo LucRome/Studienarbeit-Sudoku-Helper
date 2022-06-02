@@ -62,7 +62,7 @@
             "args": [
                 "-m",
                 "unittest",
-                "frontend_tests.algorithm_pages.test_third_eye",
+                "frontend_tests.test_solved",
             ],
             "problemMatcher": []
         }
