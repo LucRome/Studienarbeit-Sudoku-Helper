@@ -8,7 +8,7 @@
 {% endcomment %}
 
 {% block content %}
-  {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" %}
+  {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku range=range sudoku_readonly="True" nxt_action="solve" show_help=False %}
 
   {# script to toggle candidates is in-place since its not used often and its short #}
   <script>

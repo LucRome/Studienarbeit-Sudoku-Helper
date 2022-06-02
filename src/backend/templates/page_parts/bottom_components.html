@@ -2,6 +2,8 @@
   Components under the Sudoku Form (Next Action Button, Help)
   Params:
     nxt_action: The next Action ('validate' | 'solve' | 'show_candidates')
+    show_help: Show the Help Button + Modal ?
+    help_template: The Template for the Help Text
 {% endcomment %}
 
 {# visible part (Buttons) #}
@@ -33,28 +35,29 @@
   {% endif %}
 
   {# Help Button #}
-  <button class="btn btn-success rounded-pill d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#help-modal">
-    <span class="material-icons-outlined">help_outline</span>
-  </button>
+  {% if show_help %}
+    <button class="btn btn-success rounded-pill d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#help-modal">
+      <span class="material-icons-outlined">help_outline</span>
+    </button>
+  {% endif %}
 </div>
 
 
 {# Modals #}
 
 {# Help Modal #}
-<div class="modal" id="help-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <p></p> {# needed for float-end #}
-        <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">
-          <span class="material-icons-outlined
-">close</span>
-        </button>
-      </div>
+{% if show_help %}
+  <div class="modal" id="help-modal">
+    <div class="modal-dialog">
       <div class="modal-content">
-        {# TODO: Help Text (maybe as iframe) #}
+        <div class="modal-header">
+          <p>Erklärung</p> {# needed for float-end #}
+          <button type="button" class="btn btn-danger float-end" data-bs-dismiss="modal">
+            <span class="material-icons-outlined">close</span>
+          </button>
+        </div>
+        {% include help_template %}
       </div>
     </div>
   </div>
-</div>
+{% endif %}

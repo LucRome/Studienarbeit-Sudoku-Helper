@@ -13,8 +13,10 @@
 		sudoku_readonly: if True -> all Sudoku Fields are readonly
 		(bottom)
 		nxt_action: The next Action ('validate' | 'solve')
+		show_help: Show the Help Button + Modal ?
+		help_template: The Template for the Help Text
 {% endcomment %}
 
 {% include 'page_parts/top_components.html' with show_clr=show_clr text=text text_template=text_template dict=dict %}
 {% include 'page_parts/sudoku.html' with sudoku=sudoku range=range sudoku_readonly=sudoku_readonly %}
-{% include 'page_parts/bottom_components.html' with nxt_action=nxt_action %}
+{% include 'page_parts/bottom_components.html' with nxt_action=nxt_action show_help=show_help help_template=help_template %}
