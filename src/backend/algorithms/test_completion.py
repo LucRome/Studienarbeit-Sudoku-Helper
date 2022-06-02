@@ -32,7 +32,7 @@ def try_to_solve(sudoku: Sudoku) -> Tuple[bool, str]:
         str_old = str_new
 
     print('solved')
-    return True
+    return True, ''
 
 def verify(sudoku: Sudoku) -> bool:
     """
