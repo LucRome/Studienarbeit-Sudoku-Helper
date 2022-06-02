@@ -238,3 +238,13 @@ class Sudoku:
                 if not value_in_section(blk, val):
                     candidates.append(val)
             intersect_all_candidates(blk, candidates)
+
+    def is_solved(self) -> bool:
+        """
+        Checks whether all fields have a value
+        """
+        for fl in self.fields:
+            for field in fl:
+                if field.get_value() is None:
+                    return False
+        return True

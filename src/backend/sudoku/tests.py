@@ -117,6 +117,31 @@ class SudokuTest(unittest.TestCase):
                 coords = (row, col)
                 self.assertEqual(coords, sudoku.get_field(row, col).get_coordinates())
 
+    def test_solve(self):
+        self.assertTrue(Sudoku([
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [4, 5, 6, 7, 8, 9, 1, 2, 3],
+            [7, 8, 9, 1, 2, 3, 4, 5, 6],
+            [2, 3, 4, 5, 6, 7, 8, 9, 1],
+            [5, 6, 7, 8, 9, 1, 2, 3, 4],
+            [8, 9, 1, 2, 3, 4, 5, 6, 7],
+            [3, 4, 5, 6, 7, 8, 9, 1, 2],
+            [6, 7, 8, 9, 1, 2, 3, 4, 5],
+            [9, 1, 2, 3, 4, 5, 6, 7, 8]
+        ]).is_solved())
+
+        self.assertFalse(Sudoku([
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [4, 5, 6, 7, 8, 9, 1, 2, 3],
+            [7, 8, None, 1, 2, 3, 4, 5, 6],
+            [2, 3, 4, 5, 6, 7, 8, 9, 1],
+            [5, 6, 7, 8, 9, 1, 2, 3, 4],
+            [8, 9, 1, 2, 3, 4, 5, 6, 7],
+            [3, 4, 5, 6, 7, 8, 9, 1, 2],
+            [6, 7, 8, 9, 1, 2, 3, 4, 5],
+            [9, 1, 2, 3, 4, 5, 6, 7, 8]
+        ]).is_solved())
+
 """
     Candidate Select Tests
 """

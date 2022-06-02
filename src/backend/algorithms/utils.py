@@ -4,7 +4,11 @@ from typing import List, Tuple, Literal, Dict
 from enum import Enum
 
 
-# TODO: implement Function that removes the given candidates from the fields in the given unit, except the given fields
+def has_removed_candidates(removed_candidates: Dict[int, List[int]]) -> bool:
+    """
+    Checks whether some candidates where actually removed
+    """
+    return any([len(l) > 0 for l in removed_candidates.values()])
 
 class UnitType(Enum):
     ROW = 'row'
