@@ -222,12 +222,80 @@ class TestAlgorithms(unittest.TestCase):
         grid19.append([None, 7, None, 2, None, None, 3, None, 5])
         grid19.append([None, 3, None, 8, None, None, 7, None, 6])
         grid19.append([None, None, 1, None, 7, None, 4, None, 8])
+        
+        
+        grid20 = []
+        grid20.append([None, None, None, None, 2, 9, None, 4, 1])
+        grid20.append([None, 6, None, 1, 5, 8, 7, 2, None])
+        grid20.append([2, None, 1, None, 4, 3, None, 5, None])
+        grid20.append([None, None, None, 8, 6, None, None, 7, None])
+        grid20.append([6,None, None, 9, 3, 4, None, 1, None])
+        grid20.append([3, None, None, 2, 7, None, 9, 6, None])
+        grid20.append([1, 2, 6, 3, 8, 7, None, 9, None])
+        grid20.append([None, None, 9, 5, 1, 6, 2, 3, 7])
+        grid20.append([7, 3, 5, 4, 9, 2, 1, 8, 6])
+        
+        grid20_1 = []
+        grid20_1.append([5, 9, 8, 4, None, 7, 1, None, None])
+        grid20_1.append([None, None, 2, 6, 1, 9, 5, None, 8])
+        grid20_1.append([6, None, 1, 5, None, 8, None, None, None])
+        grid20_1.append([1, None, 7, 3, 8, 2, None, None, None])
+        grid20_1.append([None, None, 6, 1, 9, 4, None, 8, None])
+        grid20_1.append([None, 8, 9, 7, 5, 6, 3, 1, None])
+        grid20_1.append([8, 6, 5, 2, 7, 3, 4, 9, 1])
+        grid20_1.append([9, None, 3, 8, 4, 1, None, None, None])
+        grid20_1.append([None, 1, 4, 9, 6, 5, 8, 3, None])
 
-        sudoku1: Sudoku = Sudoku(grid13)
+        
+        grid21 = []
+        grid21.append([None, None, None, 9, 8, None, 6, None, None])
+        grid21.append([4, 6, None, 3, 2, None, 1, 8, 9])
+        grid21.append([None, 9, None, None, 1, 6, None, None, 2])
+        grid21.append([None, None, 3, 7, 5, 9, None, None, None])
+        grid21.append([None, 5, None, 2, 4, 1, 9, None, 3])
+        grid21.append([None, None, None, 6, 3, 8, None, 1, None])
+        grid21.append([7, None, None, None, None, None, None, None, 1])
+        grid21.append([None, None, 1, None, None, None, None, None, None])
+        grid21.append([None, None, None, 1, 7, 5, None, 2, 4])
+
+        grid22 = []
+        grid22.append([7, None, 6, 9, 1, 8, 4, 3, None])
+        grid22.append([None, 1, None, None, None, 6, 9, None, 8])
+        grid22.append([None, 8, 9, None, None, 5, None, None, None])
+        grid22.append([8, None, None, None, 6, None, None, None, None])
+        grid22.append([6, None, None, None, 4, None, 5, None, None])
+        grid22.append([1, 7, None, None, 9, 3, None, 2, None])
+        grid22.append([5, 3, 7, 1, 8, 4, 2, 6, 9])
+        grid22.append([9, 6, 8, 3, 5, 2, 7, None, None])
+        grid22.append([2, 4, 1, 6, 7, 9, None, None, None])
+        
+        grid23 = []
+        grid23.append([None, 6, 9, None, None, 1, None, 3, None])
+        grid23.append([None, 3, 4, None, 5, None, None, 1, None])
+        grid23.append([None, 1, None, None, 3, 7, None, None, 4])
+        grid23.append([None, None, None, 3, 7, None, None, 9, None])
+        grid23.append([None, 7, 6, 1, 8, None, None, None, 5])
+        grid23.append([1, None, None, 2, 6, None, 7, None, None])
+        grid23.append([None, None, 1, 7, None, None, None, 6, None])
+        grid23.append([6, None, 7, None, None, None, None, 5, None])
+        grid23.append([4, None, None, 5, 1, 6, None, 7, None])
+        
+        grid25 = []
+        grid25.append([None, None, 4, 3, None, 2, None, 1, 8])
+        grid25.append([8, None, None, None, None, None, None, 7, None])
+        grid25.append([None, None, 3, 8, 9, None, 4, 5, None])
+        grid25.append([6, 2, 8, None, None, None, 5, None, 4])
+        grid25.append([5, 3, 9, 4, 6, 8, 1, 2, 7])
+        grid25.append([4, None, None, 5, 2, None, 8, 6, None])
+        grid25.append([None, None, None, None, 1, None, None, None, None])
+        grid25.append([None, None, 5, None, None, None, 7, None, 1])
+        grid25.append([1, None, None, 7, 8, None, None, None, None])
+
+        sudoku1: Sudoku = Sudoku(grid25)
         sudoku1.select_candidates()
         #sudoku1.get_field(6,6).remove_candidate(1) #17
         #sudoku1.get_field(6,6).remove_candidate(3) #17
         algo = Algorithm(sudoku1)
-        bol,stri = algo.algorithm_12()
+        bol,stri = algo.algorithm_25_1()
         print('Bool:',bol)
         print('String:',stri)
