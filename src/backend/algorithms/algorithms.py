@@ -82,41 +82,39 @@ class Algorithm:
 
     # hidden single
     def algorithm_1(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
-        blockCounter = 0
-        rowCounter = 0
-        colCounter = 0
         for i in NINE_RANGE:
+            blk, row, col = self.sudoku.get_block(i), self.sudoku.get_row(i), self.sudoku.get_column(i)
             for value in ALL_FIELD_VALUES:
-                for j in NINE_RANGE:
-                    if (value in self.blocks[i][j]):
-                        blockCounter = blockCounter + 1
-                    if (rowCounter <= 1) and (value in self.rows[i][j]):
-                        rowCounter = rowCounter + 1
-                    if (colCounter <= 1) and (value in self.cols[i][j]):
-                        colCounter = colCounter + 1     
+                blk_fields, row_fields, col_fields = [], [], []
 
-                reason = None           
-                if blockCounter == 1:
-                    reason = 'block'
-                elif rowCounter == 1:
-                    reason = 'row'
-                elif colCounter == 1:
-                    reason = 'column'
+                for field in blk:
+                    if (len(blk_fields) < 2) and (value in field.get_candidates()):
+                        blk_fields.append(field)
+                for field in row:
+                    if (len(row_fields) < 2) and (value in field.get_candidates() and len(row_fields) < 2):
+                        row_fields.append(field)
+                for field in col:
+                    if (len(col_fields) < 2) and (value in field.get_candidates()):
+                        col_fields.append(field)
+
+                reason, field = None, None        
+                if len(blk_fields) == 1:
+                    reason, field = UnitType.BLOCK, blk_fields[0]
+                elif len(row_fields) == 1:
+                    reason, field = UnitType.ROW, row_fields[0]
+                elif len(col_fields) == 1:
+                    reason, field = UnitType.COLUMN, col_fields[0]
                 
                 if reason:
-                    self.sudoku.get_field(i, j).set_value(value)
-                    removed_candidates = recalc_candidates_with_new_value(self.sudoku, (i, j))
+                    field.set_value(value)
+                    removed_candidates = recalc_candidates_with_new_value(self.sudoku, field.get_coordinates())
                     return (True, {
                         'algorithm': 'hidden_single',
-                        'field': (i, j),
+                        'field': field.get_coordinates(),
                         'value': value,
-                        'reason': reason,
+                        'reason': reason.value,
                         'removed_candidates': removed_candidates
-                    })
-                else:    
-                    blockCounter = 0    
-                    rowCounter = 0    
-                    colCounter = 0               
+                    })              
         return (False, None)
  
     # Open single
