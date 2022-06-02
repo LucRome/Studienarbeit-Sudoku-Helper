@@ -26,7 +26,7 @@ function resize_all() {
 
         let fs_rest_str = size_rest + unit;
 
-        $("p, span, button, a, strong, b").css("font-size", fs_rest_str)
+        $("p, span, button, a, strong, b, blockquote, i").css("font-size", fs_rest_str)
         $(".spinner-grow").css("width", fs_rest_str);
         $(".spinner-grow").css("height", fs_rest_str);
         

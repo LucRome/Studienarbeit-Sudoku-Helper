@@ -1,3 +1,5 @@
+![](logo.png)
+
 # Studienarbeit-Sudoku-Helper
 Repository für die Studienarbeit zum Thema Sudoku-Helper
 
@@ -49,3 +51,7 @@ py -m unittest validation.test_validation
     ```
     py -m unittest frontend_tests.test_index [other test cases]
     ```
+
+# *Logo*
+- *created using [canva.com](https://www.canva.com)*
+- *favicons etc. generated using [realfavicongenerator.net](https://realfavicongenerator.net)*
