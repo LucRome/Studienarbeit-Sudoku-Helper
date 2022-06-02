@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% comment %} 
+    Params:
+        sudoku: Sudoku Class
+        range: range(0,9)
+{% endcomment %}
+
+{% load static %}
+
+{% block content %}
+     {# Success Message #}
+     <div class="alert alert-success alert-dismissible d-flex align-items-center">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <b class="mb-0">Glückwunsch das Sudoku ist vollständig gelöst!<b>
+    </div>
+
+    {% include 'page_parts/all.html' with show_clr="" text=quickinfo dict=dict sudoku=sudoku range=range sudoku_readonly="True" nxt_action="index" show_help="" %}
+{% endblock content %}

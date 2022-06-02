@@ -6,4 +6,5 @@ urlpatterns = [
     path('check-sudoku', check_sudoku, name='submit-sudoku'),
     path('solve-sudoku', solve_sudoku, name='solve-sudoku'),
     path('compute-candidates', compute_candidates, name='compute-candidates'),
+    path('solved', solved, name='solved')
 ]
