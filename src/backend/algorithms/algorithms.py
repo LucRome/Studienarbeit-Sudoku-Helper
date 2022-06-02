@@ -2,7 +2,7 @@ import re
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 from .utils import UnitType, intersection_of_units, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units, \
-    key_to_coordinates, coordinates_to_key
+    key_to_coordinates, coordinates_to_key, has_removed_candidates
 
 class Algorithm:
 
@@ -169,13 +169,14 @@ class Algorithm:
                                         break
                             if reason and fields:
                                 removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, [value1, value2], fields)
-                                return (True, {
-                                    'algorithm': 'open_pair',
-                                    'values': [value1, value2],
-                                    'fields': fields,
-                                    'reason': reason.value,
-                                    'removed_candidates': removed,
-                                })
+                                if has_removed_candidates(removed):
+                                    return (True, {
+                                        'algorithm': 'open_pair',
+                                        'values': [value1, value2],
+                                        'fields': fields,
+                                        'reason': reason.value,
+                                        'removed_candidates': removed,
+                                    })
         return (False,None)
 
     # Verstecktes Paar
@@ -232,22 +233,20 @@ class Algorithm:
                     reason, nr = None, None
                     if blockCounter == 4:
                         reason, nr = UnitType.BLOCK, i
-                        # return True, f'V1: {value1}, V2:{value2}, Block:{i}'
                     elif colCounter == 4:
                         reason, nr = UnitType.COLUMN, i
-                        # return True, f'V1: {value1}, V2:{value2}, Col:{i}'
                     elif rowCounter == 4:
                         reason, nr = UnitType.ROW, i
-                        # return True, f'V1: {value1}, V2:{value2}, Row:{i}'
                     if reason:
                         values = [value1, value2]
                         removed_candidates = enforce_hidden_algs(self.sudoku, reason, nr, values)
-                        return (True, {
-                            'algorithm': 'hidden_pair',
-                            'values': values,
-                            'reason': reason.value,
-                            'removed_candidates': removed_candidates,
-                        })
+                        if has_removed_candidates(removed_candidates):
+                            return (True, {
+                                'algorithm': 'hidden_pair',
+                                'values': values,
+                                'reason': reason.value,
+                                'removed_candidates': removed_candidates,
+                            })
 
         return (False,None)
 
@@ -322,14 +321,15 @@ class Algorithm:
                             reason, fields, field_candidates, nr = UnitType.ROW, row_fields, row_candidates, i
                         if reason:
                             removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, values, fields)
-                            return (True, {
-                                'algorithm': 'open_three',
-                                'values': values,
-                                'fields': fields,
-                                'field_candidates': field_candidates,
-                                'reason': reason.value,
-                                'removed_candidates': removed,
-                            })   
+                            if has_removed_candidates(removed):
+                                return (True, {
+                                    'algorithm': 'open_three',
+                                    'values': values,
+                                    'fields': fields,
+                                    'field_candidates': field_candidates,
+                                    'reason': reason.value,
+                                    'removed_candidates': removed,
+                                })   
         return (False,None)
 
     # Versteckter Dreier
@@ -392,12 +392,13 @@ class Algorithm:
                         if reason:
                             values = [value1, value2, value3]
                             removed_candidates = enforce_hidden_algs(self.sudoku, reason, nr, values)
-                            return (True, {
-                                'algorithm': 'hidden_three',
-                                'values': values,
-                                'reason': reason.value,
-                                'removed_candidates': removed_candidates,
-                            })
+                            if has_removed_candidates(removed_candidates):
+                                return (True, {
+                                    'algorithm': 'hidden_three',
+                                    'values': values,
+                                    'reason': reason.value,
+                                    'removed_candidates': removed_candidates,
+                                })
         return (False,None)
 
     # Nackter Vierer
@@ -469,14 +470,15 @@ class Algorithm:
                                 reason, fields, field_candidates, nr = UnitType.ROW, row_fields, row_candidates, i
                             if reason:
                                 removed = remove_candidates_from_fields_in_unit(self.sudoku, reason, nr, values, fields)
-                                return (True, {
-                                    'algorithm': 'open_four',
-                                    'values': values,
-                                    'fields': fields,
-                                    'field_candidates': field_candidates,
-                                    'reason': reason.value,
-                                    'removed_candidates': removed,
-                                })
+                                if has_removed_candidates(removed):
+                                    return (True, {
+                                        'algorithm': 'open_four',
+                                        'values': values,
+                                        'fields': fields,
+                                        'field_candidates': field_candidates,
+                                        'reason': reason.value,
+                                        'removed_candidates': removed,
+                                    })
         return (False,None)
         
     
@@ -553,12 +555,13 @@ class Algorithm:
                                 reason, nr = UnitType.ROW, i
                             if reason:
                                 removed_candidates = enforce_hidden_algs(self.sudoku, reason, nr, values)
-                                return (True, {
-                                    'algorithm': 'hidden_four',
-                                    'values': values,
-                                    'reason': reason.value,
-                                    'removed_candidates': removed_candidates
-                                })
+                                if has_removed_candidates(removed_candidates):
+                                    return (True, {
+                                        'algorithm': 'hidden_four',
+                                        'values': values,
+                                        'reason': reason.value,
+                                        'removed_candidates': removed_candidates
+                                    })
         return (False,None)
 
     # Reihe-Block-Check 
@@ -597,12 +600,13 @@ class Algorithm:
                     if blockCount > count:
                         intersect_fields = intersection_of_units(UnitType.ROW, i, UnitType.BLOCK, blockNr)  # the fields that are in the row and in the block
                         removed_candidates = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.BLOCK, blockNr, [value], intersect_fields)
-                        return (True, {
-                            'algorithm': 'row_block_check',
-                            'value': value,
-                            'intersect_fields': intersect_fields,
-                            'removed_candidates': removed_candidates
-                        })
+                        if has_removed_candidates(removed_candidates):
+                            return (True, {
+                                'algorithm': 'row_block_check',
+                                'value': value,
+                                'intersect_fields': intersect_fields,
+                                'removed_candidates': removed_candidates
+                            })
         return (False,None)
    
     # Block-Reihe_Check 
@@ -640,12 +644,13 @@ class Algorithm:
                     if rowCount > count:
                         intersect_fields = intersection_of_units(UnitType.ROW, rowNr, UnitType.BLOCK, i)  # the fields that are in the row and in the block
                         removed_candidates = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, rowNr, [value], intersect_fields)
-                        return (True, {
-                            'algorithm': 'block_row_check',
-                            'value': value,
-                            'intersect_fields': intersect_fields,
-                            'removed_candidates': removed_candidates
-                        })
+                        if has_removed_candidates(removed_candidates):
+                            return (True, {
+                                'algorithm': 'block_row_check',
+                                'value': value,
+                                'intersect_fields': intersect_fields,
+                                'removed_candidates': removed_candidates
+                            })
         return (False,None)        
 
     # X-Wing Row
@@ -693,12 +698,13 @@ class Algorithm:
                                     removed_candidates_1 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, Pair2[a][0][1], [value], intersect_fields)
                                     removed_candidates_2 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, Pair2[a][1][1], [value], intersect_fields)
                                     removed_candidates = {**removed_candidates_1, **removed_candidates_2}
-                                    return (True, {
-                                        'algorithm': 'x_wing_row',
-                                        'value': value,
-                                        'intersect_fields': intersect_fields,
-                                        'removed_candidates': removed_candidates
-                                    })
+                                    if has_removed_candidates(removed_candidates):
+                                        return (True, {
+                                            'algorithm': 'x_wing_row',
+                                            'value': value,
+                                            'intersect_fields': intersect_fields,
+                                            'removed_candidates': removed_candidates
+                                        })
         return (False,None)
     
     # X-Wing Col
@@ -746,12 +752,13 @@ class Algorithm:
                                     removed_candidates_1 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, Pair2[a][0][0], [value], intersect_fields)
                                     removed_candidates_2 = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, Pair2[a][1][0], [value], intersect_fields)
                                     removed_candidates = {**removed_candidates_1, **removed_candidates_2}
-                                    return (True, {
-                                        'algorithm': 'x_wing_col',
-                                        'value': value,
-                                        'intersect_fields': intersect_fields,
-                                        'removed_candidates': removed_candidates
-                                    })
+                                    if has_removed_candidates(removed_candidates):
+                                        return (True, {
+                                            'algorithm': 'x_wing_col',
+                                            'value': value,
+                                            'intersect_fields': intersect_fields,
+                                            'removed_candidates': removed_candidates
+                                        })
         return (False,None)
   
     # Drittes Auge
@@ -811,13 +818,14 @@ class Algorithm:
             removed_candidates = {coordinates_to_key(rowPos, colPos): to_remove}
             for v in to_remove:
                 candidates.remove(v)
-            return (True,{
-                'algorithm': 'third_eye',
-                'value': value,
-                'field': (rowPos, colPos),
-                'removed_candidates': removed_candidates,
-                'reason': reason.value
-            })
+            if has_removed_candidates(removed_candidates):
+                return (True,{
+                    'algorithm': 'third_eye',
+                    'value': value,
+                    'field': (rowPos, colPos),
+                    'removed_candidates': removed_candidates,
+                    'reason': reason.value
+                })
             
         return (False,None)
 
