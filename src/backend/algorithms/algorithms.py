@@ -24,7 +24,7 @@ class Algorithm:
             self.cols[col][row] = sudoku.get_field(row,col).get_candidates()
             self.blocks[Sudoku.get_block_nr(row,col)][self.get_block_by_row_col(row,col)] = sudoku.get_field(row,col).get_candidates()
 
-        self.print_list()
+        # self.print_list()
     
     def print_list(self):
         print('Blocks:',self.blocks)
