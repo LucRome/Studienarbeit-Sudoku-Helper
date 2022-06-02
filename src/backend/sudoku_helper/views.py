@@ -1,6 +1,6 @@
 import re
 from django.http.request import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from algorithms.algorithms import Algorithm
@@ -57,7 +57,15 @@ def solve_sudoku(request: HttpRequest):
 
     if response:
         return response
-        
+    elif sudoku.is_solved():
+        context = {
+            'sudoku': sudoku,
+            'range': NINE_RANGE,
+            'quickinfo': 'Das Sudoku ist vollständig gelöst. Knopf drücken um ein neues Sudoku zu starten.'
+        }
+    
+        return render(request, 'pages/solved.html', context)
+
     # extract and check candidates
     candidates_correct = check_and_add_candidates_from_request(request, sudoku)
     

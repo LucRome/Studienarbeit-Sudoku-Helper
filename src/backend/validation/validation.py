@@ -31,7 +31,7 @@ class Validation:
     counter = self.validate_sudoku(sudoku,0,0)
     if counter == 0:
       return (False, f'Das Sudoku ist ungültig, es existiert keine Lösung!')
-    elif counter == 1:
+    elif counter == 1 or counter is None: # (None occurs when sudoku is completely solved)
       return (True, None)
     else:
       return (False, f'Das Sudoku ist ungültig, es existieren mehrere Lösungen!')  

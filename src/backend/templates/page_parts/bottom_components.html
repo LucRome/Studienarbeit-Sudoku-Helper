@@ -32,6 +32,11 @@
     <button formaction="{% url 'solve-sudoku' %}" class="btn btn-lg btn-primary rounded-pill compute-btn" id="solve-sudoku-btn" form="form-sudoku" type="submit">
       Lösen
     </button>
+  {% elif nxt_action == "index" %}
+    {# return to index #}
+    <a class="btn btn-lg btn-primary rounded-pill" href="{% url 'index' %}">
+      Neues Sudoku
+    </a>
   {% endif %}
 
   {# Help Button #}

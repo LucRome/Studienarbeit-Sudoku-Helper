@@ -11,9 +11,10 @@
             "module": "unittest",
             "cwd": "${workspaceFolder}/src/backend",
             "args": [
-                "sudoku.tests",
-                "validation.test_validation",
-                "algorithms.test_utils"
+                // "sudoku.tests",
+                // "validation.test_validation",
+                // "algorithms.test_utils"
+                "algorithms.test_completion"
             ],
             "justMyCode": true
         },
