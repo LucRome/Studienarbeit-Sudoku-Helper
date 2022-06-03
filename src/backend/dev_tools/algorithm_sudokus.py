@@ -165,6 +165,42 @@ GRID12 = [
     [6, 2, 9, 7, 4, 3, 8, None, 1],
 ]
 
+GRID13 = [
+    [None, None, None, None, 2, None, None, None, None, ],
+    [3, 8, 6, None, None, None, None, 5, 2, ],
+    [5, None, None, None, None, 3, None, None, None, ],
+    [None, 1, None, None, None, 8, None, 9, None, ],
+    [4, None, 8, 9, None, None, 6, None, 7, ],
+    [2, None, 9, None, None, 4, None, None, None, ],
+    [8, None, None, 7, None, None, 3, 6, None, ],
+    [9, None, None, 3, None, 1, None, 4, None, ],
+    [None, None, None, None, 5, None, None, None, None, ],
+]
+
+GRID14 = [
+    [None, None, 2, 8, None, 5, None, None, 7, ],
+    [None, 9, None, 2, 4, None, None, 5, None, ],
+    [4, None, None, 9, None, None, 2, None, None, ],
+    [None, None, 6, None, None, 2, None, None, 1, ],
+    [None, None, None, None, 8, None, None, 2, None, ],
+    [None, None, None, None, None, None, 3, None, None, ],
+    [None, None, 7, None, None, 8, None, None, 5, ],
+    [None, None, None, None, 9, None, None, 6, None, ],
+    [1, None, None, 4, None, None, 7, None, None, ],
+]
+
+GRID15 = [
+    [6, 4, None, 8, 5, 3, None, 9, None, ],
+    [9, None, None, 6, 4, 1, 8, 5, None, ],
+    [1, 5, 8, 7, 2, 9, 6, 4, 3, ],
+    [3, 2, 5, 1, 6, 7, 9, 8, 4, ],
+    [4, None, 1, 9, 8, 2, 3, None, 5, ],
+    [8, 9, None, 4, 3, 5, None, 2, None, ],
+    [2, None, 9, 5, 1, 8, 4, None, None, ],
+    [7, 1, None, 2, 9, 4, 5, None, 8, ],
+    [5, 8, 4, 3, 7, 6, 2, 1, 9, ],
+]
+
 # mapping
 NAME_MAP = {
     'hidden_single': GRID,
@@ -180,4 +216,7 @@ NAME_MAP = {
     'x_wing_row': GRID10,
     'x_wing_col': GRID10,
     'third_eye': GRID12,
+    'skyscraper': GRID13,
+    'swordfish': GRID14,
+    'dragon': GRID15,
 }
