@@ -1066,7 +1066,7 @@ class Algorithm:
         return False
     
     # Drachen
-    def algorithm_16(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_16(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields: List[Field] = list()
         vStraight: List[Field] = list()
         vComplex: List[Field] = list()
@@ -1089,11 +1089,28 @@ class Algorithm:
                             for a in range(3,len(vComplex)):
                                 for b in range(0,len(vStraight)):
                                     if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
-                                        # vComplex[a]: Feld aus dem gestrichen wird
-                                        # vComplex[0, 1, 2]: Rechten markierten Felder
-                                        # vStraight[0]: Linke markierte Feld
-                                        #self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
-                                        return True, f'Value:{value}, Row:{vComplex[0].get_coordinates()[0]}, Field:{vComplex[a].get_coordinates()}'
+                                        if value in vComplex[a].get_candidates():  # check whether its useful
+                                            row = vStraight[0].get_coordinates()[0]
+                                            fields_row, fields_col, row = [vStraight[0]], None, vStraight[0].get_coordinates()[0]
+                                            if vComplex[0].get_coordinates()[0] == row:
+                                                fields_row.append(vComplex[0])
+                                                fields_col = [vComplex[1], vComplex[2]]
+                                            elif vComplex[1].get_coordinates()[0] == row:
+                                                fields_row.append(vComplex[1])
+                                                fields_col = [vComplex[0], vComplex[2]]
+                                            else:
+                                                fields_row.append(vComplex[2])
+                                                fields_col = [vComplex[0], vComplex[1]]
+                                            
+                                            vComplex[a].remove_candidate(value)
+                                            y_rem, x_rem = vComplex[a].get_coordinates()
+                                            return (True, {
+                                                'algorithm': 'dragon',
+                                                'value': value,
+                                                'fields_row': [f.get_coordinates() for f in fields_row],
+                                                'fields_col': [f.get_coordinates() for f in fields_col],
+                                                'removed_candidates': {coordinates_to_key(y_rem, x_rem): [value]}
+                                            })
                         fields.clear()
                         vStraight.clear()
                         vComplex.clear()      
