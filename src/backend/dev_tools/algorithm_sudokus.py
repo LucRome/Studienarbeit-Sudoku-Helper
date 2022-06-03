@@ -208,7 +208,7 @@ GRID16 = [
     [None, 5, None, 9, 1, 3, 8, 2, None, ],
     [None, None, None, 5, 2, 6, None, 7, None, ],
     [None, 2, None, 8, 4, 7, None, None, 9, ],
-    [9, None, None, None, 8, None, None, 6, 2, ],
+    [9, 3, None, 1, 8, None, None, 6, 2, ],
     [None, 8, 2, None, 3, None, None, None, 7, ],
     [None, None, 4, None, 9, 2, None, None, None, ],
 ]

@@ -112,6 +112,12 @@ function highlight_fields(fields, css_class) {
     })
 }
 
+function reverse_highlight_fields(fields, css_class) {
+    fields.forEach(element => {
+        $(`#field_${element[0]}_${element[1]}`).removeClass(css_class);
+    })
+}
+
 function parse_fields_from_removed_candidates(removed_candidates) {
     let fields = []
     for (var key in removed_candidates) {
@@ -122,14 +128,3 @@ function parse_fields_from_removed_candidates(removed_candidates) {
     }
     return fields;
 }
-
-// function handle_inputs(fields, show=false) {
-//     fields.forEach(element => {
-//         let inp = $(`input#${element[0]}_${element[1]}`);
-//         if (show) {
-//             inp.hide();
-//         } else {
-//             inp.show();
-//         }
-//     })
-// }

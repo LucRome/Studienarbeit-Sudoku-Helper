@@ -1146,10 +1146,10 @@ class Algorithm:
         return False 
      
     #Viereck-Type1   
-    def algorithm_17(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_17(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1 = []
         fields2 = []
-        returnField = []
+        returnField: List[Field] = []
         pos = 0
         for value1 in ALL_FIELD_VALUES:
             for value2 in range(value1+1,10):
@@ -1176,15 +1176,21 @@ class Algorithm:
                                             pos = len(returnField)
                                             returnField.append(self.sudoku.get_field(l[0],l[1]))
                                     if counter == 3:
-                                        # Fields 2: 4 markierte Felder (Koordinaten)
-                                        # gestrichene Werte: value1, value2
-                                        # Feld aus dem gestrichen wird: returnField[pos].get_coo
-                                        return True,f'Value1: {value1} Value2: {value2} Field:{returnField[pos].get_coordinates()}'
+                                        returnField[pos].remove_candidate(value1)
+                                        returnField[pos].remove_candidate(value2)
+                                        y_rem, x_rem = returnField[pos].get_coordinates()
+                                        return (True, {
+                                            'algorithm': 'square_type_1',
+                                            'values': [value1, value2],
+                                            'fields': fields2,
+                                            'removed_candidates': {coordinates_to_key(y_rem, x_rem): [value1, value2]}
+                                        })
                                     pos = 0
                                 fields2.clear()
                 fields1.clear()
                                             
         return False,None
+        
     #Viereck-Type2   
     def algorithm_18(self) -> Tuple[bool, Optional[str]]:
         fields1 = []
@@ -1230,6 +1236,7 @@ class Algorithm:
                                         # value1, value2: Im Bsp: 2,6
                                         # returnField2: Werte mit markiertem Kandidaten
                                         # Felder mit markiertem Kandidaten immer in einer Einheit, gelöscht werden kann aus Feldern im gemeinsamen Einflussbereich
+
                                         return True,f'Value1: {value1} Value2: {value2} Remove:{returnValue} Field1:{returnField2[0].get_coordinates()} Field2:{returnField2[1].get_coordinates()}'
                                     returnField.clear()
                                     returnField2.clear()
