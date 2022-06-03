@@ -10,7 +10,7 @@ def nxt_step(sudoku: Sudoku) -> Tuple[bool, Optional[Dict[str, Any]]]:
     True + Dict if one algorithm is used, else false
     """
     solver = Algorithm(sudoku)
-    for alg in solver.get_all_algorithms():
+    for alg in solver.get_name_fn_dict().values():
         success, dict = alg()
         if success:
             return True, dict

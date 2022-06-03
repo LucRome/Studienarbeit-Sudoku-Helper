@@ -39,21 +39,6 @@ class Algorithm:
 
     def get_block_by_row_col(self,row:int,col:int):
         return (((row%3)*3+(col%3)))
-
-    # all algorithms
-    def get_all_algorithms(self) -> List[Callable[[], Tuple[bool, Optional[Dict[str, Any]]]]]:        
-        return [
-            self.algorithm_2,
-            self.algorithm_1,
-            self.algorithm_3,
-            self.algorithm_4,
-            self.algorithm_5,
-            self.algorithm_6,
-            self.algorithm_7,
-            self.algorithm_8,
-            self.algorithm_9,
-            self.algorithm_10,
-        ]
     
     def get_name_fn_dict(self) -> Dict[str, Callable[[], Tuple[bool, Optional[Dict[str, Any]]]]]:
         """
@@ -72,12 +57,21 @@ class Algorithm:
             'block_row_check': self.algorithm_10,
             'x_wing_row': self.algorithm_11_1,
             'x_wing_col': self.algorithm_11_2,
-            'stonebutt': self.algorithm_12,
+            'steinbutt': self.algorithm_12,
             'third_eye': self.algorithm_13,
             'skyscraper': self.algorithm_14,
             'swordfish_col': self.algorithm_15_1,
             'swordfish_row': self.algorithm_15_1,
             'dragon': self.algorithm_16,
+            'square_type_1': self.algorithm_17,
+            'square_type_2': self.algorithm_18,
+            'square_type_4': self.algorithm_20,
+            'xy_wing': self.algorithm_21,
+            'xyz_wing': self.algorithm_22,
+            'x_chain': self.algorithm_23,
+            'swordfish_fin_col': self.algorithm_25_1,
+            'swordfish_fin_row': self.algorithm_25_2,
+            'w_wing': self.algorithm_26,
         }
 
     # hidden single
@@ -874,7 +868,7 @@ class Algorithm:
 
 
     # Wolkenkratzer
-    def algorithm_14(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_14(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields: List[Field] = list() 
         fields2: List[Field] = list() 
         returnFields: List[Field] = list()

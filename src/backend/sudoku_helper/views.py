@@ -81,7 +81,7 @@ def solve_sudoku(request: HttpRequest):
         return render(request, 'pages/index.html', context)
     
     algorithms = Algorithm(sudoku)
-    for al_fn in algorithms.get_all_algorithms():
+    for al_fn in algorithms.get_name_fn_dict().values():
         success, dict = al_fn()
         
         # TODO: check if algorithm brought any use (i.e. candidates were deleted)
