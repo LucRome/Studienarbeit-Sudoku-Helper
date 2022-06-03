@@ -1,7 +1,7 @@
 import re
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
-from .utils import UnitType, intersection_of_units, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units, \
+from .utils import UnitType, intersection_of_units, remove_candidates_from_fields, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units, \
     key_to_coordinates, coordinates_to_key, find_chain_12, check_Same_Block_Rows, find_chain_16, find_chain_16_1, has_removed_candidates
 
 class Algorithm:
@@ -870,7 +870,6 @@ class Algorithm:
     # Wolkenkratzer
     def algorithm_14(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields: List[Field] = list() 
-        fields2: List[Field] = list() 
         returnFields: List[Field] = list()
         returnFields2: List[Field] = list()
         vCol: List[List[Tuple[int,int]]] = list()  
@@ -904,51 +903,43 @@ class Algorithm:
                                     # vCol: Liste mit > 1 Kandidaten vom Wert
                                     # i: Reihe in der auf gleicher Höhe
                                     # rauslöschen in grauen Kästen möglich
+                                    found_sth = False
                                     if b[0]==0 and (y[0]==1 or y[0]==2) and b[0]!=i:      
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)                                            
                                     elif b[0]==1 and (y[0]==0 or y[0]==2) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==2 and (y[0]==0 or y[0]==1) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==3 and (y[0]==4 or y[0]==5) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==4 and (y[0]==3 or y[0]==5) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}' 
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==5 and (y[0]==3 or y[0]==4) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==6 and (y[0]==7 or y[0]==8) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==7 and (y[0]==6 or y[0]==8) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                        found_sth = check_Same_Block_Rows(b,y)
                                     elif b[0]==8 and (y[0]==6 or y[0]==7) and b[0]!=i:
-                                        if check_Same_Block_Rows(b,y): 
-                                            fields2.append(b) 
-                                            fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}' 
+                                        found_sth = check_Same_Block_Rows(b,y)
+                                    if found_sth:
+                                        y_b, x_b = b
+                                        y_y, x_y = y
+                                        intersect_fields1 = intersection_of_units(UnitType.BLOCK, self.sudoku.get_block_nr(y_b, x_b), UnitType.ROW, y_y)
+                                        removed1 = remove_candidates_from_fields(self.sudoku, intersect_fields1, [value])
+                                        intersect_fields2 = intersection_of_units(UnitType.ROW, y_b, UnitType.BLOCK, self.sudoku.get_block_nr(y_y, x_y))
+                                        removed2 = remove_candidates_from_fields(self.sudoku, intersect_fields2, [value])
+                                        removed_candidates = {**removed1, **removed2}
+                                        if has_removed_candidates(removed_candidates):
+                                            return (True, {
+                                                'algorithm': 'skyscraper',
+                                                'value': value,
+                                                'fields_staggered': [b, y],
+                                                'row_same_height': i,
+                                                'removed_candidates': removed_candidates
+                                            })
+
+
                 vCol.clear()
                 fields.clear()      
         return False,None 

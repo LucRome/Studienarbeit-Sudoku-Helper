@@ -51,6 +51,29 @@ def key_to_coordinates(key: int) -> Tuple[int, int]:
     """
     return (key//10, key%10)
 
+def remove_candidates_from_fields(sudoku: Sudoku, fields: List[Tuple[int, int]], candidates_to_remove: List[int]) -> Dict[int, List[int]]:
+    """
+    Removes the given candidates from the given fields
+    :param sudoku: the sudoku
+    :param fields: Coordinates of the fields to remove the candidates from
+    :param candidates: candidates to remove
+    """
+    removed_candidates: Dict[int, List[int]] = dict() #Key: y*10+x
+    for (y,x) in fields:
+        field = sudoku.get_field(y, x)
+        key = coordinates_to_key(y, x)
+        field_candidates = field.get_candidates()
+        for v in candidates_to_remove:
+            if v in field_candidates:
+                # Add to dict and remove
+                field.remove_candidate(v)
+                rm = removed_candidates.get(key)
+                if rm:
+                    rm.append(v)
+                else:
+                    removed_candidates.update({key: [v]})
+    return removed_candidates
+    
 
 def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int,
     candidates_to_remove: List[int], excluded_fields: List[Tuple[int, int]]) -> Dict[int, List[int]]:
