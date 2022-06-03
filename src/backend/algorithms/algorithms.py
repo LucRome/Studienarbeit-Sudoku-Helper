@@ -853,11 +853,9 @@ class Algorithm:
                         for a in range(3,len(vComplex)):
                             for b in range(0,len(vStraight)):
                                 if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
-                                    #self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
-                                    #return True, f'Value:{value}, Row:{vComplex[0].get_coordinates()[0]}, Field:{vComplex[a].get_coordinates()}'
-                                    
+                                    self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
                                     return (True,{
-                                        'algorithm': 'stonebutt',
+                                        'algorithm': 'steinbutt',
                                         'value': value,
                                         'row': vComplex[a].get_coordinates()[0],
                                         'fields': [f.get_coordinates() for f in fields],
@@ -907,7 +905,11 @@ class Algorithm:
                         for b in a:
                             for x in vCol:
                                 for y in x:
-                                        
+                                    # b, y: Felder die versetzt zueinander liegen
+                                    # value: Kandidatenwert
+                                    # vCol: Liste mit > 1 Kandidaten vom Wert
+                                    # i: Reihe in der auf gleicher Höhe
+                                    # rauslöschen in grauen Kästen möglich
                                     if b[0]==0 and (y[0]==1 or y[0]==2) and b[0]!=i:      
                                         if check_Same_Block_Rows(b,y): 
                                             fields2.append(b) 
@@ -1000,6 +1002,11 @@ class Algorithm:
                                 if(value in rows[2][l].get_candidates()):
                                     rowCount = rowCount + 1
                             if rowCount > (len(Fields2[0])+len(Fields2[1])+len(Fields2[2])):
+                                # Aus Reihen kann gelöscht werden
+                                # Reihen: siehe Returns
+                                # rows: Liste der 3 Reihen (alle Felder)
+                                # Spalten: Fields3
+                                # Fields 3: Liste der 3 Spalten jeweils mit den Koordinaten der Feldern in denen die Koordinaten auftauchen (mit umkreisten Kandidaten)
                                 return True,f'Value: {value}, Row1: { rows[0][0].get_coordinates()[0] }, Row1: { rows[1][0].get_coordinates()[0] }, Row1: { rows[2][0].get_coordinates()[0] }'
                         Fields3.clear()
         return (False,None)
@@ -1047,6 +1054,11 @@ class Algorithm:
                                 if(value in cols[2][l].get_candidates()):
                                     colCount = colCount + 1
                             if colCount > (len(Fields2[0])+len(Fields2[1])+len(Fields2[2])):
+                                # Aus Spalten kann gelöscht werden
+                                # Spalten: siehe Returns (nicht row)
+                                # cols: Liste der 3 Spalten (alle Felder)
+                                # Spalten: Fields3
+                                # Fields 3: Liste der 3 Reihen jeweils mit den Koordinaten der Feldern in denen die Koordinaten auftauchen (mit umkreisten Kandidaten)
                                 return True,f'Value: {value}, Row1: { cols[0][0].get_coordinates()[0] }, Row1: { cols[1][0].get_coordinates()[0] }, Row1: { cols[2][0].get_coordinates()[0] }'
                         Fields3.clear()
         return (False,None)
@@ -1092,6 +1104,9 @@ class Algorithm:
                             for a in range(3,len(vComplex)):
                                 for b in range(0,len(vStraight)):
                                     if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
+                                        # vComplex[a]: Feld aus dem gestrichen wird
+                                        # vComplex[0, 1, 2]: Rechten markierten Felder
+                                        # vStraight[0]: Linke markierte Feld
                                         #self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
                                         return True, f'Value:{value}, Row:{vComplex[0].get_coordinates()[0]}, Field:{vComplex[a].get_coordinates()}'
                         fields.clear()
@@ -1159,6 +1174,9 @@ class Algorithm:
                                             pos = len(returnField)
                                             returnField.append(self.sudoku.get_field(l[0],l[1]))
                                     if counter == 3:
+                                        # Fields 2: 4 markierte Felder (Koordinaten)
+                                        # gestrichene Werte: value1, value2
+                                        # Feld aus dem gestrichen wird: returnField[pos].get_coo
                                         return True,f'Value1: {value1} Value2: {value2} Field:{returnField[pos].get_coordinates()}'
                                     pos = 0
                                 fields2.clear()
@@ -1205,6 +1223,11 @@ class Algorithm:
                                                             returnValue = k
                                                             
                                     if counter == 2 and len(returnField2)==2:
+                                        # Fields2: vier markierten Felder
+                                        # returnValue: Wert der gestrichen wird
+                                        # value1, value2: Im Bsp: 2,6
+                                        # returnField2: Werte mit markiertem Kandidaten
+                                        # Felder mit markiertem Kandidaten immer in einer Einheit, gelöscht werden kann aus Feldern im gemeinsamen Einflussbereich
                                         return True,f'Value1: {value1} Value2: {value2} Remove:{returnValue} Field1:{returnField2[0].get_coordinates()} Field2:{returnField2[1].get_coordinates()}'
                                     returnField.clear()
                                     returnField2.clear()
@@ -1217,7 +1240,7 @@ class Algorithm:
     def algorithm_20(self) -> Tuple[bool, Optional[str]]:
         fields1 = []
         fields2 = []
-        fields3 = []
+        fields3: List[Tuple[int, int]] = []
         for value1 in ALL_FIELD_VALUES:
             for value2 in range(value1+1,10):
                 for i in NINE_RANGE:
@@ -1238,6 +1261,12 @@ class Algorithm:
                                         if len(self.sudoku.get_field(l[0],l[1]).get_candidates()) >=3:
                                             fields3.append(l)
                                     if len(fields3)==2:
+                                        # fields2: alle 4 markierten Felder
+                                        # fields3: Felder aus denen der Kandidat gelöscht wird (Koordinaten)
+                                        # gelöschter Wert: sh. Value in Return
+                                        # muss immer gelöscht werden sonst findet er gar nichts
+                                        # Zwei Felder immer in einer Spalte und auch auf gleicher Höhe
+                                        # 1 und 5 immer in allen 4 Feldern -> Überprüfung auf sinnhaftigkeit nicht nötig
                                         #same block
                                         if Sudoku.get_block_nr(fields3[0][0],fields3[0][1]) == Sudoku.get_block_nr(fields3[1][0],fields3[1][1]):
                                             block = self.sudoku.get_block(Sudoku.get_block_nr(fields3[0][0],fields3[0][1]))
@@ -1291,9 +1320,9 @@ class Algorithm:
         
     #XY_wing  
     def algorithm_21(self) -> Tuple[bool, Optional[str]]:
-        fields1 = [Field]
-        fields2 = [Field]
-        fields3 = [Field]
+        fields1: List[Field] = []
+        fields2: List[Field] = []
+        fields3: List[Field] = []
         err = False
         for value1 in ALL_FIELD_VALUES:
             for value2 in range(value1+1,10): 
@@ -1343,18 +1372,22 @@ class Algorithm:
                                                                                         and (col[j2].get_coordinates()[0] == f6.get_coordinates()[0] or col[j2].get_coordinates()[1] == f6.get_coordinates()[1] or Sudoku.get_block_nr(col[j2].get_coordinates()[0],col[j2].get_coordinates()[1]) == Sudoku.get_block_nr(f6.get_coordinates()[0],f6.get_coordinates()[1]))): 
                                                                                             fields3.append(col[j2].get_coordinates())
                                                                             if len(fields3) != 0:
+                                                                                # a: gestrichener Wert
+                                                                                # fields3: Liste der Felder aus denen gestrichen wird (Koordinaten)
+                                                                                # f4, f5, f6: gelb markierten Felder (f4: mittlere obere Feld -> Block, Reihe Nr)
+                                                                                # ein teil immer ein Block
+                                                                                # -> Markieren: Block + zusätzliches Feld
+                                                                                # Löschen aus gemeinsamen Einflussbereich von f5, f6
                                                                                 return True,f'Fields: {fields3} Value: {a} F4: {f4.get_coordinates()} F5: {f5.get_coordinates()} F6: {f6.get_coordinates()}'
                                                                            
-                                                              
-                                     
         return False,None    
     
     #XYZ-Wing   
     def algorithm_22(self) -> Tuple[bool, Optional[str]]:
-        fields1 = [Field]
-        fields2 = [Field]
-        fields21 = [Field]
-        fields3 = [Field]
+        fields1: List[Field] = []
+        fields2: List[Field] = []
+        fields21: List[Field] = []
+        fields3: List[Field] = []
         err = False
         for value1 in ALL_FIELD_VALUES:
             for value2 in range(value1+1,10): 
@@ -1406,6 +1439,13 @@ class Algorithm:
                                                                                 and col[j2].get_coordinates() != fields2[2].get_coordinates()): 
                                                                                     fields3.append(col[j2].get_coordinates())
                                                                     if len(fields3) != 0:
+                                                                        # a: gestrichener Wert
+                                                                        # fields3: Liste der Felder aus denen gestrichen wird (Koordinaten)
+                                                                        # fields2: rot markierte Felder (fields2[2]: mittleres Feld (verbindung zw. den Beiden))
+                                                                        # ein teil immer ein Block
+                                                                        # -> Markieren: Block + zusätzliches Feld
+                                                                        # Löschen aus gemeinsamen Einflussbereich von fields2[0], fields2[1]
+                                                                        # block+reihe oder block+spalte
                                                                         return True,f'Fields: {fields3} Value: {a} F4: {fields2[2].get_coordinates()} F5: {fields2[0].get_coordinates()} F6: {fields2[1].get_coordinates()}'
                                                                            
         return False,None         
@@ -1414,8 +1454,8 @@ class Algorithm:
     def algorithm_23(self) -> Tuple[bool, Optional[str]]:
         fields1 = []
         fields2 = []
-        fieldstrue = [Tuple[int,int]]
-        fieldsfalse = [Tuple[int,int]]
+        fieldstrue: List[Tuple[int,int]] = []
+        fieldsfalse: List[Tuple[int,int]] = []
         ccounter = 0
         rcounter = 0
         bcounter = 0
@@ -1503,12 +1543,13 @@ class Algorithm:
                                     if not(f3 in fields2):
                                         fields2.append(f3)
                 if len(fields2)>0:
+                    # wenn ein Wert in gelb -> kann nicht in rotem Gegenstück sein
+                    # fieldstrue: gelbe/rote Felder
+                    # fieldsfalse: rote/gelbe Felder
+                    # fields 2: Felder aus denen gestrichen werden kann
+                    # value: Wert der gestrichen werden kann
                     return True,f'Fields: {fields2} Value: {value} Fields1: {fieldstrue} Fields2: {fieldsfalse}'       
         return False,None       
-    
-    #XY-Chain 
-    #def algorithm_24(self) -> Tuple[bool, Optional[str]]:
-        return False,None 
 
     #swordfish fin col
     def algorithm_25_1(self) -> Tuple[bool, Optional[str]]:
@@ -1577,6 +1618,12 @@ class Algorithm:
                                         if not(check):
                                             rowCount = rowCount + 1
                                 if rowCount > 1:
+                                    # markierte Reihen: rows (sh. Schwertfisch)
+                                    # rows: Liste der 3 Reihen (alle Felder)
+                                    # fields3: Spalten
+                                    # field: Finne (1 Feld)
+                                    # es wird überprüft ob Felder gelöscht werden
+                                    # gelöscht werden kann aus: Schnitt aus Feldern in markierten Reihen + Block der Finne
                                     return True,f'Value: {value}, Row1: { rows[0][0].get_coordinates()[0] }, Row1: { rows[1][0].get_coordinates()[0] }, Row1: { rows[2][0].get_coordinates()[0] }'
                             Fields3.clear()
         return (False,None)
@@ -1648,6 +1695,7 @@ class Algorithm:
                                         if not(check):
                                             rowCount = rowCount + 1
                                 if rowCount > 1:
+                                    # sh. 25_1 bloß gedreht
                                     return True,f'Value: {value}, Col1: { cols[0][0].get_coordinates()[1] }, Col1: { cols[1][0].get_coordinates()[1] }, Col1: { cols[2][0].get_coordinates()[1] }'
                             Fields3.clear()
         return (False,None)
