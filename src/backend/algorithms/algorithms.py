@@ -831,7 +831,7 @@ class Algorithm:
 
     
     # Steinbutt
-    def algorithm_12(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_12(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields: List[Field] = list()
         vStraight: List[Field] = list()
         vComplex: List[Field] = list()
