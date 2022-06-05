@@ -2,7 +2,7 @@ import re
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
 from .utils import UnitType, intersection_of_units, remove_candidates_from_fields, remove_candidates_from_fields_in_unit, enforce_hidden_algs, recalc_candidates_with_new_value, intersection_of_units, \
-    key_to_coordinates, coordinates_to_key, find_chain_12, check_Same_Block_Rows, find_chain_16, find_chain_16_1, has_removed_candidates
+    key_to_coordinates, coordinates_to_key, find_chain_12, check_Same_Block_Rows, find_chain_16, find_chain_16_1, has_removed_candidates, get_common_units
 
 class Algorithm:
 
@@ -1231,13 +1231,22 @@ class Algorithm:
                                                             returnValue = k
                                                             
                                     if counter == 2 and len(returnField2)==2:
-                                        # Fields2: vier markierten Felder
-                                        # returnValue: Wert der gestrichen wird
-                                        # value1, value2: Im Bsp: 2,6
-                                        # returnField2: Werte mit markiertem Kandidaten
-                                        # Felder mit markiertem Kandidaten immer in einer Einheit, gelöscht werden kann aus Feldern im gemeinsamen Einflussbereich
-
-                                        return True,f'Value1: {value1} Value2: {value2} Remove:{returnValue} Field1:{returnField2[0].get_coordinates()} Field2:{returnField2[1].get_coordinates()}'
+                                        marked_candidates_fields = [f.get_coordinates() for f in returnField2]
+                                        common_units = get_common_units(marked_candidates_fields)
+                                        removed_candidates: Dict[int, List[int]] = {}
+                                        for type, nr in common_units:
+                                            fields = self.sudoku.get_row(nr) if type == UnitType.ROW else self.sudoku.get_column(nr) if type == UnitType.COLUMN else self.sudoku.get_block(nr)
+                                            rem = remove_candidates_from_fields(self.sudoku, [f.get_coordinates() for  f in fields], [returnValue], marked_candidates_fields)
+                                            removed_candidates = {**removed_candidates, **rem}
+                                        if has_removed_candidates(removed_candidates):
+                                            return (True, {
+                                                'algorithm': 'square_type_2',
+                                                'value_removed': returnValue,
+                                                'values_locked': [value1, value2],
+                                                'fields': fields2,
+                                                'fields_cricled_candidates': marked_candidates_fields,
+                                                'removed_candidates': removed_candidates
+                                            })
                                     returnField.clear()
                                     returnField2.clear()
                                 fields2.clear()
