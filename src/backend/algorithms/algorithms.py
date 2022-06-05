@@ -1192,7 +1192,7 @@ class Algorithm:
         return False,None
         
     #Viereck-Type2   
-    def algorithm_18(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_18(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1 = []
         fields2 = []
         returnField = []
@@ -1255,7 +1255,7 @@ class Algorithm:
         return False,None
     
     #Viereck-Type4   
-    def algorithm_20(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_20(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1 = []
         fields2 = []
         fields3: List[Tuple[int, int]] = []
