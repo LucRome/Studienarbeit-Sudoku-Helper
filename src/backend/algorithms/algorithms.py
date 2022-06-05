@@ -1279,12 +1279,7 @@ class Algorithm:
                                         if len(self.sudoku.get_field(l[0],l[1]).get_candidates()) >=3:
                                             fields3.append(l)
                                     if len(fields3)==2:
-                                        # fields2: alle 4 markierten Felder
-                                        # fields3: Felder aus denen der Kandidat gelöscht wird (Koordinaten)
-                                        # gelöschter Wert: sh. Value in Return
-                                        # muss immer gelöscht werden sonst findet er gar nichts
-                                        # Zwei Felder immer in einer Spalte und auch auf gleicher Höhe
-                                        # 1 und 5 immer in allen 4 Feldern -> Überprüfung auf sinnhaftigkeit nicht nötig
+                                        value_removed, value_2nd = None, None
                                         #same block
                                         if Sudoku.get_block_nr(fields3[0][0],fields3[0][1]) == Sudoku.get_block_nr(fields3[1][0],fields3[1][1]):
                                             block = self.sudoku.get_block(Sudoku.get_block_nr(fields3[0][0],fields3[0][1]))
@@ -1293,13 +1288,13 @@ class Algorithm:
                                                 if value1 in b.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
-                                                return True,f'Fields: {fields3}, Value: {value2}'
+                                                value_removed, value_2nd = value2, value1
                                             counter = 0
                                             for b in block:
                                                 if value2 in b.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
-                                                return True,f'Fields: {fields3}, Value: {value1}'   
+                                                value_removed, value_2nd = value1, value2
                                             counter = 0  
                                         #same row
                                         if fields3[0][0] == fields3[1][0]:
@@ -1309,13 +1304,13 @@ class Algorithm:
                                                 if value1 in r.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
-                                                return True,f'Fields: {fields3}, Value: {value2}'
+                                                value_removed, value_2nd = value2, value1
                                             counter = 0
                                             for r in row:
                                                 if value2 in r.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
-                                                return True,f'Fields: {fields3}, Value: {value1}'                                    
+                                                value_removed, value_2nd = value1, value2                              
                                         #same col
                                         if fields3[0][1] == fields3[1][1]:
                                             col = self.sudoku.get_column(fields3[0][1])
@@ -1324,13 +1319,26 @@ class Algorithm:
                                                 if value1 in c.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
-                                                return True,f'Fields: {fields3}, Value: {value2}'
+                                                value_removed, value_2nd = value2, value1
                                             counter = 0
                                             for c in col:
                                                 if value2 in c.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
-                                                return True,f'Fields: {fields3}, Value: {value1}'                                         
+                                                value_removed, value_2nd = value1, value2
+                                        if value_removed:
+                                            removed_candidates = remove_candidates_from_fields(self.sudoku, fields3, [value_removed])
+                                            fields_not_removed = []
+                                            for f in fields2:
+                                                if f not in fields3:
+                                                    fields_not_removed.append(f)
+                                            return (True, {
+                                                'algorithm': 'square_type_4',
+                                                'fields_not_removed': fields_not_removed,
+                                                'value_removed': value_removed,
+                                                'value_2nd': value_2nd,
+                                                'removed_candidates': removed_candidates
+                                            })
                                     fields3.clear()
                 fields1.clear()                         
         return False,None
