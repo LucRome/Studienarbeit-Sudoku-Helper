@@ -853,7 +853,7 @@ class Algorithm:
                                         'value': value,
                                         'row': vComplex[a].get_coordinates()[0],
                                         'fields': [f.get_coordinates() for f in fields],
-                                        'path_complex': vComplex[1:3],
+                                        'path_complex': [f.get_coordinates() for f in vComplex[1:3]],
                                         'removed_candidates': {coordinates_to_key(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]): [value]}
                                     })
                     fields.clear()
