@@ -290,12 +290,35 @@ class TestAlgorithms(unittest.TestCase):
         grid25.append([None, None, None, None, 1, None, None, None, None])
         grid25.append([None, None, 5, None, None, None, 7, None, 1])
         grid25.append([1, None, None, 7, 8, None, None, None, None])
+        
+        grid24 = []
+        grid24.append([None, None, 8, None, 5, None, 4, 3, None])
+        grid24.append([None, None, 3, 8, 7, None, 2, None, 5])
+        grid24.append([None, None, None, 9, None, None, 1, 8, 7])
+        grid24.append([None, 2, None, None, None, 7, 9, 1, None])
+        grid24.append([None, None, None, 5, None, None, 6, 2, None])
+        grid24.append([9, None, 6, None, None, None, None, None, None])
+        grid24.append([4, None, None, None, None, None, 3, None, 2])
+        grid24.append([None, None, None, 1, 2, 6, 8, 4, None])
+        grid24.append([None, 8, 2, 3, 4, None, None, None, None])
+        
+        grid26 = []
+        grid26.append([1, 2, None, 5, 7, 9, None, None, None])
+        grid26.append([None, 3, 9, 2, 4, None, 5, None, 7])
+        grid26.append([5, None, 7, 6, 3, 8, 9, 2, None])
+        grid26.append([None, None, 6, 7, None, None, None, None, None])
+        grid26.append([None, 7, 3, None, None, None, 2, None, None])
+        grid26.append([None, 5, None, 3, None, 4, 7, None, 9])
+        grid26.append([7, None, None, None, None, None, 8, 9, 3])
+        grid26.append([None, 9, None, None, None, 3, 1, 7, 5])
+        grid26.append([3, None, 5, 9, None, 7, 6, 4, 2])
 
-        sudoku1: Sudoku = Sudoku(grid25)
+        sudoku1: Sudoku = Sudoku(grid21)
         sudoku1.select_candidates()
-        #sudoku1.get_field(6,6).remove_candidate(1) #17
-        #sudoku1.get_field(6,6).remove_candidate(3) #17
+        
+        #sudoku1.get_field(5,4).remove_candidate(1) #17
+        #sudoku1.get_field(5,4).remove_candidate(2) #17
         algo = Algorithm(sudoku1)
-        bol,stri = algo.algorithm_25_1()
+        bol,stri = algo.algorithm_21()
         print('Bool:',bol)
         print('String:',stri)

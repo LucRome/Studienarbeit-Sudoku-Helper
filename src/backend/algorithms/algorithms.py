@@ -1,3 +1,4 @@
+from csv import field_size_limit
 import re
 from typing import Tuple, Optional, List, Any, Dict, Callable
 from sudoku.base import Sudoku, Field, NINE_RANGE, ALL_FIELD_VALUES
@@ -13,6 +14,7 @@ class Algorithm:
     def __init__(self,sudoku:Sudoku):
         self.update_list(sudoku)
         self.sudoku = sudoku
+        self.print_list()
 
         
     def update_list(self,sudoku:Sudoku):
@@ -885,7 +887,7 @@ class Algorithm:
         vCol2: List[Tuple[int,int]] = list()
         for i in NINE_RANGE:
             row = self.sudoku.get_row(i)
-            for value in ALL_FIELD_VALUES:
+            for value in range(1,10):
                 for j in NINE_RANGE:
                     if value in row[j].get_candidates():
                         fields.append(row[j])
@@ -907,12 +909,11 @@ class Algorithm:
                         for b in a:
                             for x in vCol:
                                 for y in x:
-                                        
                                     if b[0]==0 and (y[0]==1 or y[0]==2) and b[0]!=i:      
                                         if check_Same_Block_Rows(b,y): 
                                             fields2.append(b) 
                                             fields2.append(y)
-                                            return True,f'Fields:{fields2},Value: {value}, vCol: {vCol}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
+                                            return True,f'Fields:{fields2},Value: {value}, vCol: {b[1]}, Row{i}, Check: {check_Same_Block_Rows(b,y)}'
                                     elif b[0]==1 and (y[0]==0 or y[0]==2) and b[0]!=i:
                                         if check_Same_Block_Rows(b,y): 
                                             fields2.append(b) 
@@ -1291,9 +1292,9 @@ class Algorithm:
         
     #XY_wing  
     def algorithm_21(self) -> Tuple[bool, Optional[str]]:
-        fields1 = [Field]
-        fields2 = [Field]
-        fields3 = [Field]
+        fields1:  List[Field] = []
+        fields2:  List[Field] = []
+        fields3:  List[Field] = []
         err = False
         for value1 in ALL_FIELD_VALUES:
             for value2 in range(value1+1,10): 
@@ -1507,8 +1508,88 @@ class Algorithm:
         return False,None       
     
     #XY-Chain 
-    #def algorithm_24(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_24(self) -> Tuple[bool, Optional[str]]:
+        fields1:  List[Field] = []
+        returnFields:  List[Field] = []
+        for i in NINE_RANGE:
+            row = self.sudoku.get_row(i)
+            for j in NINE_RANGE:
+                if len(row[j].get_candidates())==2:
+                    fields1.append(row[j])
+        for f in fields1:
+            if self.check_middle(fields1,f)[0]:
+                fields3 = self.check_middle(fields1,f)[1]
+                fields4 = self.check_middle(fields1,f)[2]
+                for f1 in fields3:
+                    for f2 in fields4:
+                        fields21 = fields1.copy()
+                        fields22 = fields1.copy()
+                        for c1 in f1.get_candidates():
+                            if c1 != f.get_candidates()[0]:
+                               candidate1 = c1
+                        for c2 in f2.get_candidates():
+                            if c2 != f.get_candidates()[1]:    
+                                candidate2 = c2
+                        fields6 = self.get_chain_24(fields22,f2,candidate2)
+                        fields5 = self.get_chain_24(fields21,f1,candidate1)
+                        if fields5 == None:
+                            fields5 == [candidate1,f1]
+                        else:
+                            fields5.append([candidate1,f1])
+                        if fields6 == None:
+                            fields6 == [candidate2,f2]
+                        else:
+                            fields6.append([candidate2,f2])
+                        if fields6 != None and fields5 != None:
+                            for f3 in fields5:
+                                for f4 in fields6:
+                                    if f3[0] == f4[0]:
+                                        if f3[1].get_coordinates() != f4[1].get_coordinates():
+                                            for i in NINE_RANGE:
+                                                row2 = self.sudoku.get_row(i)
+                                                for j in NINE_RANGE:
+                                                    if (f3[0] in row2[j].get_candidates() and (Sudoku.get_block_nr(f3[1].get_coordinates()[0],f3[1].get_coordinates()[1]) == Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) or f3[1].get_coordinates()[0] == row2[j].get_coordinates()[0] or f3[1].get_coordinates()[1] == row2[j].get_coordinates()[1])
+                                                        and (Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) == Sudoku.get_block_nr(f4[1].get_coordinates()[0],f4[1].get_coordinates()[1]) or row2[j].get_coordinates()[0] == f4[1].get_coordinates()[0] or row2[j].get_coordinates()[1] == f4[1].get_coordinates()[1])):
+                                                        returnFields.append(row2[j])
+                                            if len(returnFields) >= 1:
+                                                    return True,f'Value: {f3[0]} Field:{returnFields[0].get_coordinates()}'
+                    
         return False,None 
+    
+    def get_chain_24(self,fields1:  List[Field],field: Field,candidate: int) -> List[Tuple[int,Field]]:
+        returnTuple = []
+        fields2 = []
+        if field in fields1:
+            fields1.remove(field)
+        for f in fields1:
+            if candidate in f.get_candidates() and (Sudoku.get_block_nr(f.get_coordinates()[0],f.get_coordinates()[1]) == Sudoku.get_block_nr(field.get_coordinates()[0],field.get_coordinates()[1]) or f.get_coordinates()[0] == field.get_coordinates()[0] or f.get_coordinates()[1] == field.get_coordinates()[1]):
+                for c in f.get_candidates():
+                    if c != candidate:
+                        fields2 = fields1.copy()
+                        a = self.get_chain_24(fields2,f,c)
+                        if a != None:
+                            for a1 in a:
+                                returnTuple.append(a1) 
+                            returnTuple.append([c,f])
+                        else:
+                            returnTuple.append([c,f])
+        if len(returnTuple)==0:         
+            return None
+        else:
+            return returnTuple
+
+    def check_middle(self,fields1:  List[Field],field: Field) -> Tuple[bool, Optional[List[Field]], Optional[List[Field]]]:
+        fields2:  List[Field] = []
+        fields3:  List[Field] = []
+        for f in fields1:
+            if f.get_coordinates() != field.get_coordinates() and (Sudoku.get_block_nr(f.get_coordinates()[0],f.get_coordinates()[1]) == Sudoku.get_block_nr(field.get_coordinates()[0],field.get_coordinates()[1]) or f.get_coordinates()[0] == field.get_coordinates()[0] or f.get_coordinates()[1] == field.get_coordinates()[1]):
+                if field.get_candidates()[0] in f.get_candidates():
+                    fields2.append(f)
+                if field.get_candidates()[1] in f.get_candidates():
+                    fields3.append(f)
+        if len(fields2) >= 1 and len(fields3) >= 1:
+            return True,fields2,fields3
+        return False,None,None
 
     #swordfish fin col
     def algorithm_25_1(self) -> Tuple[bool, Optional[str]]:
@@ -1651,6 +1732,7 @@ class Algorithm:
                                     return True,f'Value: {value}, Col1: { cols[0][0].get_coordinates()[1] }, Col1: { cols[1][0].get_coordinates()[1] }, Col1: { cols[2][0].get_coordinates()[1] }'
                             Fields3.clear()
         return (False,None)
+    
     def check_25_1(self,Fields2:list,row:int)->bool:
         for a in range(0,len(Fields2[0])):
             for b in range(0,len(Fields2[1])):
@@ -1668,4 +1750,51 @@ class Algorithm:
         return False
     #W-Wing
     def algorithm_26(self) -> Tuple[bool, Optional[str]]:
+        fields1: List[Field] = []
+        fields2: List[Field] = []
+        field: Field = None
+        value: List[int]= []
+        for value1 in ALL_FIELD_VALUES:
+            for value2 in range(value1+1,10):
+                value.append(value1)
+                value.append(value2)
+                for i in NINE_RANGE:
+                    row = self.sudoku.get_row(i)
+                    for j in NINE_RANGE:
+                        if value1 in row[j].get_candidates() and value2 in row[j].get_candidates() and len(row[j].get_candidates())==2:
+                            fields1.append(row[j])
+                for f1 in range(0,len(fields1)):
+                    for f2 in range(f1+1,len(fields1)):    
+                        for i in NINE_RANGE:
+                            row2 = self.sudoku.get_row(i)
+                            for v1 in value:
+                                for j in NINE_RANGE:
+                                    if v1 in row2[j].get_candidates():
+                                        fields2.append(row2[j])
+                                print('---')
+                                for k in fields2:
+                                    print(k.get_coordinates())
+                            
+                                if len(fields2)==2:
+                                    if ((fields2[0].get_coordinates()[1]== fields1[f1].get_coordinates()[1] or fields2[0].get_coordinates()[1]== fields1[f2].get_coordinates()[1]) 
+                                        and (fields2[1].get_coordinates()[1]== fields1[f1].get_coordinates()[1] or fields2[1].get_coordinates()[1]== fields1[f2].get_coordinates()[1])):
+                                        print('aaa')
+                                        for v2 in value:
+                                            if (v2 != v1 and (v2 in self.sudoku.get_field(fields1[f1].get_coordinates()[0], fields1[f2].get_coordinates()[1]).get_candidates())
+                                                and (self.sudoku.get_field(fields1[f1].get_coordinates()[0], fields1[f2].get_coordinates()[1]).get_coordinates() != fields1[f1].get_coordinates())
+                                                and (self.sudoku.get_field(fields1[f1].get_coordinates()[0], fields1[f2].get_coordinates()[1]).get_coordinates() != fields1[f2].get_coordinates())):
+                                                field = self.sudoku.get_field(fields1[f1].get_coordinates()[0], fields1[f2].get_coordinates()[1])
+                                            elif (v2 != v1 and (v2 in self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1]).get_candidates())
+                                                and (self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1]).get_coordinates() != fields1[f1].get_coordinates())
+                                                and (self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1]).get_coordinates() != fields1[f2].get_coordinates())):
+                                                field = self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1])
+                                            if field != None:        
+                                                return True,f'Value1: {v1} Value2: {v2} Fields: {field.get_coordinates(),fields1[f1].get_coordinates(),fields1[f2].get_coordinates()}'
+                            fields2.clear()
+                value.clear()
+                fields1.clear()
+                                    
+                                    
+                                    
+                
         return False,None 
