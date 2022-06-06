@@ -959,7 +959,7 @@ class Algorithm:
                 for j in NINE_RANGE:
                     if value in col[j].get_candidates():
                         Counter = Counter + 1
-                        Fields1.append([j,i])
+                        Fields1.append((j,i))
                 if(Counter<=3)and Counter > 1:
                     Fields2.append(Fields1.copy()) 
                     Fields1.clear()
@@ -1020,7 +1020,7 @@ class Algorithm:
                 for j in NINE_RANGE:
                     if value in row[j].get_candidates():
                         Counter = Counter + 1
-                        Fields1.append([i,j])
+                        Fields1.append((i,j))
                 if(Counter<=3)and Counter > 1:
                     Fields2.append(Fields1.copy()) 
                     Fields1.clear()
@@ -1624,7 +1624,7 @@ class Algorithm:
                 for j in NINE_RANGE:
                     if value in col[j].get_candidates():
                         Counter = Counter + 1
-                        Fields1.append([j,i])
+                        Fields1.append((j,i))
                 if(Counter<=4)and Counter > 1:
                     Fields2.append(Fields1.copy()) 
                     Fields1.clear()
@@ -1701,7 +1701,7 @@ class Algorithm:
                 for j in NINE_RANGE:
                     if value in row[j].get_candidates():
                         Counter = Counter + 1
-                        Fields1.append([j,i])
+                        Fields1.append((j,i))
                 if(Counter<=4)and Counter > 1:
                     Fields2.append(Fields1.copy()) 
                     Fields1.clear()
