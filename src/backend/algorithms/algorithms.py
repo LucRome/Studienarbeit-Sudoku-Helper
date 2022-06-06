@@ -1478,7 +1478,7 @@ class Algorithm:
         return False,None         
     
     #X-Chain   
-    def algorithm_23(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_23(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1 = []
         fields2 = []
         fieldstrue: List[Tuple[int,int]] = []
@@ -1575,7 +1575,14 @@ class Algorithm:
                     # fieldsfalse: rote/gelbe Felder
                     # fields 2: Felder aus denen gestrichen werden kann
                     # value: Wert der gestrichen werden kann
-                    return True,f'Fields: {fields2} Value: {value} Fields1: {fieldstrue} Fields2: {fieldsfalse}'       
+                    removed_candidates = remove_candidates_from_fields(self.sudoku, fields2, [value])
+                    if has_removed_candidates(removed_candidates):
+                         return (True, {
+                            'algorithm': 'x_chain',
+                            'fields': [fieldstrue, fieldsfalse],
+                            'value': value,
+                            'removed_candidates': removed_candidates
+                        })
         return False,None       
 
     #swordfish fin col

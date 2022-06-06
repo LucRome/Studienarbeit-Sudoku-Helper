@@ -13,6 +13,11 @@
     background-color: var(--bs-orange) !important;
 }
 
+/* For Algorithms where the fields are seperated into two pairs */
+.field-locked-candidates-2 {
+    background-color: var(--bs-red) !important;
+}
+
 /* Fields where candidates are locked and others are removed */
 .field-locked-and-removed-candidates {
     background-color: rgb(136, 113, 70) !important;
@@ -20,11 +25,11 @@
 
 /* For areas that are affected by an algorithm */
 .field-affected {
-    /* background-color: var(--bs-yellow); */
+    background-color: var(--bs-yellow);
 }
 
 .field-affected input, .field-affected img {
-    /* background-color: var(--bs-yellow);    */
+    background-color: var(--bs-yellow);   
 }
 
 /* For the Explanation Text */
