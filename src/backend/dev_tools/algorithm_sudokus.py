@@ -297,6 +297,18 @@ GRID24 = [
     [8, 3, 7, None, 6, 4, 2, 5, None, ],
 ]
 
+GRID25 = [
+    [None, None, 4, 3, None, 2, None, 1, 8],
+    [8, None, None, None, None, None, None, 7, None],
+    [None, None, 3, 8, 9, None, 4, 5, None],
+    [6, 2, 8, None, None, None, 5, None, 4],
+    [5, 3, 9, 4, 6, 8, 1, 2, 7],
+    [4, None, None, 5, 2, None, 8, 6, None],
+    [None, None, None, None, 1, None, None, None, None],
+    [None, None, 5, None, None, None, 7, None, 1],
+    [1, None, None, 7, 8, None, None, None, None],
+]
+
 # mapping
 NAME_MAP = {
     'hidden_single': GRID,
@@ -324,4 +336,6 @@ NAME_MAP = {
     'x_chain': GRID21,
     'w_wing': GRID23,
     'steinbutt': GRID24,
+    'swordfish_fin_col': GRID25,
+    'swordfish_fin_row': GRID25,
 }

@@ -1609,7 +1609,7 @@ class Algorithm:
         return False,None       
 
     #swordfish fin col
-    def algorithm_25_1(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_25_1(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Fields1 = []
         Fields2 = []
         Fields3 = []
@@ -1681,7 +1681,25 @@ class Algorithm:
                                     # field: Finne (1 Feld)
                                     # es wird überprüft ob Felder gelöscht werden
                                     # gelöscht werden kann aus: Schnitt aus Feldern in markierten Reihen + Block der Finne
-                                    return True,f'Value: {value}, Row1: { rows[0][0].get_coordinates()[0] }, Row1: { rows[1][0].get_coordinates()[0] }, Row1: { rows[2][0].get_coordinates()[0] }'
+                                    block_nr = Sudoku.get_block_nr(field[0], field[1])
+                                    col_fields = []
+                                    for fl in Fields3:
+                                        for f in fl:
+                                            col_fields.append(f)
+                                    removed_candidates: Dict[str, Any] = {}
+                                    row_nrs = [r[0].get_coordinates()[0] for r in rows] 
+                                    for r in row_nrs:
+                                        fields = intersection_of_units(UnitType.ROW, r, UnitType.BLOCK, block_nr)
+                                        rem = remove_candidates_from_fields(self.sudoku, fields, [value], col_fields)
+                                        removed_candidates = {**removed_candidates, **rem}
+                                    if has_removed_candidates(removed_candidates):
+                                        return (True, {
+                                            'algorithm': 'swordfish_fin_col',
+                                            'fields': col_fields,
+                                            'value': value,
+                                            'row_nrs': row_nrs,
+                                            'removed_candidates': removed_candidates
+                                        })
                             Fields3.clear()
         return (False,None)
     
