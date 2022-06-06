@@ -1770,10 +1770,29 @@ class Algorithm:
                                         if not(check):
                                             rowCount = rowCount + 1
                                 if rowCount > 1:
-                                    # sh. 25_1 bloß gedreht
-                                    return True,f'Value: {value}, Col1: { cols[0][0].get_coordinates()[1] }, Col1: { cols[1][0].get_coordinates()[1] }, Col1: { cols[2][0].get_coordinates()[1] }'
+                                    block_nr = Sudoku.get_block_nr(field[0], field[1])
+                                    row_fields = []
+                                    for fl in Fields3:
+                                        for f in fl:
+                                            row_fields.append(f)
+                                    removed_candidates: Dict[str, Any] = {}
+                                    col_nrs = [c[0].get_coordinates()[1] for c in cols] 
+                                    for c in col_nrs:
+                                        fields = intersection_of_units(UnitType.COLUMN, c, UnitType.BLOCK, block_nr)
+                                        rem = remove_candidates_from_fields(self.sudoku, fields, [value], row_fields)
+                                        removed_candidates = {**removed_candidates, **rem}
+                                    if has_removed_candidates(removed_candidates):
+                                        return (True, {
+                                            'algorithm': 'swordfish_fin_row',
+                                            'fields': row_fields,
+                                            'value': value,
+                                            'col_nrs': col_nrs,
+                                            'removed_candidates': removed_candidates
+                                        })
                             Fields3.clear()
         return (False,None)
+
+
     def check_25_1(self,Fields2:list,row:int)->bool:
         for a in range(0,len(Fields2[0])):
             for b in range(0,len(Fields2[1])):
