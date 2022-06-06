@@ -1411,7 +1411,7 @@ class Algorithm:
         return False,None    
     
     #XYZ-Wing   
-    def algorithm_22(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_22(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1: List[Field] = []
         fields2: List[Field] = []
         fields21: List[Field] = []
@@ -1467,15 +1467,14 @@ class Algorithm:
                                                                                 and col[j2].get_coordinates() != fields2[2].get_coordinates()): 
                                                                                     fields3.append(col[j2].get_coordinates())
                                                                     if len(fields3) != 0:
-                                                                        # a: gestrichener Wert
-                                                                        # fields3: Liste der Felder aus denen gestrichen wird (Koordinaten)
-                                                                        # fields2: rot markierte Felder (fields2[2]: mittleres Feld (verbindung zw. den Beiden))
-                                                                        # ein teil immer ein Block
-                                                                        # -> Markieren: Block + zusätzliches Feld
-                                                                        # Löschen aus gemeinsamen Einflussbereich von fields2[0], fields2[1]
-                                                                        # block+reihe oder block+spalte
-                                                                        return True,f'Fields: {fields3} Value: {a} F4: {fields2[2].get_coordinates()} F5: {fields2[0].get_coordinates()} F6: {fields2[1].get_coordinates()}'
-                                                                           
+                                                                        removed_candidates = remove_candidates_from_fields(self.sudoku, fields3, [a])
+                                                                        if has_removed_candidates(removed_candidates):
+                                                                            return (True, {
+                                                                                'algorithm': 'xyz_wing',
+                                                                                'fields': [f.get_coordinates() for f in fields2],
+                                                                                'values': [value1, value2, value3],
+                                                                                'removed_candidates': removed_candidates
+                                                                            })                              
         return False,None         
     
     #X-Chain   
