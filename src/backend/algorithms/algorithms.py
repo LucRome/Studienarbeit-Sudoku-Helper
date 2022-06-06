@@ -61,7 +61,7 @@ class Algorithm:
             'third_eye': self.algorithm_13,
             'skyscraper': self.algorithm_14,
             'swordfish_col': self.algorithm_15_1,
-            'swordfish_row': self.algorithm_15_1,
+            'swordfish_row': self.algorithm_15_2,
             'dragon': self.algorithm_16,
             'square_type_1': self.algorithm_17,
             'square_type_2': self.algorithm_18,
@@ -944,8 +944,8 @@ class Algorithm:
                 fields.clear()      
         return False,None 
        
-  # Schwertfisch-Col
-    def algorithm_15_1(self) -> Tuple[bool, Optional[str]]:
+    # Schwertfisch-Col
+    def algorithm_15_1(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Fields1 = []
         Fields2 = []
         Fields3 = []
@@ -987,17 +987,26 @@ class Algorithm:
                                 if(value in rows[2][l].get_candidates()):
                                     rowCount = rowCount + 1
                             if rowCount > (len(Fields2[0])+len(Fields2[1])+len(Fields2[2])):
-                                # Aus Reihen kann gelöscht werden
-                                # Reihen: siehe Returns
-                                # rows: Liste der 3 Reihen (alle Felder)
-                                # Spalten: Fields3
-                                # Fields 3: Liste der 3 Spalten jeweils mit den Koordinaten der Feldern in denen die Koordinaten auftauchen (mit umkreisten Kandidaten)
-                                return True,f'Value: {value}, Row1: { rows[0][0].get_coordinates()[0] }, Row1: { rows[1][0].get_coordinates()[0] }, Row1: { rows[2][0].get_coordinates()[0] }'
+                                removed_candidates: Dict[str, Any] = {}
+                                col_fields = []
+                                for fl in Fields3:
+                                    for f in fl:
+                                        col_fields.append(f)
+                                for row in [r[0].get_coordinates()[0] for r in rows]:
+                                    rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, row, [value], col_fields)
+                                    removed_candidates = {**removed_candidates, **rem}
+                                if has_removed_candidates(removed_candidates):
+                                    return (True, {
+                                        'algorithm': 'swordfish_col',
+                                        'fields': col_fields,
+                                        'value': value,
+                                        'removed_candidates': removed_candidates
+                                    })
                         Fields3.clear()
         return (False,None)
                            
     # Schwertfisch-Row
-    def algorithm_15_2(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_15_2(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Fields1 = []
         Fields2 = []
         Fields3 = []
@@ -1044,7 +1053,21 @@ class Algorithm:
                                 # cols: Liste der 3 Spalten (alle Felder)
                                 # Spalten: Fields3
                                 # Fields 3: Liste der 3 Reihen jeweils mit den Koordinaten der Feldern in denen die Koordinaten auftauchen (mit umkreisten Kandidaten)
-                                return True,f'Value: {value}, Row1: { cols[0][0].get_coordinates()[0] }, Row1: { cols[1][0].get_coordinates()[0] }, Row1: { cols[2][0].get_coordinates()[0] }'
+                                removed_candidates: Dict[str, Any] = {}
+                                row_fields = []
+                                for fl in Fields3:
+                                    for f in fl:
+                                        row_fields.append(f)
+                                for row in [c[0].get_coordinates()[0] for c in cols]:
+                                    rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, row, [value], row_fields)
+                                    removed_candidates = {**removed_candidates, **rem}
+                                if has_removed_candidates(removed_candidates):
+                                    return (True, {
+                                        'algorithm': 'swordfish_row',
+                                        'fields': row_fields,
+                                        'value': value,
+                                        'removed_candidates': removed_candidates
+                                    })
                         Fields3.clear()
         return (False,None)
     
