@@ -19,6 +19,10 @@ class UnitType(Enum):
 def get_unit(type: UnitType, nr: int, excluded_fields: List[Tuple[int, int]] = []) -> List[Tuple[int, int]]:
     unit: List[Tuple[int, int]] = list()  # the coordinates of the unit fields (except the excluded ones)
 
+    # make sure, that excluded fields are Tuples
+    for f in excluded_fields:
+        if not isinstance(f, tuple):
+            raise TypeError(f'Fields must be tuples, not: {f.__class__}')
     if type == UnitType.ROW:
         for col in NINE_RANGE:
             if (nr, col) not in excluded_fields:
