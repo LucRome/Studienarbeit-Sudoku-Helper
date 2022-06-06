@@ -1345,7 +1345,7 @@ class Algorithm:
         
         
     #XY_wing  
-    def algorithm_21(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_21(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1: List[Field] = []
         fields2: List[Field] = []
         fields3: List[Field] = []
@@ -1398,14 +1398,16 @@ class Algorithm:
                                                                                         and (col[j2].get_coordinates()[0] == f6.get_coordinates()[0] or col[j2].get_coordinates()[1] == f6.get_coordinates()[1] or Sudoku.get_block_nr(col[j2].get_coordinates()[0],col[j2].get_coordinates()[1]) == Sudoku.get_block_nr(f6.get_coordinates()[0],f6.get_coordinates()[1]))): 
                                                                                             fields3.append(col[j2].get_coordinates())
                                                                             if len(fields3) != 0:
-                                                                                # a: gestrichener Wert
-                                                                                # fields3: Liste der Felder aus denen gestrichen wird (Koordinaten)
-                                                                                # f4, f5, f6: gelb markierten Felder (f4: mittlere obere Feld -> Block, Reihe Nr)
-                                                                                # ein teil immer ein Block
-                                                                                # -> Markieren: Block + zusätzliches Feld
-                                                                                # Löschen aus gemeinsamen Einflussbereich von f5, f6
-                                                                                return True,f'Fields: {fields3} Value: {a} F4: {f4.get_coordinates()} F5: {f5.get_coordinates()} F6: {f6.get_coordinates()}'
-                                                                           
+                                                                                removed_candidates = remove_candidates_from_fields(self.sudoku, fields3, [a])
+                                                                                if has_removed_candidates(removed_candidates):
+                                                                                    value1
+                                                                                    return (True, {
+                                                                                        'algorithm': 'xy_wing',
+                                                                                        'fields': [f4.get_coordinates(), f5.get_coordinates(), f6.get_coordinates()],
+                                                                                        'values': [value1, value2, value3],
+                                                                                        'value_removed': a,
+                                                                                        'removed_candidates': removed_candidates
+                                                                                    })                                                            
         return False,None    
     
     #XYZ-Wing   

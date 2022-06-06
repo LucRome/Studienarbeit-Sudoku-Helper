@@ -238,15 +238,15 @@ GRID18 = [
 ]
 
 GRID19 = [
-    [None, None, None, 9, 8, None, 6, None, None, ],
-    [4, 6, None, None, 2, None, 1, 8, 9, ],
-    [None, 9, None, None, 1, 6, None, None, 2, ],
-    [None, None, 3, 7, 5, 9, None, None, None, ],
-    [None, 5, None, 2, 4, 1, 9, None, 3, ],
-    [None, None, None, 6, 3, 8, None, 1, None, ],
-    [7, None, None, None, None, None, None, None, 1, ],
-    [None, None, 1, None, None, None, None, None, None, ],
-    [None, None, None, 1, 7, 5, None, 2, 4, ],
+    [None, None, None, 9, 8, None, 6, None, None],
+    [4, 6, None, 3, 2, None, 1, 8, 9],
+    [None, 9, None, None, 1, 6, None, None, 2],
+    [None, None, 3, 7, 5, 9, None, None, None],
+    [None, 5, None, 2, 4, 1, 9, None, 3],
+    [None, None, None, 6, 3, 8, None, 1, None],
+    [7, None, None, None, None, None, None, None, 1],
+    [None, None, 1, None, None, None, None, None, None],
+    [None, None, None, 1, 7, 5, None, 2, 4],
 ]
 
 GRID20 = [
@@ -271,18 +271,6 @@ GRID21 = [
     [None, None, 1, 7, None, None, None, 6, None, ],
     [6, None, 7, None, None, None, None, 5, None, ],
     [4, None, None, 5, 1, 6, None, 7, None, ],
-]
-
-GRID22 = [
-    [None, None, 8, None, 5, None, 4, 3, None, ],
-    [None, None, 3, 8, 7, None, 2, None, 5, ],
-    [None, None, None, 9, None, None, 1, 8, 7, ],
-    [None, 2, None, None, None, 7, 9, 1, None, ],
-    [None, None, None, 5, None, None, 6, 2, None, ],
-    [9, None, 6, None, None, None, None, None, None, ],
-    [4, None, None, None, None, None, 3, None, 2, ],
-    [None, None, None, None, 2, 6, 8, 4, None, ],
-    [None, 8, 2, 3, 4, None, None, None, None, ],
 ]
 
 GRID23 = [
@@ -333,7 +321,6 @@ NAME_MAP = {
     'xy_wing': GRID19,
     'xyz_wing': GRID20,
     'x_chain': GRID21,
-    'xy_wing': GRID22,
     'w_wing': GRID23,
     'steinbutt': GRID24,
 }
