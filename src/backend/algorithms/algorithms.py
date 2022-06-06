@@ -992,8 +992,8 @@ class Algorithm:
                                 for fl in Fields3:
                                     for f in fl:
                                         col_fields.append(f)
-                                for row in [r[0].get_coordinates()[0] for r in rows]:
-                                    rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, row, [value], col_fields)
+                                for r in [r[0].get_coordinates()[0] for r in rows]:
+                                    rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.ROW, r, [value], col_fields)
                                     removed_candidates = {**removed_candidates, **rem}
                                 if has_removed_candidates(removed_candidates):
                                     return (True, {
@@ -1058,8 +1058,8 @@ class Algorithm:
                                 for fl in Fields3:
                                     for f in fl:
                                         row_fields.append(f)
-                                for row in [c[0].get_coordinates()[0] for c in cols]:
-                                    rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, row, [value], row_fields)
+                                for c in [c[0].get_coordinates()[0] for c in cols]:
+                                    rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, c, [value], row_fields)
                                     removed_candidates = {**removed_candidates, **rem}
                                 if has_removed_candidates(removed_candidates):
                                     return (True, {
