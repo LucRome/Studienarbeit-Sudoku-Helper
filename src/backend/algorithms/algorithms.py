@@ -1058,7 +1058,7 @@ class Algorithm:
                                 for fl in Fields3:
                                     for f in fl:
                                         row_fields.append(f)
-                                for c in [c[0].get_coordinates()[0] for c in cols]:
+                                for c in [c[0].get_coordinates()[1] for c in cols]:
                                     rem = remove_candidates_from_fields_in_unit(self.sudoku, UnitType.COLUMN, c, [value], row_fields)
                                     removed_candidates = {**removed_candidates, **rem}
                                 if has_removed_candidates(removed_candidates):
