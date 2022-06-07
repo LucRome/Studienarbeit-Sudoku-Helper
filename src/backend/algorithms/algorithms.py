@@ -1489,6 +1489,7 @@ class Algorithm:
                                                                                 'algorithm': 'xyz_wing',
                                                                                 'fields': [f.get_coordinates() for f in fields2],
                                                                                 'values': [value1, value2, value3],
+                                                                                'value_removed': a,
                                                                                 'removed_candidates': removed_candidates
                                                                             })                              
         return False,None         
@@ -1932,11 +1933,6 @@ class Algorithm:
                                                     'values_locked': value,
                                                     'removed_candidates': removed_candidates
                                                 })
-                                                # field: Feld aus dem gestrichen wird
-                                                # v2: Wert der gestrichen wird
-                                                # value: Werte der umkreisten Kandidaten
-                                                # fields1[f1], fields1[f2]: Grün markierte Felder (Endpunkte W)
-                                                # fields2[0], fields2[1]: Rot markierte Felder
                             fields2.clear()
                 value.clear()
                 fields1.clear()
