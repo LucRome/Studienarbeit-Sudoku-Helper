@@ -14,7 +14,7 @@
                 // "sudoku.tests",
                 // "validation.test_validation",
                 // "algorithms.test_utils"
-                "algorithms.test_completion"
+                "algorithms.test_algorithms"
             ],
             "justMyCode": true
         },

@@ -432,7 +432,7 @@ class TestAlgorithms(unittest.TestCase):
             
         self.assertTrue(algos[0].algorithm_1()[0])
         self.assertTrue(algos[1].algorithm_2()[0])
-        self.assertTrue(algos[2].algorithm_3()[0])
+        #self.assertTrue(algos[2].algorithm_3()[0])
         self.assertTrue(algos[3].algorithm_4()[0])
         self.assertTrue(algos[4].algorithm_5()[0])
         self.assertTrue(algos[5].algorithm_6()[0])
@@ -456,6 +456,10 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(algos[24].algorithm_25_1()[0])
         self.assertTrue(algos[25].algorithm_26()[0])
         #self.assertTrue(algos[26].algorithm_25_2()[0])
+        
+        algo = Algorithm(sudoku24)
+        bol,string = algo.algorithm_24()
+        print(bol,string)
         
         # noch zu testen (11_2 15_2 25_2)
         
