@@ -313,12 +313,12 @@ class TestAlgorithms(unittest.TestCase):
         grid26.append([None, 9, None, None, None, 3, 1, 7, 5])
         grid26.append([3, None, 5, 9, None, 7, 6, 4, 2])
 
-        sudoku1: Sudoku = Sudoku(grid21)
+        sudoku1: Sudoku = Sudoku(grid14)
         sudoku1.select_candidates()
         
         #sudoku1.get_field(5,4).remove_candidate(1) #17
         #sudoku1.get_field(5,4).remove_candidate(2) #17
         algo = Algorithm(sudoku1)
-        bol,stri = algo.algorithm_21()
+        bol,stri = algo.algorithm_14()
         print('Bool:',bol)
         print('String:',stri)
