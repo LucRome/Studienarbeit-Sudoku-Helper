@@ -1790,7 +1790,7 @@ class Algorithm:
         return (False,None)
     
     #swordfish fin row
-    def algorithm_25_2(self) -> Tuple[bool, Optional[str]]:
+    def algorithm_25_2(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         Fields1 = []
         Fields2 = []
         Fields3 = []
@@ -1805,7 +1805,7 @@ class Algorithm:
                 for j in NINE_RANGE:
                     if value in row[j].get_candidates():
                         Counter = Counter + 1
-                        Fields1.append((j,i))
+                        Fields1.append((i,j))
                 if(Counter<=4)and Counter > 1:
                     Fields2.append(Fields1.copy()) 
                     Fields1.clear()
