@@ -27,7 +27,7 @@ function enter_changes() {
     handle_removed_candidates(dict.removed_candidates, marked_to_delete=false, remove=true);
 
     highlight_fields(dict.fields_1, "field-locked-candidates");
-    highlight_fields(dict.fields_2, "field-locked-candidates");
+    highlight_fields(dict.fields_2, "field-locked-candidates-2");
     let rem_candidates = parse_fields_from_removed_candidates(dict.removed_candidates);
     highlight_fields(rem_candidates, "field-removed-candidate");
 }
