@@ -1771,14 +1771,10 @@ class Algorithm:
                                 for j in NINE_RANGE:
                                     if v1 in row2[j].get_candidates():
                                         fields2.append(row2[j])
-                                print('---')
-                                for k in fields2:
-                                    print(k.get_coordinates())
                             
                                 if len(fields2)==2:
                                     if ((fields2[0].get_coordinates()[1]== fields1[f1].get_coordinates()[1] or fields2[0].get_coordinates()[1]== fields1[f2].get_coordinates()[1]) 
                                         and (fields2[1].get_coordinates()[1]== fields1[f1].get_coordinates()[1] or fields2[1].get_coordinates()[1]== fields1[f2].get_coordinates()[1])):
-                                        print('aaa')
                                         for v2 in value:
                                             if (v2 != v1 and (v2 in self.sudoku.get_field(fields1[f1].get_coordinates()[0], fields1[f2].get_coordinates()[1]).get_candidates())
                                                 and (self.sudoku.get_field(fields1[f1].get_coordinates()[0], fields1[f2].get_coordinates()[1]).get_coordinates() != fields1[f1].get_coordinates())
