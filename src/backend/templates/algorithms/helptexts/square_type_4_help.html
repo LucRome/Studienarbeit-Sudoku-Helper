@@ -1,0 +1,19 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Verbotenes Rechteck Typ4
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn vier im Rechteck angeordnete Felder aller die selben zwei Kandidaten (hier: 1 und 5) besitzten und 2 Feldern zusätzlich noch weiteren Kandidaten besitzen.
+Und nur einer dieser Kandidaten(hier: 1) im gemeinsamen Einflussbereich keine weiteren Felder als Kandidat besetzt.
+Kann der andere Kandidate (hier: 5) aus dem Felder-Paar eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/rectangle_type4.png' %}{% endblock img_src %}

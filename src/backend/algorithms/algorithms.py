@@ -47,8 +47,8 @@ class Algorithm:
         returns the dict that maps the functions to the algorithm names
         """
         return {
-            'hidden_single': self.algorithm_1,
             'open_single': self.algorithm_2,
+            'hidden_single': self.algorithm_1,
             'open_pair': self.algorithm_3,
             'hidden_pair': self.algorithm_4,
             'open_three': self.algorithm_5,
@@ -889,7 +889,7 @@ class Algorithm:
                         for j in NINE_RANGE:
                             if value in col[j].get_candidates():
                                 vCol2.append(col[j].get_coordinates())
-                        if len(vCol2) > 1:
+                        if len(vCol2) == 2:
                             if len(vCol)> 0:
                                 if vCol[0][0] != vCol2[0][0]: 
                                     vCol.append(vCol2.copy())

@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Verbotenes Rechteck Typ1
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn vier im Rechteck angeordnete Felder aller die selben zwei Kandidaten (hier: 4 und 5) besitzten und 3 Feldern ausschließlich das Kandidaten-Paar beinhalten,
+kann aus dem vierten Feld (hier: R8S7) das Kandidaten-Paar eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/rectangle_type1.png' %}{% endblock img_src %}
