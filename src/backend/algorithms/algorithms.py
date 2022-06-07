@@ -901,11 +901,6 @@ class Algorithm:
                         for b in a:
                             for x in vCol:
                                 for y in x:
-                                    # b, y: Felder die versetzt zueinander liegen
-                                    # value: Kandidatenwert
-                                    # vCol: Liste mit > 1 Kandidaten vom Wert
-                                    # i: Reihe in der auf gleicher Höhe
-                                    # rauslöschen in grauen Kästen möglich
                                     found_sth = False
                                     if b[0]==0 and (y[0]==1 or y[0]==2) and b[0]!=i:      
                                         found_sth = check_Same_Block_Rows(b,y)                                            
@@ -1925,13 +1920,24 @@ class Algorithm:
                                                 and (self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1]).get_coordinates() != fields1[f1].get_coordinates())
                                                 and (self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1]).get_coordinates() != fields1[f2].get_coordinates())):
                                                 field = self.sudoku.get_field(fields1[f2].get_coordinates()[0], fields1[f1].get_coordinates()[1])
-                                            if field != None:        
-                                                return True,f'Value1: {v1} Value2: {v2} Fields: {field.get_coordinates(),fields1[f1].get_coordinates(),fields1[f2].get_coordinates()}'
+                                            if field != None:
+                                                # already checked if improvement is made
+                                                field.remove_candidate(v2)
+                                                y_rem, x_rem = field.get_coordinates()
+                                                removed_candidates = {coordinates_to_key(y_rem, x_rem): [v2]}
+                                                return (True, {
+                                                    'algorithm': 'w_wing',
+                                                    'fields_1': [fields1[f1].get_coordinates(), fields1[f2].get_coordinates()],
+                                                    'fields_2': [fields2[0].get_coordinates(), fields2[1].get_coordinates()],
+                                                    'values_locked': value,
+                                                    'removed_candidates': removed_candidates
+                                                })
+                                                # field: Feld aus dem gestrichen wird
+                                                # v2: Wert der gestrichen wird
+                                                # value: Werte der umkreisten Kandidaten
+                                                # fields1[f1], fields1[f2]: Grün markierte Felder (Endpunkte W)
+                                                # fields2[0], fields2[1]: Rot markierte Felder
                             fields2.clear()
                 value.clear()
                 fields1.clear()
-                                    
-                                    
-                                    
-                
         return False,None 

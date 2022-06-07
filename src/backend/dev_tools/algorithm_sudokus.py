@@ -275,12 +275,12 @@ GRID21 = [
     [4, None, None, 5, 1, 6, None, 7, None, ],
 ]
 
-GRID23 = [
+GRID23 = [ # Warning: Grid has no solution (only to test Algorithm)
     [1, 2, None, 5, 7, 9, None, None, None, ],
     [None, 3, 9, 2, 4, None, 5, None, 7, ],
-    [5, None, 7, None, 3, 8, 9, 2, None, ],
-    [None, None, 6, 7, None, None, None, None, None, ],
-    [None, 7, 3, None, None, None, 2, None, None, ],
+    [5, None, 7, 6, 3, 8, 9, 2, None, ],
+    [None, None, 6, 7, None, 2, None, None, None, ],
+    [None, 7, 3, None, None, 1, 2, None, None, ],
     [None, 5, None, 3, None, 4, 7, None, 9, ],
     [7, None, None, None, None, None, 8, 9, 3, ],
     [None, 9, None, None, None, 3, 1, 7, 5, ],
