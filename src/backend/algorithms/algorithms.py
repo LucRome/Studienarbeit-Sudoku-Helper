@@ -1051,11 +1051,6 @@ class Algorithm:
                                 if(value in cols[2][l].get_candidates()):
                                     colCount = colCount + 1
                             if colCount > (len(Fields2[0])+len(Fields2[1])+len(Fields2[2])):
-                                # Aus Spalten kann gelöscht werden
-                                # Spalten: siehe Returns (nicht row)
-                                # cols: Liste der 3 Spalten (alle Felder)
-                                # Spalten: Fields3
-                                # Fields 3: Liste der 3 Reihen jeweils mit den Koordinaten der Feldern in denen die Koordinaten auftauchen (mit umkreisten Kandidaten)
                                 removed_candidates: Dict[str, Any] = {}
                                 row_fields = []
                                 for fl in Fields3:
@@ -1767,12 +1762,6 @@ class Algorithm:
                                         if not(check):
                                             rowCount = rowCount + 1
                                 if rowCount > 1:
-                                    # markierte Reihen: rows (sh. Schwertfisch)
-                                    # rows: Liste der 3 Reihen (alle Felder)
-                                    # fields3: Spalten
-                                    # field: Finne (1 Feld)
-                                    # es wird überprüft ob Felder gelöscht werden
-                                    # gelöscht werden kann aus: Schnitt aus Feldern in markierten Reihen + Block der Finne
                                     block_nr = Sudoku.get_block_nr(field[0], field[1])
                                     col_fields = []
                                     for fl in Fields3:

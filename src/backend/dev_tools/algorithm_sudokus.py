@@ -4,7 +4,6 @@
 The Sudokus to test each algorithm
 """
 
-# TODO: add missing
 
 # Sudokus (only the values)
 from sudoku.base import NINE_RANGE

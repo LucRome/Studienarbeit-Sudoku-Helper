@@ -14,10 +14,10 @@
                 "-m",
                 "unittest",
                 // "validation.test_validation",
-                // "algorithms.test_algorithms",
+                "algorithms.test_algorithms",
                 // "sudoku.tests",
                 // "algorithms.test_utils",
-                "algorithms.test_completion"
+                // "algorithms.test_completion"
             ]
         },
         {
