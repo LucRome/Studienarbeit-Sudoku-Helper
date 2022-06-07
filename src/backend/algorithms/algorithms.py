@@ -1549,10 +1549,15 @@ class Algorithm:
                                                 row2 = self.sudoku.get_row(i)
                                                 for j in NINE_RANGE:
                                                     if (f3[0] in row2[j].get_candidates() and (Sudoku.get_block_nr(f3[1].get_coordinates()[0],f3[1].get_coordinates()[1]) == Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) or f3[1].get_coordinates()[0] == row2[j].get_coordinates()[0] or f3[1].get_coordinates()[1] == row2[j].get_coordinates()[1])
-                                                        and (Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) == Sudoku.get_block_nr(f4[1].get_coordinates()[0],f4[1].get_coordinates()[1]) or row2[j].get_coordinates()[0] == f4[1].get_coordinates()[0] or row2[j].get_coordinates()[1] == f4[1].get_coordinates()[1])):
+                                                        and (Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) == Sudoku.get_block_nr(f4[1].get_coordinates()[0],f4[1].get_coordinates()[1]) or row2[j].get_coordinates()[0] == f4[1].get_coordinates()[0] or row2[j].get_coordinates()[1] == f4[1].get_coordinates()[1])
+                                                        and row2[j].get_coordinates() != f3[1].get_coordinates()  and row2[j].get_coordinates() != f4[1].get_coordinates()):
                                                         returnFields.append(row2[j])
                                             if len(returnFields) >= 1:
-                                                    return True,f'Value: {f3[0]} Field:{returnFields[0].get_coordinates()}'
+                                                for k in returnFields:
+                                                    print('ReturnFields:',k.get_coordinates())
+                                                print(f3[1].get_coordinates())    
+                                                print(f4[1].get_coordinates())    
+                                                return True,f'Value: {f3[0]} Field:{returnFields[0].get_coordinates()}'
                     
         return False,None 
     
