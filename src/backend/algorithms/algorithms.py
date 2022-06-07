@@ -1596,11 +1596,6 @@ class Algorithm:
                                     if not(f3 in fields2):
                                         fields2.append(f3)
                 if len(fields2)>0:
-                    # wenn ein Wert in gelb -> kann nicht in rotem Gegenstück sein
-                    # fieldstrue: gelbe/rote Felder
-                    # fieldsfalse: rote/gelbe Felder
-                    # fields 2: Felder aus denen gestrichen werden kann
-                    # value: Wert der gestrichen werden kann
                     removed_candidates = remove_candidates_from_fields(self.sudoku, fields2, [value])
                     if has_removed_candidates(removed_candidates):
                          return (True, {
@@ -1657,9 +1652,6 @@ class Algorithm:
                                                         and row2[j].get_coordinates() != f3[1].get_coordinates()  and row2[j].get_coordinates() != f4[1].get_coordinates()):
                                                         returnFields.append(row2[j])
                                             if len(returnFields) >= 1:
-                                                # f: grünes Feld
-                                                # f3, f4: Werte mit Endfeldern
-                                                # returnFields: Felder aus denen Kandidat gelöscht wird
                                                 value = f3[0]
                                                 removed_candidates = remove_candidates_from_fields(self.sudoku, [f.get_coordinates() for f in returnFields], [value])
                                                 # already checked if useful
