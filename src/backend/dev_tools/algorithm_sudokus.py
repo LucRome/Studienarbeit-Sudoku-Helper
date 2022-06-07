@@ -326,6 +326,7 @@ GRID25 = [
 
 GRID26 = [[GRID25[col][row] for col in NINE_RANGE] for row in NINE_RANGE]
 
+# warning: Grid has no solution, only to test algorithm
 GRID27 = [
     [None, None, 8, None, 5, None, 4, 3, None],
     [None, None, 3, 8, 7, None, 2, None, 5],
