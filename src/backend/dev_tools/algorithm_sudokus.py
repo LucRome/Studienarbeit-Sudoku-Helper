@@ -327,15 +327,15 @@ GRID25 = [
 GRID26 = [[GRID25[col][row] for col in NINE_RANGE] for row in NINE_RANGE]
 
 GRID27 = [
-    [None, None, 8, None, 5, None, 4, 3, None, ],
-    [None, None, 3, 8, 7, None, 2, None, 5, ],
-    [None, None, None, 9, None, None, 1, 8, 7, ],
-    [None, 2, None, None, None, 7, 9, 1, None, ],
-    [None, None, None, 5, None, None, 6, 2, None, ],
-    [9, None, 6, None, None, None, None, None, None, ],
-    [4, None, None, None, None, None, 3, None, 2, ],
-    [None, None, None, None, 2, 6, 8, 4, None, ],
-    [None, 8, 2, 3, 4, None, None, None, None, ],
+    [None, None, 8, None, 5, None, 4, 3, None],
+    [None, None, 3, 8, 7, None, 2, None, 5],
+    [None, None, None, 9, None, None, 1, 8, 7],
+    [None, 2, None, None, None, 7, 9, 1, None],
+    [None, None, None, 5, None, None, 6, 2, None],
+    [9, None, 6, None, None, None, None, None, None],
+    [4, None, None, None, None, None, 3, None, 2],
+    [None, None, None, 1, 2, 6, 8, 4, None],
+    [None, 8, 2, 3, 4, None, None, None, None],
 ]
 
 # mapping

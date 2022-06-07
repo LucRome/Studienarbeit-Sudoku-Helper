@@ -1656,7 +1656,10 @@ class Algorithm:
                                                         and (Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) == Sudoku.get_block_nr(f4[1].get_coordinates()[0],f4[1].get_coordinates()[1]) or row2[j].get_coordinates()[0] == f4[1].get_coordinates()[0] or row2[j].get_coordinates()[1] == f4[1].get_coordinates()[1])):
                                                         returnFields.append(row2[j])
                                             if len(returnFields) >= 1:
-                                                print(f'f1: {f1.get_coordinates()}\n\nf2: {f2.get_coordinates()}\n\nf3: {[f3[0], f3[1].get_coordinates()]}\n\nf4: {f4[0], f4[1].get_coordinates()}\n\nfields1: {[f.get_coordinates() for f in fields1]}\n\nfields21: {[f.get_coordinates() for f in fields21]}\n\nfields22: {[f.get_coordinates() for f in fields22]}\n\nfields3: {[f.get_coordinates() for f in fields3]}\n\nfields4: {[f.get_coordinates() for f in fields4]}\n\n')
+                                                # f: grünes Feld
+                                                # fields5, fields6: gelbe Felder (alle Felder die eine Kette bilden können)
+                                                # f3, f4: Tatsächlich verwendete Endfelder
+                                                print(f'f: {f.get_coordinates()}\n\nf1: {f1.get_coordinates()}\n\nf2: {f2.get_coordinates()}\n\nf3: {[f3[0], f3[1].get_coordinates()]}\n\nf4: {f4[0], f4[1].get_coordinates()}\n\nfields1: {[f.get_coordinates() for f in fields1]}\n\nfields21: {[f.get_coordinates() for f in fields21]}\n\nfields22: {[f.get_coordinates() for f in fields22]}\n\nfields3: {[f.get_coordinates() for f in fields3]}\n\nfields4: {[f.get_coordinates() for f in fields4]}\n\n')
                                                 print(f'fields5: {[[f[0], f[1].get_coordinates()] for f in fields5]}\n\nfields6: {[[f[0], f[1].get_coordinates()] for f in fields6]}\n\nreturnFields: {[f.get_coordinates() for f in returnFields]}')
                                                 return True,f'Value: {f3[0]} Field:{returnFields[0].get_coordinates()}'
                     
