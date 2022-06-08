@@ -7,7 +7,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Sudoku Helper{% endblock %}</title>
+  <title>{% block title %}SbS Sudoku{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -35,11 +35,10 @@
 <body>
   {# Navbar #}
   <nav class="navbar navbar-expand bg-dark navbar-dark">
-    <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'index' %}">
         <img src="{% static '/logo/logo.png' %}" style="width: 3em;">
       </a>
-    </div>
+      <a class="navbar-brand" href="{% url 'index' %}">Step-by-Step Sudoku</a>
     {% block navbar-content %} 
       {# TODO: block needed?#}
     {% endblock %}
