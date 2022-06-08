@@ -45,7 +45,7 @@ class TestIndex(ut.TestCase):
         submit_sudoku(self.driver)
 
         # skip verified page
-        self.driver.find_element(by=By.ID, value='solve-sudoku-btn')
+        self.driver.find_element(by=By.ID, value='solve-sudoku-btn').click()
         wait_for_page_to_load(self.driver, timeout=120)
 
         # tests

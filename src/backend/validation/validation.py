@@ -1,11 +1,13 @@
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Union
+from sudoku.base import NINE_RANGE
 from sudoku.base import Sudoku, Field
 
 def field_to_value(field: Field) -> Optional[int]:
     return field.get_value()
 
 class Validation:
-  grid: List
+  grid: List[List[int]]
+  solution: List[List[int]]
 
   def __init__(self,sudoku):
     self.grid = list()
@@ -27,12 +29,16 @@ class Validation:
           return False
     return True
       
-  def validate(self, sudoku:Sudoku) -> Tuple[bool, Optional[str]]:
+  def validate(self, sudoku:Sudoku) -> Tuple[bool, Union[str, List[List[int]]]]:
+    """
+    checks if the amount of possible solutions = 1
+    :returns: False + Error Message or True + Solution
+    """
     counter = self.validate_sudoku(sudoku,0,0)
     if counter == 0:
       return (False, f'Das Sudoku ist ungültig, es existiert keine Lösung!')
     elif counter == 1 or counter is None: # (None occurs when sudoku is completely solved)
-      return (True, None)
+      return (True, self.solution) if counter else (True, None)
     else:
       return (False, f'Das Sudoku ist ungültig, es existieren mehrere Lösungen!')  
 
@@ -56,7 +62,8 @@ class Validation:
               #Check that this value has not already be used on this 3x3 square
               if self.checkBlock(row=row,col=col,value=value):
                 self.grid[row][col] = value 
-                if self.check_sudoku():    
+                if self.check_sudoku():
+                  self.solution = [[self.grid[y][x] for x in NINE_RANGE] for y in NINE_RANGE]    
                   self.grid[row][col] = None
                   return counter + 1
                 else:

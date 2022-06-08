@@ -37,6 +37,15 @@
     <a class="btn btn-lg btn-primary rounded-pill" href="{% url 'index' %}">
       Neues Sudoku
     </a>
+  {% elif nxt_action == "failed_to_solve" %}
+    {# Toggle solution #}
+    <button type="button" class="btn btn-lg btn-secondary rounded-pill" id="toggle-solution-btn">
+      Lösung an-/ausschalten
+    </button>
+    {# return to index #}
+    <a class="btn btn-lg btn-primary rounded-pill" href="{% url 'index' %}">
+      Neues Sudoku
+    </a>
   {% endif %}
 
   {# Help Button #}

@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from typing import List
 
-from .utils.web_driver_utils import start_driver, quit_driver
+from .utils.web_driver_utils import WAIT_TIME, start_driver, quit_driver
 from .utils.input_utils import write_value_in_field, clear_all_fields
 from backend.sudoku.base import ALL_FIELD_VALUES, FIELD_VALUE_MAX, FIELD_VALUE_MIN, NINE_RANGE
 from .utils.modal_tests import test_modals
@@ -65,7 +65,9 @@ class TestIndex(ut.TestCase):
         for row in NINE_RANGE:
             for col in NINE_RANGE:
                 self.assertEqual(self.driver.find_element(by=By.ID, value=f'{row}_{col}').get_attribute('value'), '')
+                self.driver.implicitly_wait(0)
                 self.assertEqual(0, len(self.driver.find_elements(by=By.CLASS_NAME, value='sudoku-field-incorrect')))
+        self.driver.implicitly_wait(WAIT_TIME)
 
             
 
@@ -103,9 +105,13 @@ class TestIndex(ut.TestCase):
 
             field_value += 1
 
-
-        # row, column and block all at once
-        ids = ('0_3', '6_2', '2_1', '0_2')  # when the last field is set, all these fields should have an error
+    def test_inputs_combined_2(self):
+        """
+        row, column and block all at once
+        """
+        field_value = 4
+        submit_btn = self.driver.find_element(by=By.ID, value='submit-sudoku-btn')
+        ids = ('0_5', '6_2', '2_1', '0_2')  # when the last field is set, all these fields should have an error
         inputs: List[WebElement] = []
         for id in ids:
             inputs.append(self.driver.find_element(by=By.ID, value=id))
@@ -121,6 +127,7 @@ class TestIndex(ut.TestCase):
         # set the last field and check that everything is blocked:
         for input in inputs[-1:]:
             write_value_in_field(input, field_value)
+            input.send_keys(Keys.TAB)
         
         self.assertFalse(submit_btn.is_enabled())
         for input in inputs:
@@ -136,4 +143,4 @@ class TestIndex(ut.TestCase):
             self.assertEqual(input.get_attribute('class'), '')
 
     def test_modals(self):
-        test_modals(self, self.driver, True, True)
+        test_modals(self, self.driver, quickinfo=True, help=False)

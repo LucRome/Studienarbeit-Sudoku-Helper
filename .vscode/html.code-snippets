@@ -6,7 +6,7 @@
             "{% extends \"algorithms/quickinfos/generic.html\" %}",
             "",
             "{% comment %}", 
-            "  Quickinfo for hidden single",
+            "  Quickinfo",
             "  Params:",
             "    dict: dictionary",
             "{% endcomment %}",

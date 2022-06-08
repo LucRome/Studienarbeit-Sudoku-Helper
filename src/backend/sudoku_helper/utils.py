@@ -92,10 +92,10 @@ def sudoku_simple_check(sudoku: Sudoku) -> Tuple[bool, Optional[str]]:
     return (True, None)
 
 
-def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[HttpResponse]]:
+def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[List[List[int]]],Optional[HttpResponse]]:
     """
     Handles the extraction and validation of a Sudoku from a HttpRequest, also handles the responses if something is wrong
-    Returns the Sudoku if everything is correct
+    Returns the Sudoku with its solution if everything is correct
     """
 
     values = get_values_from_request(request)
@@ -104,7 +104,7 @@ def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[
         sudoku = Sudoku(values)
         correct = True
     except WrongFieldValueException as e:
-        correct, msg = False, 'Einige Werte waren nicht in dem erlaubten Bereich (1-9) und wurden deshalb entfernt!'
+        correct, info = False, 'Einige Werte waren nicht in dem erlaubten Bereich (1-9) und wurden deshalb entfernt!'
         # Initialize Sudoku without wrong Field Values
         for y in NINE_RANGE:
             for x in NINE_RANGE:
@@ -115,10 +115,10 @@ def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[
 
     if correct and sudoku is not None:
         val = Validation(sudoku)
-        correct, msg = sudoku_simple_check(sudoku)
+        correct, info = sudoku_simple_check(sudoku) 
         if correct:
             sudoku.select_candidates()
-            correct,msg = val.validate(sudoku)
+            correct,info = val.validate(sudoku) # info: msg or solution
 
     if not correct:
         context = {
@@ -126,9 +126,9 @@ def check_sudoku_view(request: HttpRequest) -> Tuple[Optional[Sudoku], Optional[
             'range': NINE_RANGE,
             'quickinfo': 'Bitte geben Sie ein valides Sudoku ein und drücken Sie validieren um fortzufahren!',
             'failed_tests': True,
-            'error_msg': msg,
+            'error_msg': info,
         }
-        return None, render(request, 'pages/index.html', context)
+        return None, None, render(request, 'pages/index.html', context)
     
     else:
-        return sudoku, None
+        return sudoku, info, None

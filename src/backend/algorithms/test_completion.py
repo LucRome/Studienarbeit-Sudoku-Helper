@@ -3,32 +3,38 @@ from algorithms.algorithms import *
 from sudoku.base import Field, Sudoku
 from validation.validation import Validation
 from sudoku_helper.utils import sudoku_simple_check
+from dev_tools.algorithm_sudokus import NAME_MAP
 import json
 
-def nxt_step(sudoku: Sudoku) -> Tuple[bool, Optional[Dict[str, Any]]]:
+def nxt_step(sudoku: Sudoku) -> Tuple[bool, Optional[str], Optional[Dict[str, Any]]]:
     """
-    True + Dict if one algorithm is used, else false
+    True + None + Dict if one algorithm is used, else false + msg + None
     """
+    if not verify(sudoku):
+        return False, 'Sudoku has no solution', None
     solver = Algorithm(sudoku)
     for alg in solver.get_name_fn_dict().values():
         success, dict = alg()
         if success:
-            return True, dict
-    return False, None
+            print('.', end='')
+            return True, None, dict
+    return False, 'No Algorithm was able to solve it', None
 
 def try_to_solve(sudoku: Sudoku) -> Tuple[bool, str]:
     """
     True if Sudoku is solvable with algorithms
     """
+    all_returns: List[Dict[str, Any]] = []
     str_new, str_old = '',''
     while not sudoku.is_solved():
-        success, dict = nxt_step(sudoku)
+        success, msg, dict = nxt_step(sudoku)
         if not success:
-            return False, 'No Algorithm was able to solve it'
+            return False, msg
         # check for repetition
         str_new = json.dumps(dict)
         if str_new == str_old:
             return False, f"The same action occured twice -> maybe problem with algorithm: {dict['algorithm']}"
+        all_returns.append(dict)
         str_old = str_new
 
     print('solved')
@@ -64,32 +70,6 @@ class TestCompleteSolvability(ut.TestCase):
             # attempt solving
             success, msg = try_to_solve(sudoku)
             self.assertTrue(success, msg=msg)
-
-
-    def test_simple(self):
-        """
-        Test a simple sudoku
-        """
-        sudoku = Sudoku([
-            [None, 2, 3, None, 6, 5, None, 8, 9],
-            [9, None, None, None, None, 4, None, None, 5],
-            [5, None, None, None, None, None, None, None, 8],
-            [6, None, None, 3, 4, None, None, 1, 8],
-            [3, 8, None, 5, 9, None, None, None, 2],
-            [None, None, None, None, 8, 6, 3, None, None],
-            [2, 3, 5, None, None, None, None, None, 6],
-            [8, None, 7, 6, 2, None, None, None, 3],
-            [None, 9, 6, None, 5, 3, 8, 2, None],
-        ])
-        sudoku.select_candidates()
-
-        # first validation
-        self.assertTrue(verify(sudoku))
-
-        # attempt solving
-        success, msg = try_to_solve(sudoku)
-        self.assertTrue(success, msg=msg)
-
 
     def test_middle(self):
         """
@@ -165,3 +145,14 @@ class TestCompleteSolvability(ut.TestCase):
         ]
 
         self.__test_sudokus(sudokus)
+
+    def test_algorithm_sudokus(self):
+        for key, values in NAME_MAP.items():
+            sudoku = Sudoku(values)
+            sudoku.select_candidates()
+
+            if not verify(sudoku):
+                print(f'sudoku {key} has no solution -> not Tested')
+            else:
+                success, msg = try_to_solve(sudoku)
+                self.assertTrue(success, msg=f'{msg} (sudoku: {key})')
