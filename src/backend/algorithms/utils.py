@@ -1,6 +1,6 @@
 import math
 from sudoku.base import Sudoku, Field, NINE_RANGE
-from typing import List, Tuple, Literal, Dict
+from typing import List, Tuple, Literal, Dict, Optional
 from enum import Enum
 
 
@@ -19,6 +19,10 @@ class UnitType(Enum):
 def get_unit(type: UnitType, nr: int, excluded_fields: List[Tuple[int, int]] = []) -> List[Tuple[int, int]]:
     unit: List[Tuple[int, int]] = list()  # the coordinates of the unit fields (except the excluded ones)
 
+    # make sure, that excluded fields are Tuples
+    for f in excluded_fields:
+        if not isinstance(f, tuple):
+            raise TypeError(f'Fields must be tuples, not: {f.__class__}')
     if type == UnitType.ROW:
         for col in NINE_RANGE:
             if (nr, col) not in excluded_fields:
@@ -51,6 +55,31 @@ def key_to_coordinates(key: int) -> Tuple[int, int]:
     """
     return (key//10, key%10)
 
+def remove_candidates_from_fields(sudoku: Sudoku, fields: List[Tuple[int, int]], candidates_to_remove: List[int], except_fields: Optional[List[Tuple[int, int]]] = None) -> Dict[int, List[int]]:
+    """
+    Removes the given candidates from the given fields
+    :param sudoku: the sudoku
+    :param fields: Coordinates of the fields to remove the candidates from
+    :param candidates: candidates to remove
+    """
+    removed_candidates: Dict[int, List[int]] = dict() #Key: y*10+x
+    for (y,x) in fields:
+        if except_fields and (y,x) in except_fields:
+            continue
+        field = sudoku.get_field(y, x)
+        key = coordinates_to_key(y, x)
+        field_candidates = field.get_candidates()
+        for v in candidates_to_remove:
+            if v in field_candidates:
+                # Add to dict and remove
+                field.remove_candidate(v)
+                rm = removed_candidates.get(key)
+                if rm:
+                    rm.append(v)
+                else:
+                    removed_candidates.update({key: [v]})
+    return removed_candidates
+    
 
 def remove_candidates_from_fields_in_unit(sudoku: Sudoku,type: UnitType, nr: int,
     candidates_to_remove: List[int], excluded_fields: List[Tuple[int, int]]) -> Dict[int, List[int]]:
@@ -227,3 +256,43 @@ def intersection_of_units(a_type: UnitType, a_nr: int, b_type: UnitType, b_nr: i
         if coords in b:
             intersection.append(coords)
     return intersection
+
+def get_common_units(fields: List[Tuple[int, int]]) -> List[Tuple[UnitType, int]]:
+    """
+    Get the units all fields have in common
+    :param fields: the coordinates of the fields
+    :returns: A List of all common units, sorted by unit type
+    """
+    common: List[Tuple[UnitType, int]] = []
+
+    # row
+    row: int = fields[0][0]
+    same = True
+    for i in range(1, len(fields)):
+        if fields[i][0] != row:
+            same = False
+            break
+    if same:
+        common.append((UnitType.ROW, row))
+    
+    # column
+    col: int = fields[0][1]
+    same = True
+    for i in range(1, len(fields)):
+        if fields[i][1] != col:
+            same = False
+            break
+    if same:
+        common.append((UnitType.COLUMN, col))
+
+    # Block
+    blk = Sudoku.get_block_nr(fields[0][0], fields[0][1])
+    same = True
+    for i in range(1, len(fields)):
+        if Sudoku.get_block_nr(fields[0][0], fields[0][1]) != blk:
+            same = False
+            break
+    if same:
+        common.append((UnitType.BLOCK, blk))
+
+    return common

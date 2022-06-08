@@ -8,11 +8,19 @@ from typing import List
 
 from .utils.web_driver_utils import start_driver, quit_driver
 from .utils.input_utils import write_value_in_field, clear_all_fields, enter_sudoku, submit_sudoku
-from backend.sudoku.base import ALL_FIELD_VALUES, FIELD_VALUE_MAX, FIELD_VALUE_MIN, NINE_RANGE
-from backend.dev_tools.algorithm_sudokus import GRID12
 from .utils.modal_tests import test_modals
 
-SUDOKU_VALID = GRID12
+SUDOKU_VALID = [
+    [None, None, 8, 6, None, None, 2, 1, 9],
+    [2, None, 6, 9, None, None, 5, 3, 8],
+    [9, 5, 1, 2, 3, 8, 4, 6, 7],
+    [4, 8, 2, None, 9, None, 3, 7, 6],
+    [None, 9, None, 4, 6, 2, 1, 8, 5],
+    [1, 6, 5, 3, 8, 7, 9, 2, 4],
+    [8, None, None, None, 2, 9, 6, 4, 3],
+    [5, None, None, 8, 1, 6, 7, 9, 2],
+    [6, 2, 9, 7, 4, 3, 8, None, 1],
+]
 SUDOKU_INVALID = [
     [None, 2, None, None, None, None, None, None, None],
     [None, None, None, None, None, None, None, None, None],
@@ -69,7 +77,7 @@ class TestVerified(ut.TestCase):
         for can in candidates:
             self.assertFalse(can.is_displayed())
 
-        test_modals(self, self.driver, quickinfo=True, help=True)
+        test_modals(self, self.driver, quickinfo=True, help=False)
     
     def test_invalid(self):
         """
@@ -94,4 +102,4 @@ class TestVerified(ut.TestCase):
         self.assertTrue(self.driver.find_element(by=By.ID, value='submit-sudoku-btn').is_enabled())
 
         # modals
-        test_modals(self, self.driver, quickinfo=True, help=True)
+        test_modals(self, self.driver, quickinfo=True, help=False)

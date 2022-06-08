@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Schwertfisch Spalten
+{% endblock algo_name %}
+
+{% block helptext %}
+Liegen in genau drei Spalten (hier: S3,S6,S9) alle Kandidaten eines Werts(hier: 4) auch in genau drei Reihen(hier: R5,R6,R8),
+so wird in jeder der Reihen der Wert(hier: 4) in einer der Schnittpunkte liegen. Somit können in den restlichen Felder dieser Reihe der Wert (hier: 4) aus den Kandidaten eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/swordfish_col.png' %}{% endblock img_src %}

@@ -1,10 +1,10 @@
 {% extends "algorithms/quickinfos/generic.html" %}
 
 {% comment %} 
-  Quickinfo for hidden pair
+  Quickinfo
   Params:
     dict: dictionary 
 {% endcomment %}
 {% block step-1 %}Es gibt einen versteckten Dreier in dem hervorgehobenen Bereich{% endblock step-1 %}
-{% block step-3 %}Mit dem versteckten Dreier Algorithmus werden die hervorgehobenen Kandidaten als Kandidaten für die markierten Felder festgelegt.
+{% block step-3 %}Mit dem versteckten Dreier Algorithmus werden die hervorgehobenen Kandidaten als Kandidaten für die so markierten Felder festgelegt.
 Denn {{dict.values.0}}, {{dict.values.1}} und {{dict.values.2}} treten innerhalb der Einheit nur in diesen drei Feldern als Kandidaten auf{% endblock step-3 %}

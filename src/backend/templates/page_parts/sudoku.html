@@ -4,6 +4,7 @@
     sudoku: Sudoku Class
     range: range(0,9)
     sudoku_readonly: if True -> all Sudoku Fields are readonly
+    solution: solution for the sudoku
 {% endcomment %}
 
 {% load accessors %}
@@ -31,9 +32,11 @@
                     {# When not readonly: Normal Input #}
                     <input id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/>
                   {% else %}
-                    {# When readonly: Value in readonly mode or candidates #}
+                    {# When readonly: Value in readonly mode or solution or candidates #}
                     {% if field.get_value is not None %}
                       <input readonly id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ field.get_value }}" maxlength="1"/> 
+                    {% elif solution %}
+                      <input readonly class="solution-value" id="{{row}}_{{column}}" name="{{row}}_{{column}}" type="number" value="{{ solution|get_value:row|get_value:column }}" maxlength="1"/> 
                     {% else %}
                       {% include "components/candidates.html" with candidates=field.get_candidates row=row column=column %}
                     {% endif %}

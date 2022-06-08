@@ -1,0 +1,9 @@
+{% extends "algorithms/quickinfos/generic.html" %}
+
+{% comment %}
+  Quickinfo
+  Params:
+    dict: dictionary
+{% endcomment %}
+{% block step-1 %}In den markierten Feldern kann ein verbotenes Viereck Typ 1 gebildet werden.{% endblock step-1 %}
+{% block step-3 %}Mit dem Algorithmus verbotenes Viereck Typ 1 können Kandidaten mit den Werten {{dict.values.0}}, {{dict.values.1}} aus dem markierten Feld entfernt werden.{% endblock step-3 %}
