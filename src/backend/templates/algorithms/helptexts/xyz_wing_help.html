@@ -1,0 +1,20 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+XYZ Wing
+{% endblock algo_name %}
+
+{% block helptext %}
+Innerhalb eines Blocks (hier: B6) und einer Reihe (hier: R5) gibt es drei Felder mit mit drei verschiedenen Kandidaten (hier: 1,3,7)wird.
+Einer dieser Werte ist in jedem Feld enthalten (hier: 1), in zwei Feldern befinden sich zwei unterschiedliche Kandidaten-Paare (hier: 1,3 und 1,7),
+und in dem dritten Feld, welches sich im Schnittpunkt der anderen zwei Felder befindet, befinden sich alle drei Kandidaten.
+Nun können Kandidaten mit dem gemeinsamen Wert (hier: 1) aus dem Schnittbereich (hier: schwarz Umrandet) eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/xyz_wing.png' %}{% endblock img_src %}

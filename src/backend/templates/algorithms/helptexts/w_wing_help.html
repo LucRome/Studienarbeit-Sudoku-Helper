@@ -1,0 +1,19 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+W Wing
+{% endblock algo_name %}
+
+{% block helptext %}
+Zwei Felder enthalten ausschließlich ein Kandidaten-Paar (hier: 6, 8 in den grün markierten Felder), das sind die Endpunkte des Ws.
+Das zweite Merkmal ist eine Reihe (hier: R8) in der ein Wert des Kandidaten-Paar (hier: 6) nur zweimal vorkommt und das auf höhe der Endpunkte.
+Nun kann man aus dem Überschneidungsbereich der beiden Endpunkte den anderen Kandidaten (hier: 8) eliminieren.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/w_wing.png' %}{% endblock img_src %}
