@@ -838,26 +838,29 @@ class Algorithm:
                 for j in NINE_RANGE:
                     if value in row[j].get_candidates():
                         fields.append(row[j])
-                if len(fields) == 2 :
-                    for field in fields:
-                        if find_chain_12(self.sudoku, field, value)[0] and find_chain_12(self.sudoku, field, value)[1] != None: 
-                            vComplex = find_chain_12(self.sudoku, field, value)[1]
-                        elif find_chain_12(self.sudoku, field, value)[0] == False:
-                            vStraight = find_chain_12(self.sudoku, field, value)[1]
+                if len(fields) == 2:
+                    fields_coordinates = [f.get_coordinates() for f in fields]
+                    if Sudoku.get_block_nr(fields_coordinates[0][0], fields_coordinates[0][1]) != Sudoku.get_block_nr(fields_coordinates[1][0], fields_coordinates[1][1]):
+                        # fields must be in different blocks!
+                        for field in fields:
+                            if find_chain_12(self.sudoku, field, value)[0] and find_chain_12(self.sudoku, field, value)[1] != None: 
+                                vComplex = find_chain_12(self.sudoku, field, value)[1]
+                            elif find_chain_12(self.sudoku, field, value)[0] == False:
+                                vStraight = find_chain_12(self.sudoku, field, value)[1]
 
-                    if vStraight != None and vComplex !=None and len(vComplex) > 2 and len(vStraight)>=2:
-                        for a in range(3,len(vComplex)):
-                            for b in range(0,len(vStraight)):
-                                if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
-                                    self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
-                                    return (True,{
-                                        'algorithm': 'steinbutt',
-                                        'value': value,
-                                        'row': vComplex[a].get_coordinates()[0],
-                                        'fields': [f.get_coordinates() for f in fields],
-                                        'path_complex': [f.get_coordinates() for f in vComplex[1:3]],
-                                        'removed_candidates': {coordinates_to_key(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]): [value]}
-                                    })
+                        if vStraight != None and vComplex !=None and len(vComplex) > 2 and len(vStraight)>=2:
+                            for a in range(3,len(vComplex)):
+                                for b in range(0,len(vStraight)):
+                                    if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
+                                        self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
+                                        return (True,{
+                                            'algorithm': 'steinbutt',
+                                            'value': value,
+                                            'row': vComplex[a].get_coordinates()[0],
+                                            'fields': [f.get_coordinates() for f in fields],
+                                            'path_complex': [f.get_coordinates() for f in vComplex[1:3]],
+                                            'removed_candidates': {coordinates_to_key(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]): [value]}
+                                        })
                     fields.clear()
                     vStraight.clear()
                     vComplex.clear()      
