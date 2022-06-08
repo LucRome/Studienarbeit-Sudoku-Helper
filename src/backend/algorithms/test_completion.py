@@ -71,32 +71,6 @@ class TestCompleteSolvability(ut.TestCase):
             success, msg = try_to_solve(sudoku)
             self.assertTrue(success, msg=msg)
 
-
-    def test_simple(self):
-        """
-        Test a simple sudoku
-        """
-        sudoku = Sudoku([
-            [None, 2, 3, None, 6, 5, None, 8, 9],
-            [9, None, None, None, None, 4, None, None, 5],
-            [5, None, None, None, None, None, None, None, 8],
-            [6, None, None, 3, 4, None, None, 1, 8],
-            [3, 8, None, 5, 9, None, None, None, 2],
-            [None, None, None, None, 8, 6, 3, None, None],
-            [2, 3, 5, None, None, None, None, None, 6],
-            [8, None, 7, 6, 2, None, None, None, 3],
-            [None, 9, 6, None, 5, 3, 8, 2, None],
-        ])
-        sudoku.select_candidates()
-
-        # first validation
-        self.assertTrue(verify(sudoku))
-
-        # attempt solving
-        success, msg = try_to_solve(sudoku)
-        self.assertTrue(success, msg=msg)
-
-
     def test_middle(self):
         """
         Test mediocre sudokus (Expert Level on Website)
