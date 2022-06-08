@@ -845,7 +845,7 @@ class Algorithm:
                         if vStraight != None and vComplex !=None and len(vComplex) > 2 and len(vStraight)>=2:
                             for a in range(3,len(vComplex)):
                                 for b in range(0,len(vStraight)):
-                                    if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
+                                    if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0] and vComplex[a].get_coordinates()[1]==vStraight[0].get_coordinates()[1]:
                                         self.sudoku.get_field(vComplex[a].get_coordinates()[0],vComplex[a].get_coordinates()[1]).remove_candidate(value)
                                         return (True,{
                                             'algorithm': 'steinbutt',
@@ -898,23 +898,23 @@ class Algorithm:
                             for x in vCol:
                                 for y in x:
                                     found_sth = False
-                                    if b[0]==0 and (y[0]==1 or y[0]==2) and b[0]!=i:      
+                                    if b[0]==0 and (y[0]==1 or y[0]==2) and b[0]!=i and y[0]!=i:      
                                         found_sth = check_Same_Block_Rows(b,y)                                            
-                                    elif b[0]==1 and (y[0]==0 or y[0]==2) and b[0]!=i:
+                                    elif b[0]==1 and (y[0]==0 or y[0]==2) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==2 and (y[0]==0 or y[0]==1) and b[0]!=i:
+                                    elif b[0]==2 and (y[0]==0 or y[0]==1) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==3 and (y[0]==4 or y[0]==5) and b[0]!=i:
+                                    elif b[0]==3 and (y[0]==4 or y[0]==5) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==4 and (y[0]==3 or y[0]==5) and b[0]!=i:
+                                    elif b[0]==4 and (y[0]==3 or y[0]==5) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==5 and (y[0]==3 or y[0]==4) and b[0]!=i:
+                                    elif b[0]==5 and (y[0]==3 or y[0]==4) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==6 and (y[0]==7 or y[0]==8) and b[0]!=i:
+                                    elif b[0]==6 and (y[0]==7 or y[0]==8) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==7 and (y[0]==6 or y[0]==8) and b[0]!=i:
+                                    elif b[0]==7 and (y[0]==6 or y[0]==8) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
-                                    elif b[0]==8 and (y[0]==6 or y[0]==7) and b[0]!=i:
+                                    elif b[0]==8 and (y[0]==6 or y[0]==7) and b[0]!=i and y[0]!=i:
                                         found_sth = check_Same_Block_Rows(b,y)
                                     if found_sth:
                                         y_b, x_b = b
@@ -1076,7 +1076,9 @@ class Algorithm:
                     if (Fields2[0][a][1] == col or Fields2[1][b][1] == col or Fields2[2][c][1]== col):
                         return True
         return False
-    
+        
+    def print_list(self):
+        print('Rows:',self.rows)
     # Drachen
     def algorithm_16(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields: List[Field] = list()
@@ -1097,7 +1099,7 @@ class Algorithm:
                                 vComplex = find_chain_16(self.sudoku, field, value)[1]
                             elif find_chain_16_1(self.sudoku, field, value)[0] == True:
                                 vStraight = find_chain_16_1(self.sudoku, field, value)[1]
-                        if vStraight != None and vComplex !=None and len(vComplex) > 2 and len(vStraight)>=2:
+                        if vStraight != None and vComplex != None and len(vComplex) > 2 and len(vStraight)>=2:
                             for a in range(3,len(vComplex)):
                                 for b in range(0,len(vStraight)):
                                     if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0] and vComplex[a].get_coordinates()[1]==vStraight[0].get_coordinates()[1]:
@@ -1114,6 +1116,7 @@ class Algorithm:
                                                 fields_row.append(vComplex[2])
                                                 fields_col = [vComplex[0], vComplex[1]]
                                             
+                                            self.print_list()
                                             vComplex[a].remove_candidate(value)
                                             y_rem, x_rem = vComplex[a].get_coordinates()
                                             return (True, {
@@ -1152,7 +1155,7 @@ class Algorithm:
                         colCounter = colCounter + 1
                     if colCounter > 2:
                         return False
-                if colCounter < 2 and rowCounter > 0:
+                if colCounter < 2 and colCounter > 0:
                     return False
             return True      
         return False 
@@ -1902,7 +1905,7 @@ class Algorithm:
                             row2 = self.sudoku.get_row(i)
                             for v1 in value:
                                 for j in NINE_RANGE:
-                                    if v1 in row2[j].get_candidates():
+                                    if v1 in row2[j].get_candidates() and row2[j].get_coordinates()!=fields1[f1].get_coordinates() and row2[j].get_coordinates()!=fields1[f2].get_coordinates():
                                         fields2.append(row2[j])
                             
                                 if len(fields2)==2:
