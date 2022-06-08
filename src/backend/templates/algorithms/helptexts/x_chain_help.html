@@ -1,0 +1,19 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+X Kette
+{% endblock algo_name %}
+
+{% block helptext %}
+Gibt es in einer Einheit nur zwei Kandidaten eines Werts, so ist immer einer richtig und der andere falsch.
+Findet man für einen Wert(hier: 3) mehrere solcher Paare und liegen diese in sich überschneidenen Einheiten so lässt sich eine Kette bilden, die abwechseld "wahr" oder "falsch" ist.
+Liegen nun ein Feld in dem Einflussbereiches eines "wahren" und eines "falschen" Feld kann der Kandidat (hier: 3) eliminiert werde.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/x_chain.png' %}{% endblock img_src %}

@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Steinbutt
+{% endblock algo_name %}
+
+{% block helptext %}
+In einere Reihe (hier: R3) kommt ein Kandidat (hier: 2) nur zweimal vor. Egal welches von diesen Felder richtig ist es kommt zur Eliminierung des Werts (hier: 2) im Feld (hier: R6,S4)ist.
+Links über den direkten Einfluss und rechts über eine Kette.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/stonebutt.png' %}{% endblock img_src %}

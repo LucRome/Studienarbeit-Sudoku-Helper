@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+XY Kette
+{% endblock algo_name %}
+
+{% block helptext %}
+Von einem Startfeld (hier: R2S8) gehen zwei Ketten aus mit jeweils dem anderen Kandidaten Wert als Start.
+Wenn beide Ketten auf den selben Wert enden (hier: 1), kann aus den Feldern im Überschneidungsbereich der beiden Endfelder der Kandidatwert (hier: 1) eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/xy_chain.png' %}{% endblock img_src %}

@@ -311,18 +311,6 @@ GRID25 = [
     [1, None, None, 7, 8, None, None, None, None],
 ]
 
-# GRID26 = [
-#     [None, 8, None, 6, 5, 4, None, None, 1, ],
-#     [None, None, None, 2, 3, None, None, None, None, ],
-#     [4, None, 3, 8, 9, None, None, 5, None, ],
-#     [3, None, 8, None, 4, 5, None, None, 7, ],
-#     [None, None, 9, None, 6, 2, 1, None, 8, ],
-#     [2, None, None, None, 8, None, None, None, None, ],
-#     [None, None, 4, 5, 1, 8, None, 7, None, ],
-#     [1, 7, 5, None, 2, 6, None, None, None, ],
-#     [8, None, None, 4, 7, None, None, 1, None, ],
-# ]
-
 GRID26 = [[GRID25[col][row] for col in NINE_RANGE] for row in NINE_RANGE]
 
 # warning: Grid has no solution, only to test algorithm

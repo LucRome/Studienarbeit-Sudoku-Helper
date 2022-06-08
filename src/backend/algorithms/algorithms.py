@@ -14,6 +14,7 @@ class Algorithm:
     def __init__(self,sudoku:Sudoku):
         self.update_list(sudoku)
         self.sudoku = sudoku
+        self.print_list()
 
         
     def update_list(self,sudoku:Sudoku):
