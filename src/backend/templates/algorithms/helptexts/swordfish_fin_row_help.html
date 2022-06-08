@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Schwertfisch mit Flosse Reihe
+{% endblock algo_name %}
+
+{% block helptext %}
+Dies ist ein um ein Feld erweiterter Schwertfisch (hier: R8S9), da in Reihe (hier: R8) dieser Wert außerhalb der drei Spalten liegt.
+Nun können nur aus dem gemeinsamen Einflussbereiches (hier: schwarz Umrandet) der Kandidat (hier: 3) eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/swordfish_fin_row.png' %}{% endblock img_src %}

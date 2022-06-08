@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Wolkenkratzer
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn in zwei Spalten sind genau zwei Felder eines Kandidaten(hier: 2), wobei zwei Felder in der selben Reihe (hier: R9) liegen,
+dann können nun die Kandidaten gleichen Wertes (hier: 2), die im gemeinsamen Einflussbereiche (hier: schwarze Umrahmung) liegen, entfernt werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/skyscraper.png' %}{% endblock img_src %}

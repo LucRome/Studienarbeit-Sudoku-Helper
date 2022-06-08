@@ -1,0 +1,18 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+Drache
+{% endblock algo_name %}
+
+{% block helptext %}
+Ein Kandidat (hier: 6) existiert in einer Reihe (hier: R5) und einer Spalte (hier: S9) je nur zweimal.
+Befinden sich je ein Kandidat dieser beiden Paare in einem Block (hier: B6), kann dieser Wert im Schnittpunkt der anderen Kandidaten (hier: R7S2) eliminiert werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/dragon.png' %}{% endblock img_src %}

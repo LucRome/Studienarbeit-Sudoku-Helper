@@ -1,0 +1,29 @@
+{
+    "algo-visu": {
+        "prefix": "algo-visu",
+        "body": [
+            "",
+            "// Step 1",
+            "$(document).ready(function() {",
+            "   // highlight the corresponding units",
+            "   // TODO",
+            "})",
+            "",
+            "// Step 2",
+            "function add_candidates() {",
+            "   // TODO",
+            "}",
+            "",
+            "// Step 3",
+            "function mark_candidates() {",
+            "    // TODO",
+            "}",
+            "",
+            "// Step 4",
+            "function enter_changes() {",
+            "   // TODO",
+            "}",
+        ],
+        "scope": "javascript"
+    }
+}

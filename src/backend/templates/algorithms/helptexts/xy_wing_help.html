@@ -1,0 +1,19 @@
+{% extends 'algorithms/helptexts/base_helptext.html' %}
+
+{% comment %}
+Explanation for third eye Algorithm
+{% endcomment %}
+
+{% load static %}
+
+{% block algo_name %}
+XY Wing
+{% endblock algo_name %}
+
+{% block helptext %}
+Wenn in drei Felder genau drei Kandidatenwerte (hier: 4,5,7) stehen und diese in jedem dieser Felder ein unterschiedliches Kandidaten-Paar bilden,
+kann ein Kettenartiger Zusammenhang gebildet werden, hierbei ist das Resultat, dass in einem der Endfelder (hier: R3S4 und R1S9) der gemeinsame Kandidat (hier: 5) stehen wird.
+Nun kann aus den Feldern des gemeinsamen Einflussbereiches (hier: schwarz Umrandet) der Wert(hier: 5) entfernt werden.
+{% endblock helptext %}
+
+{% block img_src %}{% static 'imgs/help_images/xy_wing.png' %}{% endblock img_src %}

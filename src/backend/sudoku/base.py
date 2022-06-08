@@ -154,6 +154,7 @@ class Sudoku:
                 ret.append(self.get_field(row=y, column= x))
         return ret
 
+    @staticmethod
     def get_block_nr(row: int, column: int) -> int:
         if row not in NINE_RANGE or column not in NINE_RANGE:
             raise OutOfFieldsException()
@@ -161,6 +162,7 @@ class Sudoku:
         y: int = floor(row/3)
         return y*3 + x
     
+    @staticmethod
     def get_block_ranges(block_nr: int) -> Tuple[range, range]:
         """
         Get the ranges for row and column for the blocks

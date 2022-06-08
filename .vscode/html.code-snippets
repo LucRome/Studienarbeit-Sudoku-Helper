@@ -1,4 +1,19 @@
 {
+    "quickinfo": {
+        "prefix": "quickinfo",
+        "scope": "django-html, html",
+        "body": [
+            "{% extends \"algorithms/quickinfos/generic.html\" %}",
+            "",
+            "{% comment %}", 
+            "  Quickinfo for hidden single",
+            "  Params:",
+            "    dict: dictionary",
+            "{% endcomment %}",
+            "{% block step-1 %}$1{% endblock step-1 %}",
+            "{% block step-3 %}$2{% endblock step-3 %}",
+        ]
+    },
     "help-text": {
         "prefix": "help",
         "body": [
