@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% comment %}
+  Params:
+    sudoku: Sudoku,
+    range: NINE_RANGE,
+    quickinfo: Quickinfo
+    solution: solution,
+{% endcomment %}
+
+{% load static %}
+
+{% block additional-head %}
+  <link rel="stylesheet" href="{% static 'css/failed_to_solve.css' %}">
+  <script src="{% static 'js/failed_to_solve.js' %}"></script>
+{% endblock additional-head %}
+
+{% block navbar-content %}
+  {% if link_dev_tools %}
+    <a href="{% url 'dev_tools_home' %}">Dev Tools</a>
+  {% endif %}
+{% endblock navbar-content %}
+
+{% block content %}
+  {# Error message#}
+  <div class="alert alert-danger alert-dismissible d-flex align-items-center">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <strong class="material-icons-outlined">warning</strong>
+    <p class="mb-0 align-self-center">Das Sudoku kann mit den gegebenen Algorithmen nicht gelöst werden!<p>
+  </div>
+  
+  {# Rest of the Page #}
+  {% include 'page_parts/all.html' with show_clr="" text=quickinfo sudoku=sudoku solution=solution range=range sudoku_readonly="True" nxt_action="failed_to_solve" show_help="" %}
+    {# ="" -> False #}
+
+{% endblock content %}

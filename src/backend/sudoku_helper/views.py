@@ -34,7 +34,7 @@ def check_sudoku(request: HttpRequest):
     """
     Check the submitted Sudoku (comes after index)
     """
-    sudoku, response = check_sudoku_view(request)
+    sudoku, solution, response = check_sudoku_view(request)
 
     if response:
         return response
@@ -53,7 +53,7 @@ def solve_sudoku(request: HttpRequest):
     """
     Apply the solving Algorithms to the Sudoku
     """
-    sudoku, response = check_sudoku_view(request)
+    sudoku, solution, response = check_sudoku_view(request)
 
     if response:
         return response
@@ -83,9 +83,6 @@ def solve_sudoku(request: HttpRequest):
     algorithms = Algorithm(sudoku)
     for al_fn in algorithms.get_name_fn_dict().values():
         success, dict = al_fn()
-        
-        # TODO: check if algorithm brought any use (i.e. candidates were deleted)
-
         if success:
             context = {
                 'sudoku': sudoku,
@@ -98,7 +95,17 @@ def solve_sudoku(request: HttpRequest):
             }
             return render(request, 'pages/solve.html', context)
 
-    # TODO: Wenn nie success: Error Message
+    # never success:
+    context = {
+        'sudoku': sudoku,
+        'range': NINE_RANGE,
+        'quickinfo': 'Kein Algorithmus konnte das gegebene Sudoku lösen. Sie können sich die Komplettlösung anzeigen lassen.',
+        'solution': solution,
+    }
+    return render(request, 'pages/failed_to_solve.html', context)
+
+
+
 
 
 @require_http_methods(['POST'])
@@ -107,7 +114,7 @@ def compute_candidates(request: HttpRequest):
     Compute the candidates for the sudoku
     (Called after each algorithm, in case a field got a value)
     """
-    sudoku, response = check_sudoku_view(request)
+    sudoku, solution ,response = check_sudoku_view(request)
 
     if response:
         return response
