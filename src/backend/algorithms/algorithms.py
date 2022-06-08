@@ -1101,7 +1101,7 @@ class Algorithm:
                         if vStraight != None and vComplex !=None and len(vComplex) > 2 and len(vStraight)>=2:
                             for a in range(3,len(vComplex)):
                                 for b in range(0,len(vStraight)):
-                                    if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0]:
+                                    if vComplex[a].get_coordinates()[0] == vStraight[b].get_coordinates()[0] and vComplex[a].get_coordinates()[1]==vStraight[0].get_coordinates()[1]:
                                         if value in vComplex[a].get_candidates():  # check whether its useful
                                             row = vStraight[0].get_coordinates()[0]
                                             fields_row, fields_col, row = [vStraight[0]], None, vStraight[0].get_coordinates()[0]
