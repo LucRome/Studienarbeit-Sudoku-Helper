@@ -14,7 +14,6 @@ class Algorithm:
     def __init__(self,sudoku:Sudoku):
         self.update_list(sudoku)
         self.sudoku = sudoku
-        self.print_list()
 
         
     def update_list(self,sudoku:Sudoku):
@@ -442,8 +441,8 @@ class Algorithm:
                                         if not(testValue in values):
                                             err = True
                                     if not err:
-                                        col_fields.append(block[j].get_coordinates())
-                                        col_candidates.append(block[j].get_candidates())
+                                        col_fields.append(col[j].get_coordinates())
+                                        col_candidates.append(col[j].get_candidates())
                                         colCounter = colCounter + 1
                                 
                                 #row check
@@ -454,8 +453,8 @@ class Algorithm:
                                         if not(testValue in values):
                                             err = True
                                     if not err:
-                                        row_fields.append(block[j].get_coordinates())
-                                        row_candidates.append(block[j].get_candidates())
+                                        row_fields.append(row[j].get_coordinates())
+                                        row_candidates.append(row[j].get_candidates())
                                         rowCounter = rowCounter + 1 
 
                             reason, fields, field_candidates ,nr = None, None, None, None
