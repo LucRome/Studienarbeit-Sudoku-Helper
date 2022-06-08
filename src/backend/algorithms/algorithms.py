@@ -1076,9 +1076,7 @@ class Algorithm:
                     if (Fields2[0][a][1] == col or Fields2[1][b][1] == col or Fields2[2][c][1]== col):
                         return True
         return False
-        
-    def print_list(self):
-        print('Rows:',self.rows)
+
     # Drachen
     def algorithm_16(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields: List[Field] = list()
@@ -1115,8 +1113,6 @@ class Algorithm:
                                             else:
                                                 fields_row.append(vComplex[2])
                                                 fields_col = [vComplex[0], vComplex[1]]
-                                            
-                                            self.print_list()
                                             vComplex[a].remove_candidate(value)
                                             y_rem, x_rem = vComplex[a].get_coordinates()
                                             return (True, {
@@ -1299,14 +1295,14 @@ class Algorithm:
                                         if Sudoku.get_block_nr(fields3[0][0],fields3[0][1]) == Sudoku.get_block_nr(fields3[1][0],fields3[1][1]):
                                             block = self.sudoku.get_block(Sudoku.get_block_nr(fields3[0][0],fields3[0][1]))
                                             counter = 0
-                                            for b in block:
-                                                if value1 in b.get_candidates():
+                                            for b_f in block:
+                                                if value1 in b_f.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
                                                 value_removed, value_2nd = value2, value1
                                             counter = 0
-                                            for b in block:
-                                                if value2 in b.get_candidates():
+                                            for b_f in block:
+                                                if value2 in b_f.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
                                                 value_removed, value_2nd = value1, value2
@@ -1315,14 +1311,14 @@ class Algorithm:
                                         if fields3[0][0] == fields3[1][0]:
                                             row = self.sudoku.get_row(fields3[0][0])
                                             counter = 0
-                                            for r in row:
-                                                if value1 in r.get_candidates():
+                                            for r_f in row:
+                                                if value1 in r_f.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
                                                 value_removed, value_2nd = value2, value1
                                             counter = 0
-                                            for r in row:
-                                                if value2 in r.get_candidates():
+                                            for r_f in row:
+                                                if value2 in r_f.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
                                                 value_removed, value_2nd = value1, value2                              
@@ -1330,14 +1326,14 @@ class Algorithm:
                                         if fields3[0][1] == fields3[1][1]:
                                             col = self.sudoku.get_column(fields3[0][1])
                                             counter = 0
-                                            for c in col:
-                                                if value1 in c.get_candidates():
+                                            for c_f in col:
+                                                if value1 in c_f.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
                                                 value_removed, value_2nd = value2, value1
                                             counter = 0
-                                            for c in col:
-                                                if value2 in c.get_candidates():
+                                            for c_f in col:
+                                                if value2 in c_f.get_candidates():
                                                     counter = counter + 1
                                             if counter==2:
                                                 value_removed, value_2nd = value1, value2
