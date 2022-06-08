@@ -38,7 +38,7 @@ class Validation:
     if counter == 0:
       return (False, f'Das Sudoku ist ungültig, es existiert keine Lösung!')
     elif counter == 1 or counter is None: # (None occurs when sudoku is completely solved)
-      return (True, self.solution)
+      return (True, self.solution) if counter else (True, None)
     else:
       return (False, f'Das Sudoku ist ungültig, es existieren mehrere Lösungen!')  
 
