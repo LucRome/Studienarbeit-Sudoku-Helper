@@ -14,7 +14,6 @@ class Algorithm:
     def __init__(self,sudoku:Sudoku):
         self.update_list(sudoku)
         self.sudoku = sudoku
-        self.print_list()
 
         
     def update_list(self,sudoku:Sudoku):
@@ -25,13 +24,7 @@ class Algorithm:
             self.rows[row][col] = sudoku.get_field(row,col).get_candidates()
             self.cols[col][row] = sudoku.get_field(row,col).get_candidates()
             self.blocks[Sudoku.get_block_nr(row,col)][self.get_block_by_row_col(row,col)] = sudoku.get_field(row,col).get_candidates()
-
-        # self.print_list()
     
-    def print_list(self):
-        print('Blocks:',self.blocks)
-        print('Rows:',self.rows)
-        print('Cols:',self.cols)
 
     def get_row_by_block(self,blockNr:int,blockPos:int):
         return ((blockNr//3)*3 + blockPos//3)
@@ -1552,11 +1545,7 @@ class Algorithm:
                                                         and (Sudoku.get_block_nr(row2[j].get_coordinates()[0],row2[j].get_coordinates()[1]) == Sudoku.get_block_nr(f4[1].get_coordinates()[0],f4[1].get_coordinates()[1]) or row2[j].get_coordinates()[0] == f4[1].get_coordinates()[0] or row2[j].get_coordinates()[1] == f4[1].get_coordinates()[1])
                                                         and row2[j].get_coordinates() != f3[1].get_coordinates()  and row2[j].get_coordinates() != f4[1].get_coordinates()):
                                                         returnFields.append(row2[j])
-                                            if len(returnFields) >= 1:
-                                                for k in returnFields:
-                                                    print('ReturnFields:',k.get_coordinates())
-                                                print(f3[1].get_coordinates())    
-                                                print(f4[1].get_coordinates())    
+                                            if len(returnFields) >= 1:  
                                                 return True,f'Value: {f3[0]} Field:{returnFields[0].get_coordinates()}'
                     
         return False,None 
