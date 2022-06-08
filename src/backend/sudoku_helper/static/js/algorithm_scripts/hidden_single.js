@@ -32,5 +32,7 @@ function mark_candidates() {
 function enter_changes() {
     $(`#field_${y}_${x} .candidate-table`).hide();
     $(`#${y}_${x}`).show().addClass("field-new-value");
+    let rem = parse_fields_from_removed_candidates(dict.removed_candidates);
+    highlight_fields(rem, "field-removed-candidate");
     handle_removed_candidates(dict.removed_candidates, marked_to_delete=false, remove=true);
 }

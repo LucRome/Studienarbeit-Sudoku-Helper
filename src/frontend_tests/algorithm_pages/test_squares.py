@@ -62,4 +62,4 @@ class TestSquares(ut.TestCase):
 
         gt.nxt_hint_btn.click()
 
-        gt.step_4(locked_b=True, removed=True)
+        gt.step_4(locked_b=True, removed_n_locked_b=True)

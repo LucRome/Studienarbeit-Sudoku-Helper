@@ -31,6 +31,13 @@ function enter_changes() {
     // remove candidates to delete
     handle_removed_candidates(dict.removed_candidates, marked_to_delete=false, remove=true);
     // Highlight fields
-    highlight_fields(intersect_fields, "field-locked-candidates");
+    let intersect_fields_with_candidate = [];
+    intersect_fields.forEach(coords => {
+        let c = $(`#field_${coords[0]}_${coords[1]} img[nr="${dict.value}"][src*="imgs"]`);
+        if (c.length > 0) {
+            intersect_fields_with_candidate.push(coords);
+        }
+    })
+    highlight_fields(intersect_fields_with_candidate, "field-locked-candidates");
     highlight_fields(removed_fields, "field-removed-candidate");
 }

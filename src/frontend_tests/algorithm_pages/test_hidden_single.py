@@ -29,8 +29,8 @@ class TestHiddenSingle(ut.TestCase):
 
         gt.nxt_hint_btn.click()
 
-        gt.step_3(use=1) # TODO: Delete = True
+        gt.step_3(use=1, delete=True)
 
         gt.nxt_hint_btn.click()
 
-        gt.step_4(new=1) # TODO: Delete = True
+        gt.step_4(new=1, removed=True)

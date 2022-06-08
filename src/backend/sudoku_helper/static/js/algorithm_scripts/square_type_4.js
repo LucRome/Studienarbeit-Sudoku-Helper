@@ -29,5 +29,5 @@ function mark_candidates() {
 function enter_changes() {
     handle_removed_candidates(dict.removed_candidates, marked_to_delete=false, remove=true);
     highlight_fields(dict.fields_not_removed, "field-locked-candidates");
-    highlight_fields(fields_rem, "field-removed-candidate");
+    highlight_fields(fields_rem, "field-locked-and-removed-candidates");
 }
