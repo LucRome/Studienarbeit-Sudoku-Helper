@@ -1487,8 +1487,9 @@ class Algorithm:
                                                                                 'value_removed': a,
                                                                                 'removed_candidates': removed_candidates
                                                                             })                              
-        return False,None         
-    
+        return False,None 
+            
+           
     #X-Chain   
     def algorithm_23(self) -> Tuple[bool, Optional[Dict[str, Any]]]:
         fields1 = []
@@ -1509,6 +1510,7 @@ class Algorithm:
                         fields1.append(row[j].get_coordinates())
             fieldstrue.clear()
             fieldsfalse.clear()
+            err = False
             for f1 in range(0,len(fields1)):
                 for f2 in range(f1+1,len(fields1)):
                     ccounter = 0
@@ -1532,6 +1534,8 @@ class Algorithm:
                         for j in NINE_RANGE:
                             if value in col[j].get_candidates():
                                 ccounter = ccounter + 1  
+                    if rcounter > 2 or bcounter > 2 or ccounter > 2:
+                        err = True
                     if rcounter == 2 or bcounter == 2 or ccounter == 2:
                         if not(fields1[f1] in fieldstrue):
                             if not(fields1[f1] in fieldsfalse):
@@ -1551,45 +1555,46 @@ class Algorithm:
                             if not(fields1[f2] in fieldsfalse):
                                 if not(fields1[f2] in fieldstrue):
                                     fieldsfalse.append(fields1[f2])
-            while(not(counter1 >=2 and counter2 >=2) or len(fieldstrue)>=1 or len(fieldsfalse)>=1):
-                for f4 in fieldstrue:
-                    counter1 = 0
-                    for f5 in fieldsfalse:
-                        if (f4[0] == f5[0] or f4[1]==f5[1] or Sudoku.get_block_nr(f4[0],f4[1]) == (Sudoku.get_block_nr(f5[0],f5[1]))):
-                            counter1 = counter1 + 1
-                    if counter1 <= 1:
-                        fieldstrue.remove(f4)
-                        break 
-                    
-                for f4 in fieldsfalse:
-                    counter2 = 0
-                    for f5 in fieldstrue:
-                        if (f4[0] == f5[0] or f4[1]==f5[1] or Sudoku.get_block_nr(f4[0],f4[1]) == (Sudoku.get_block_nr(f5[0],f5[1]))):
-                            counter2 = counter2 + 1
-                    if counter2 <= 1:
-                        fieldsfalse.remove(f4)
-                        break   
-                if(counter1 >=2 and counter2 >=2) or len(fieldstrue)<=1 or len(fieldsfalse)<=1:
-                    break           
-            fields2.clear()
-            if counter1 >=2 and counter2 >=2 :
-                for f3 in fields1:
-                    if not(f3 in fieldsfalse) and not(f3 in fieldstrue):
-                        for f1 in fieldstrue:
-                            for f2 in fieldsfalse:
-                                if ((f3[0] == f1[0] or f3[1]==f1[1] or Sudoku.get_block_nr(f3[0],f3[1]) == (Sudoku.get_block_nr(f1[0],f1[1])))
-                                    and (f3[0] == f2[0] or f3[1]==f2[1] or Sudoku.get_block_nr(f3[0],f3[1]) == (Sudoku.get_block_nr(f2[0],f2[1])))):
-                                    if not(f3 in fields2):
-                                        fields2.append(f3)
-                if len(fields2)>0:
-                    removed_candidates = remove_candidates_from_fields(self.sudoku, fields2, [value])
-                    if has_removed_candidates(removed_candidates):
-                         return (True, {
-                            'algorithm': 'x_chain',
-                            'fields': [fieldstrue, fieldsfalse],
-                            'value': value,
-                            'removed_candidates': removed_candidates
-                        })
+            if not(err):
+                while(not(counter1 >=2 and counter2 >=2) or len(fieldstrue)>=1 or len(fieldsfalse)>=1):
+                    for f4 in fieldstrue:
+                        counter1 = 0
+                        for f5 in fieldsfalse:
+                            if (f4[0] == f5[0] or f4[1]==f5[1] or Sudoku.get_block_nr(f4[0],f4[1]) == (Sudoku.get_block_nr(f5[0],f5[1]))):
+                                counter1 = counter1 + 1
+                        if counter1 <= 1:
+                            fieldstrue.remove(f4)
+                            break 
+                        
+                    for f4 in fieldsfalse:
+                        counter2 = 0
+                        for f5 in fieldstrue:
+                            if (f4[0] == f5[0] or f4[1]==f5[1] or Sudoku.get_block_nr(f4[0],f4[1]) == (Sudoku.get_block_nr(f5[0],f5[1]))):
+                                counter2 = counter2 + 1
+                        if counter2 <= 1:
+                            fieldsfalse.remove(f4)
+                            break   
+                    if(counter1 >=2 and counter2 >=2) or len(fieldstrue)<=1 or len(fieldsfalse)<=1:
+                        break           
+                fields2.clear()
+                if counter1 >=2 and counter2 >=2 :
+                    for f3 in fields1:
+                        if not(f3 in fieldsfalse) and not(f3 in fieldstrue):
+                            for f1 in fieldstrue:
+                                for f2 in fieldsfalse:
+                                    if ((f3[0] == f1[0] or f3[1]==f1[1] or Sudoku.get_block_nr(f3[0],f3[1]) == (Sudoku.get_block_nr(f1[0],f1[1])))
+                                        and (f3[0] == f2[0] or f3[1]==f2[1] or Sudoku.get_block_nr(f3[0],f3[1]) == (Sudoku.get_block_nr(f2[0],f2[1])))):
+                                        if not(f3 in fields2):
+                                            fields2.append(f3)
+                    if len(fields2)>0:
+                        removed_candidates = remove_candidates_from_fields(self.sudoku, fields2, [value])
+                        if has_removed_candidates(removed_candidates):
+                            return (True, {
+                                'algorithm': 'x_chain',
+                                'fields': [fieldstrue, fieldsfalse],
+                                'value': value,
+                                'removed_candidates': removed_candidates
+                            })
         return False,None       
     
     #XY-Chain 
@@ -1692,7 +1697,7 @@ class Algorithm:
         Fields2 = []
         Fields3 = []
         field = Tuple[int,int]
-        rows = list()      
+        rows = list()   
         for value in ALL_FIELD_VALUES:
             Counter = 0
             Fields1.clear()
@@ -1760,18 +1765,23 @@ class Algorithm:
                                             col_fields.append(f)
                                     removed_candidates: Dict[str, Any] = {}
                                     row_nrs = [r[0].get_coordinates()[0] for r in rows] 
-                                    for r in row_nrs:
-                                        fields = intersection_of_units(UnitType.ROW, r, UnitType.BLOCK, block_nr)
-                                        rem = remove_candidates_from_fields(self.sudoku, fields, [value], col_fields)
-                                        removed_candidates = {**removed_candidates, **rem}
-                                    if has_removed_candidates(removed_candidates):
-                                        return (True, {
-                                            'algorithm': 'swordfish_fin_col',
-                                            'fields': col_fields,
-                                            'value': value,
-                                            'row_nrs': row_nrs,
-                                            'removed_candidates': removed_candidates
-                                        })
+                                    counter = 0
+                                    for f1 in col_fields:
+                                        if not(f1[0] in row_nrs):
+                                            counter = counter +1
+                                    if counter == 1:
+                                        for r in row_nrs:
+                                            fields = intersection_of_units(UnitType.ROW, r, UnitType.BLOCK, block_nr)
+                                            rem = remove_candidates_from_fields(self.sudoku, fields, [value], col_fields)
+                                            removed_candidates = {**removed_candidates, **rem}
+                                        if has_removed_candidates(removed_candidates):
+                                            return (True, {
+                                                'algorithm': 'swordfish_fin_col',
+                                                'fields': col_fields,
+                                                'value': value,
+                                                'row_nrs': row_nrs,
+                                                'removed_candidates': removed_candidates
+                                            })
                             Fields3.clear()
         return (False,None)
     
@@ -1848,19 +1858,24 @@ class Algorithm:
                                         for f in fl:
                                             row_fields.append(f)
                                     removed_candidates: Dict[str, Any] = {}
-                                    col_nrs = [c[0].get_coordinates()[1] for c in cols] 
-                                    for c in col_nrs:
-                                        fields = intersection_of_units(UnitType.COLUMN, c, UnitType.BLOCK, block_nr)
-                                        rem = remove_candidates_from_fields(self.sudoku, fields, [value], row_fields)
-                                        removed_candidates = {**removed_candidates, **rem}
-                                    if has_removed_candidates(removed_candidates):
-                                        return (True, {
-                                            'algorithm': 'swordfish_fin_row',
-                                            'fields': row_fields,
-                                            'value': value,
-                                            'col_nrs': col_nrs,
-                                            'removed_candidates': removed_candidates
-                                        })
+                                    col_nrs = [c[0].get_coordinates()[1] for c in cols]
+                                    counter = 0
+                                    for f1 in row_fields:
+                                        if not(f1[0] in col_nrs):
+                                            counter = counter +1
+                                    if counter == 1: 
+                                        for c in col_nrs:
+                                            fields = intersection_of_units(UnitType.COLUMN, c, UnitType.BLOCK, block_nr)
+                                            rem = remove_candidates_from_fields(self.sudoku, fields, [value], row_fields)
+                                            removed_candidates = {**removed_candidates, **rem}
+                                        if has_removed_candidates(removed_candidates):
+                                            return (True, {
+                                                'algorithm': 'swordfish_fin_row',
+                                                'fields': row_fields,
+                                                'value': value,
+                                                'col_nrs': col_nrs,
+                                                'removed_candidates': removed_candidates
+                                            })
                             Fields3.clear()
         return (False,None)
 
