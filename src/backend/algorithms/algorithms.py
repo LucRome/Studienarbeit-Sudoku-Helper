@@ -1696,7 +1696,7 @@ class Algorithm:
         Fields1 = []
         Fields2 = []
         Fields3 = []
-        field = Tuple[int,int]
+        field: Tuple[int,int] = None
         rows = list()   
         for value in ALL_FIELD_VALUES:
             Counter = 0
@@ -1733,7 +1733,7 @@ class Algorithm:
                                             field = e1
                                 rowCount = 0
                                 for l in NINE_RANGE:
-                                    if(value in rows[0][l].get_candidates()) and rows[0][l].get_coordinates()!= field and Sudoku.get_block_nr(rows[0][l].get_coordinates()[0],rows[0][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
+                                    if(field and value in rows[0][l].get_candidates()) and rows[0][l].get_coordinates()!= field and Sudoku.get_block_nr(rows[0][l].get_coordinates()[0],rows[0][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
                                         check = False
                                         for e in Fields3:
                                             for e1 in e:
@@ -1741,7 +1741,7 @@ class Algorithm:
                                                     check = True
                                         if not(check):
                                             rowCount = rowCount + 1
-                                    if(value in rows[1][l].get_candidates()) and rows[1][l].get_coordinates()!= field and Sudoku.get_block_nr(rows[1][l].get_coordinates()[0],rows[1][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
+                                    if(field and value in rows[1][l].get_candidates()) and rows[1][l].get_coordinates()!= field and Sudoku.get_block_nr(rows[1][l].get_coordinates()[0],rows[1][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
                                         check = False
                                         for e in Fields3:
                                             for e1 in e:
@@ -1749,7 +1749,7 @@ class Algorithm:
                                                     check = True
                                         if not(check):
                                             rowCount = rowCount + 1
-                                    if(value in rows[2][l].get_candidates()) and rows[2][l].get_coordinates()!= field and Sudoku.get_block_nr(rows[2][l].get_coordinates()[0],rows[2][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
+                                    if(field and value in rows[2][l].get_candidates()) and rows[2][l].get_coordinates()!= field and Sudoku.get_block_nr(rows[2][l].get_coordinates()[0],rows[2][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
                                         check = False
                                         for e in Fields3:
                                             for e1 in e:
@@ -1790,7 +1790,7 @@ class Algorithm:
         Fields1 = []
         Fields2 = []
         Fields3 = []
-        field = Tuple[int,int]
+        field: Tuple[int,int] = None
         cols = list()      
         for value in ALL_FIELD_VALUES:
             Counter = 0
@@ -1827,7 +1827,7 @@ class Algorithm:
                                             field = e1
                                 rowCount = 0
                                 for l in NINE_RANGE:
-                                    if(value in cols[0][l].get_candidates()) and cols[0][l].get_coordinates()!= field and Sudoku.get_block_nr(cols[0][l].get_coordinates()[0],cols[0][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
+                                    if(field and value in cols[0][l].get_candidates()) and cols[0][l].get_coordinates()!= field and Sudoku.get_block_nr(cols[0][l].get_coordinates()[0],cols[0][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
                                         check = False
                                         for e in Fields3:
                                             for e1 in e:
@@ -1835,7 +1835,7 @@ class Algorithm:
                                                     check = True
                                         if not(check):
                                             rowCount = rowCount + 1
-                                    if(value in cols[1][l].get_candidates()) and cols[1][l].get_coordinates()!= field and Sudoku.get_block_nr(cols[1][l].get_coordinates()[0],cols[1][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
+                                    if(field and value in cols[1][l].get_candidates()) and cols[1][l].get_coordinates()!= field and Sudoku.get_block_nr(cols[1][l].get_coordinates()[0],cols[1][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
                                         check = False
                                         for e in Fields3:
                                             for e1 in e:
@@ -1843,7 +1843,7 @@ class Algorithm:
                                                     check = True
                                         if not(check):
                                             rowCount = rowCount + 1
-                                    if(value in cols[2][l].get_candidates()) and cols[2][l].get_coordinates()!= field and Sudoku.get_block_nr(cols[2][l].get_coordinates()[0],cols[2][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
+                                    if(field and value in cols[2][l].get_candidates()) and cols[2][l].get_coordinates()!= field and Sudoku.get_block_nr(cols[2][l].get_coordinates()[0],cols[2][l].get_coordinates()[1]) == Sudoku.get_block_nr(field[0],field[1]):
                                         check = False
                                         for e in Fields3:
                                             for e1 in e:
