@@ -222,7 +222,7 @@ def find_chain_16(sudoku:Sudoku,field:Field,value:int) -> Tuple[bool,List[Field]
     for i in NINE_RANGE:
         if value in col[i].get_candidates() and col[i].get_coordinates()[0]!= chain[1].get_coordinates()[0] and col[i].get_coordinates()[0]!= chain[0].get_coordinates()[0]:
             chain.append(col[i])
-    if len(chain) < 3:
+    if len(chain) < 3 or len(chain) > 3:
             return True, None
     row = sudoku.get_row(chain[2].get_coordinates()[0])
     for i in NINE_RANGE:

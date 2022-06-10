@@ -48,28 +48,7 @@ class TestValidateSudoku(unittest.TestCase):
         
         
 
-        sudoku1: Sudoku = Sudoku(grid)
-        sudoku1.select_candidates()
-        val = Validation(sudoku1)
-        counter,msg = val.validate(sudoku1)
-        self.assertTrue(counter,2)
-        print(msg)
 
-        #counter2 = 0
-        #sudoku2: Sudoku = Sudoku(grid2)
-        ##sudoku2.select_candidates()
-        #val2 = Validation(sudoku2)
-        #counter2 = val2.validate_sudoku(sudoku2, 0,0)
-        #print(counter2)
-        #self.assertAlmostEqual(counter2,10)
-        #print(counter2)
-        
-        #sudoku3: Sudoku = Sudoku(grid3)
-        #sudoku3.select_candidates()
-        #val3 = Validation(sudoku3)
-        #counter = val3.validate_sudoku(sudoku3, counter= 0,pos =0)
-        #self.assertAlmostEqual(counter,2)
-        #print(counter)
 
 
         # Correct sudoku
@@ -84,11 +63,45 @@ class TestValidateSudoku(unittest.TestCase):
                 [8, 3, None, 2, 5, 7, None, 4, None],
                 [5, None, None, 6, None, 3, 8, None, 7],
         ]
-        sudoku4: Sudoku = Sudoku(grid4)
-        val4 = Validation(sudoku4)
-        sudoku4.select_candidates()
-        correct,msg = val4.validate(sudoku4)
-        self.assertTrue(correct)
-        
+        # Correct sudoku
+        grid5 = [
+                [None, 5, 2, None, None, None, 6, None, None],
+                [None, None, None, 3, None, None, None, 8, None],
+                [None, None, None, 1, None, None, None, None, None],
+                [6, 4, None, None, None, None, 5, None, None],
+                [None, None, None, None, 2, 9, None, None, None],
+                [None, None, None, 7, None, None, None, None, None],
+                [1, None, 9, None, None, None, None, 3, None],
+                [None, None, None, None, 5, None, 4, None, None],
+                [None, None, None, None, None, None, None, None, None],
+        ]
+        sudoku1: Sudoku = Sudoku(grid)
+        sudoku1.select_candidates()
+        val = Validation(sudoku1)
+        bol,msg = val.validate(sudoku1)
+        self.assertTrue(bol,2)
 
+        sudoku2: Sudoku = Sudoku(grid2)
+        sudoku2.select_candidates()
+        val = Validation(sudoku2)
+        bol,msg = val.validate(sudoku2)
+        self.assertFalse(bol,2)
+        sudoku3: Sudoku = Sudoku(grid3)
+        sudoku3.select_candidates()
+        val = Validation(sudoku3)
+        bol,msg = val.validate(sudoku3)
+        self.assertFalse(bol,2)
+       
+        
+        sudoku4: Sudoku = Sudoku(grid4)
+        val = Validation(sudoku4)
+        sudoku4.select_candidates()
+        bol,msg = val.validate(sudoku4)
+        self.assertTrue(bol)
+        
+        sudoku5: Sudoku = Sudoku(grid5)
+        val = Validation(sudoku5)
+        sudoku5.select_candidates()
+        bol,msg = val.validate(sudoku5)
+        self.assertTrue(bol)
 
