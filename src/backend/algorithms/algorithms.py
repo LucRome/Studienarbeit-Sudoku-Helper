@@ -1578,7 +1578,7 @@ class Algorithm:
                         for f in blk2:
                             if value in f.get_candidates():
                                 b_cnt += 1
-                if (r_cnt > 2 or c_cnt > 2 or b_cnt > 2):
+                if not (r_cnt > 2 or c_cnt > 2 or b_cnt > 2):
                     err2 = True
             if not(err2):
                 while(not(counter1 >=2 and counter2 >=2) or len(fieldstrue)>=1 or len(fieldsfalse)>=1):
