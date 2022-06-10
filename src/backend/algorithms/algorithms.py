@@ -63,7 +63,7 @@ class Algorithm:
             'square_type_4': self.algorithm_20,
             'xy_wing': self.algorithm_21,
             'xyz_wing': self.algorithm_22,
-            'x_chain': self.algorithm_23,
+            # 'x_chain': self.algorithm_23,
             'xy_chain': self.algorithm_24,  
             'swordfish_fin_col': self.algorithm_25_1,
             'swordfish_fin_row': self.algorithm_25_2,
@@ -1886,7 +1886,7 @@ class Algorithm:
                                     col_nrs = [c[0].get_coordinates()[1] for c in cols]
                                     counter = 0
                                     for f1 in row_fields:
-                                        if not(f1[0] in col_nrs):
+                                        if not(f1[1] in col_nrs):
                                             counter = counter +1
                                     if counter == 1: 
                                         for c in col_nrs:

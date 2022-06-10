@@ -451,11 +451,11 @@ class TestAlgorithms(unittest.TestCase):
         self.assertTrue(algos[19].algorithm_20()[0])
         self.assertTrue(algos[20].algorithm_21()[0])
         self.assertTrue(algos[21].algorithm_22()[0])
-        self.assertTrue(algos[22].algorithm_23()[0])
         self.assertTrue(algos[23].algorithm_24()[0])
         self.assertTrue(algos[24].algorithm_25_1()[0])
         self.assertTrue(algos[25].algorithm_26()[0])
-        #self.assertTrue(algos[26].algorithm_25_2()[0])
+        self.assertTrue(algos[26].algorithm_25_2()[0])
+        self.assertTrue(algos[22].algorithm_23()[0])
         
         algo = Algorithm(sudoku24)
         bol,string = algo.algorithm_24()
