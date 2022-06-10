@@ -1886,7 +1886,7 @@ class Algorithm:
                                     col_nrs = [c[0].get_coordinates()[1] for c in cols]
                                     counter = 0
                                     for f1 in row_fields:
-                                        if not(f1[0] in col_nrs):
+                                        if not(f1[1] in col_nrs):
                                             counter = counter +1
                                     if counter == 1: 
                                         for c in col_nrs:
