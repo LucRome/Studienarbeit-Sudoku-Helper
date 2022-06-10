@@ -63,7 +63,7 @@ class Algorithm:
             'square_type_4': self.algorithm_20,
             'xy_wing': self.algorithm_21,
             'xyz_wing': self.algorithm_22,
-            'x_chain': self.algorithm_23,
+            # 'x_chain': self.algorithm_23,
             'xy_chain': self.algorithm_24,  
             'swordfish_fin_col': self.algorithm_25_1,
             'swordfish_fin_row': self.algorithm_25_2,
