@@ -1558,6 +1558,7 @@ class Algorithm:
                                     fieldsfalse.append(fields1[f2])
             
             r_cnt, c_cnt, b_cnt = 0, 0, 0
+            err2 = False
             for ft in fieldstrue:
                 for ff in fieldsfalse:
                     # same unit?
@@ -1577,8 +1578,9 @@ class Algorithm:
                         for f in blk2:
                             if value in f.get_candidates():
                                 b_cnt += 1
-            
-            if not (r_cnt > 2 or c_cnt > 2 or b_cnt > 2):
+                if not (r_cnt > 2 or c_cnt > 2 or b_cnt > 2):
+                    err2 = True
+            if not(err2):
                 while(not(counter1 >=2 and counter2 >=2) or len(fieldstrue)>=1 or len(fieldsfalse)>=1):
                     for f4 in fieldstrue:
                         counter1 = 0
